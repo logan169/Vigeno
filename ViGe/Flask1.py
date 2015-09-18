@@ -3,8 +3,8 @@ __author__ = 'schwartzl'
 import flask
 from flask import Flask, url_for, redirect
 
-import format as F
-import kernel as K
+import ViGe.format as F
+import ViGe.kernel as K
 
 app = Flask(__name__)
 
@@ -51,12 +51,13 @@ def incompletPath(genomeId,l):
 
 
 #print to screen complet information for position
-@app.route('/<genomeId>/position/<int:startPosition>/')
-def startPos (genomeId,startPosition):
+@app.route('/<genomeId>/<chrosome>/<int:startPosition>/')
+def startPos (genomeId,chromosome, startPosition):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Gene
     from pyGeno.Genome import Exon
     from pyGeno.Genome import Transcript
+    from pyGeno.Genome import Chromosome
     Exon.ensureGlobalIndex('start')			#est ce que on peut faire ca?
     Gene.ensureGlobalIndex('start')			#est ce que on peut faire ca?
     Transcript.ensureGlobalIndex('start')	#est ce que on peut faire ca?
@@ -69,11 +70,15 @@ def startPos (genomeId,startPosition):
 
     except:
         try:
-        geneReferent = genomeReferent.get(Gene, start = str(startPosition))[0]
-        resp = K.JSONResponse(F.formatGene(geneReferent), False, 'ok') #==> Intron
+            geneReferent = genomeReferent.get(Gene, start = str(startPosition))[0]
+            resp = K.JSONResponse(F.formatGene(geneReferent), False, 'ok') #==> Intron
         except IndexError:
             resp = K.JSONResponse(None, True, 'Gene not found') #==> Region intergenique
-        return flask.jsonify(**resp)
+
+    return flask.jsonify(**resp)
+
+    #for exons in g.get(Exons, {"CDS_start >": x1, "CDS_end <=" : x2, "chromosome.number" : "22"}) :
+
 
 #print to screen complet information for gene
 @app.route('/<genomeId>/gene/<geneId>/')

@@ -4,7 +4,6 @@ def formatGene(gene) :
     return {
         'id': gene.id,
         'name': gene.name,
-
         'strand': gene.strand,
         'start': gene.start,
         'chromosome': gene.chromosome.number,
@@ -24,11 +23,11 @@ def formatExon(exon) :
         'frame' : exon.frame,
         'strand' : exon.strand,
 
-        'genome': str(exon.genome),
-        'chromosome': str(exon.chromosome),
+        'genome': exon.genome.name,
+        'chromosome': exon.chromosome.number,
         'gene': exon.gene.name,
-        'transcript': str(exon.transcript),
-        'protein': str(exon.protein),
+        'transcript': exon.transcript.name,
+        'protein': exon.protein.name,
     }
 
 def formatTranscript(transcript) :
@@ -40,10 +39,10 @@ def formatTranscript(transcript) :
         'length' : transcript.length,
         'coding' : transcript.coding,
 
-        'genome': str(transcript.genome),
-        'chromosome': str(transcript.chromosome),
-        'gene': str(transcript.gene),
-        'protein': str(transcript.protein),
+        'genome': transcript.genome.name,
+        'chromosome': transcript.chromosome.number,
+        'gene': transcript.gene.name,
+        'protein': transcript.protein.name,
     }
 
 def formatProtein(protein) :
@@ -51,8 +50,8 @@ def formatProtein(protein) :
         'id': protein.id,
         'name': protein.name,
 
-        'genome': str(protein.genome),
-        'chromosome': str(protein.chromosome),
-        'gene': str(protein.gene),
-        'transcript': str(protein.transcript),
+        'genome': protein.genome.name,
+        'chromosome': protein.chromosome.name,
+        'gene': protein.gene.name,
+        'transcript': protein.transcript.name,
     }
