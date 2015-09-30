@@ -13,20 +13,6 @@ app = Flask(__name__)
 ########################################################################################################################
 ########################################################################################################################
 
-########################################################################################################################
-#modificaton a ajouter:
-########################################################################################################################
-#
-#modifier les str dans le fichier format
-#
-#//implementer de partout return dictionnaire dans dictionnaires##########################verifier si fonctionne bien
-#
-#
-#
-#
-#
-#
-########################################################################################################################
 # Home sweet home!!!
 @app.route('/')
 def home():
@@ -38,10 +24,14 @@ def home():
 @app.route('/<genomeId>/')
 def genomeId(genomeId):
     from pyGeno.Genome import Genome
-    genomeReferent = str(Genome (name = str(genomeId)))
-    return '<br/><br/> %s <br/> <br> Please enter  a command as followed in the URL to continue <br> <br> i.e: /genomeId/... <br> ' \
+
+    try:
+        genomeReferent = str(Genome (name = str(genomeId)))
+        return '<br/><br/> %s <br/> <br> Please enter  a command as followed in the URL to continue <br> <br> i.e: /genomeId/... <br> ' \
            '&nbsp &nbsp &nbsp &nbsp gene/geneId/ <br> &nbsp &nbsp &nbsp &nbsp exon/exonId/ <br> &nbsp &nbsp &nbsp &nbsp transcript/transcriptId/' \
            ' <br> &nbsp &nbsp &nbsp &nbsp protein/proteinId/ <br> &nbsp &nbsp &nbsp &nbsp position/startPosition' % genomeReferent
+    except:
+        return redirect(url_for('home'))
 
 #redirige vers la page de genomeId si le path est incomplet
 @app.route('/<genomeId>/<l>/')
@@ -51,33 +41,111 @@ def incompletPath(genomeId,l):
 
 
 #print to screen complet information for position
-@app.route('/<genomeId>/<chrosome>/<int:startPosition>/')
-def startPos (genomeId,chromosome, startPosition):
+@app.route('/<genomeId>/<chromosomeId>/<int:startPosition>/')
+def startPos (genomeId,chromosomeId, startPosition):
+
+    #faire le menage dans le code
+
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Gene
     from pyGeno.Genome import Exon
     from pyGeno.Genome import Transcript
     from pyGeno.Genome import Chromosome
-    Exon.ensureGlobalIndex('start')			#est ce que on peut faire ca?
-    Gene.ensureGlobalIndex('start')			#est ce que on peut faire ca?
-    Transcript.ensureGlobalIndex('start')	#est ce que on peut faire ca?
+    import pyGeno.configuration as conf
+
+    Exon.ensureGlobalIndex('start')
+    Exon.ensureGlobalIndex('end')
+    Exon.dropGlobalIndex('genome')
+    Gene.dropGlobalIndex('genome')
+    #Gene.ensureGlobalIndex('start')
+    #Gene.ensureGlobalIndex('end')
 
     genomeReferent = Genome (name = str(genomeId))
 
-    try :
-        ExonReferent = genomeReferent.get(Exon, start = str(startPosition))[0]
-        resp = K.JSONResponse(F.formatExon(ExonReferent), False, 'ok') #==> Exon
 
-    except:
+
+"""
+    ####################################################################################################################################
+    #1ere facon de faire la position basee sur les index
+    ####################################################################################################################################
+    try :
+        exonReferent = genomeReferent.get(Exon, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
+        resp = K.JSONResponse(F.formatExon(exonReferent[0]), False, 'ok') #==> Exon
+
+    except IndexError:
         try:
-            geneReferent = genomeReferent.get(Gene, start = str(startPosition))[0]
-            resp = K.JSONResponse(F.formatGene(geneReferent), False, 'ok') #==> Intron
-        except IndexError:
-            resp = K.JSONResponse(None, True, 'Gene not found') #==> Region intergenique
+            geneReferent = genomeReferent.get(Gene, {'start >=': startPosition, 'end <': startPosition, "chromosome.number" : str(chromosomeId)})
+            if len(geneReferent) == 0:
+                print 'b'
+                geneReferent = genomeReferent.get(Gene, {'start <': startPosition, 'end >=': startPosition, "chromosome.number" : str(chromosomeId)})
+
+            resp = K.JSONResponse(F.formatGene(geneReferent[0]), False, 'ok') #==> Intron
+        except :
+            resp = K.JSONResponse(None, True, 'position not found') #==> Region intergenique
 
     return flask.jsonify(**resp)
 
-    #for exons in g.get(Exons, {"CDS_start >": x1, "CDS_end <=" : x2, "chromosome.number" : "22"}) :
+"""
+#########################################################################
+#2eme facon d'avoir la position basee sur des iterget /iterative
+#########################################################################
+"""
+
+    Exon.dropGlobalIndex('genome')
+    Gene.dropGlobalIndex('genome')
+    Exon.ensureGlobalIndex('start')
+    Exon.ensureGlobalIndex('end')
+    Exon.dropGlobalIndex('start')
+    Exon.dropGlobalIndex('end')
+
+    Exon.ensureGlobalIndex(['start','end'])
+    genomeReferent = Genome (name = str(genomeId))
+
+
+
+    #version iterative fonctionnelle...mais longue comme l'hiver
+    try :
+        for exon in genomeReferent.iterGet(Exon, { "chromosome.number" : str(chromosomeId) }):
+            if exon.start <= startPosition and exon.end > startPosition:
+                print 'position est dans l\'exon : '+ str(exon)
+                return str(exon.id)
+
+    except ValueError:
+        for gene in genomeReferent.iterGet(Gene, { "chromosome.number" : str(chromosomeId) }):
+            if gene.start <= startPosition and gene.end > startPosition:
+                print 'position est dans un intron du gene : '+ str(gene)
+                return str(gene.name)
+
+    # A faire, verifier que la position est comprise entre 0 et chromosome length
+    return 'position est dans une region intergenique du chromosome '+ str(chromosomeId)
+"""
+
+#############################################################################################
+##range
+##########################################################################
+@app.route('/<genomeId>/<chromosomeId>/<int:startPosition>/<int:endPosition>/')
+def range (genomeId,chromosomeId, startPosition, endPosition):
+    from pyGeno.Genome import Genome
+    from pyGeno.Genome import Gene
+    from pyGeno.Genome import Exon
+    from pyGeno.Genome import Transcript
+    from pyGeno.Genome import Chromosome
+
+    genomeReferent = Genome (name = str(genomeId))
+
+    chro =  genomeReferent.get(Chromosome, number = str(chromosomeId))[0]
+    return chro.sequence[startPosition:endPosition]
+
+
+    #print genomeReferent.get(ChromosomeSequence_getSequence, {'start =': startPosition, 'end =': endPosition, "chromosome.number =" str(chromosomeId)})
+    #return Chromosome.ChromosomeSequence_getSequence(startPosition, endPosition)
+
+
+
+
+
+
+
 
 
 #print to screen complet information for gene
@@ -90,16 +158,16 @@ def geneId (genomeId,geneId):
     genomeReferent = Genome (name = str(genomeId))
 
     try :
-        geneReferent = genomeReferent.get(Gene, name = str(geneId))[0]
-        resp = K.JSONResponse(F.formatGene(geneReferent), False, 'ok')
+        geneReferent = genomeReferent.get(Gene, id = str(geneId.upper()))[0]
 
-    except:
+    except IndexError:
         try:
-            geneReferent = genomeReferent.get(Gene, id = str(geneId))[0]
-            resp = K.JSONResponse(F.formatGene(geneReferent), False, 'ok')
-        except IndexError:
+            geneReferent = genomeReferent.get(Gene, name = str(geneId.upper()))[0]
+        except :
             resp = K.JSONResponse(None, True, 'Gene not found')
+            return flask.jsonify(**resp)
 
+    resp = K.JSONResponse(F.formatGene(geneReferent), False, 'ok')
     return flask.jsonify(**resp)
 
 #print to screen complet information for exon
@@ -107,20 +175,14 @@ def geneId (genomeId,geneId):
 def exon (genomeId,exonId):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Exon
-    Exon.ensureGlobalIndex('name')
     Exon.ensureGlobalIndex('id')
     genomeReferent = Genome (name = str(genomeId))
 
     try :
-        exonReferent = genomeReferent.get(Exon, name = str(exonId)) [0]
+        exonReferent = genomeReferent.get(Exon, id = str(exonId.upper())) [0]
         resp = K.JSONResponse(F.formatExon(exonReferent), False, 'ok')
-
-    except:
-        try:
-            exonReferent = genomeReferent.get(Exon, id = str(exonId))[0]
-            resp = K.JSONResponse(F.formatExon(exonReferent), False, 'ok')
-        except IndexError:
-            resp = K.JSONResponse(None, True, 'Exon not found')
+    except :
+        resp = K.JSONResponse(None, True, 'Exon not found')
 
     return flask.jsonify(**resp)
 
@@ -134,16 +196,16 @@ def transcriptId (genomeId,transcriptId):
     genomeReferent = Genome (name = str(genomeId))
 
     try :
-        transcriptReferent = genomeReferent.get(Transcript, name = str(transcriptId)) [0]
-        resp = K.JSONResponse(F.formatTranscript(transcriptReferent), False, 'ok')
+        transcriptReferent = genomeReferent.get(Transcript, id = str(transcriptId.upper())) [0]
 
-    except:
+    except IndexError:
         try:
-            transcriptReferent = genomeReferent.get(Transcript, id = str(transcriptId))[0]
-            resp = K.JSONResponse(F.formatTranscript(transcriptReferent), False, 'ok')
-        except IndexError:
+            transcriptReferent = genomeReferent.get(Transcript, name = str(transcriptId.upper()))[0]
+        except :
             resp = K.JSONResponse(None, True, 'Transcript not found')
+            return flask.jsonify(**resp)
 
+    resp = K.JSONResponse(F.formatTranscript(transcriptReferent), False, 'ok')
     return flask.jsonify(**resp)
 
 
@@ -158,15 +220,16 @@ def proteinId (genomeId,proteinId):
 
     try :
         proteinReferent = genomeReferent.get(Protein, name = str(proteinId)) [0]
-        resp = K.JSONResponse(F.formatProtein(proteinReferent), False, 'ok')
 
-    except:
+
+    except IndexError:
         try:
             proteinReferent = genomeReferent.get(Protein, id = str(proteintId))[0]
-            resp = K.JSONResponse(F.formatProtein(proteinReferent), False, 'ok')
-        except IndexError:
+        except :
             resp = K.JSONResponse(None, True, 'Protein not found')
+            return flask.jsonify(**resp)
 
+    resp = K.JSONResponse(F.formatProtein(proteinReferent), False, 'ok')
     return flask.jsonify(**resp)
 
 
@@ -174,10 +237,11 @@ if __name__ == '__main__':
     app.debug=True
     app.run()
 
+"""
 ########################################################################################################################
 #brouillon
 ########################################################################################################################
-"""
+
 string = ''
 #imprime les informations sur le genome de reference
 string += genomeReferent.genome + '<br>'
@@ -192,33 +256,7 @@ for seq in geneReferent.get(Exon):
     x+=1
 
 string += '%d exons trouves' %x
+
 return string
 
-
-
-#the name of the genome is defined inside the package's manifest.ini file
-#get returns a list of elements
-from pyGeno.Genome import Genome
-from pyGeno.Genome import Gene
-from pyGeno.Genome import Protein
-
-GenomeReferent = Genome(name = str(genomeId))
-return str(GenomeReferent.get(Gene, name = str(geneId))[0]) + '\n'+ str(GenomeReferent.get(Protein, name = str(geneId)))
 """
-
-
-
-
-'''
-g = Genome(name = "GRCh37.75")
-prot = g.get(Protein, id = 'ENSP00000438917')[0]
-#print the protein sequence
-print prot.sequence
-#print the protein's gene biotype
-print prot.gene.biotype
-#print protein's transcript sequence
-print prot.transcript.sequence
-
-GRCh37.75
-SRY
-'''
