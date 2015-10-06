@@ -8,17 +8,14 @@ import ViGe.kernel as K
 
 app = Flask(__name__)
 
-########################################################################################################################
-#######################################      programme flask        ####################################################
-########################################################################################################################
-########################################################################################################################
-
 # Home sweet home!!!
 @app.route('/')
 def home():
-    return '<br/>Welcome to pyGeno visual interface! <br/> Please enter a command in the URL <br> <br> i.e: /genomeId/... ' \
-           '<br> &nbsp &nbsp &nbsp &nbsp gene/geneId/ <br> &nbsp &nbsp &nbsp &nbsp exon/exonId/ <br> &nbsp &nbsp &nbsp &nbsp ' \
-           'transcript/transcriptId/ <br> &nbsp &nbsp &nbsp &nbsp protein/proteinId/'
+	resp = JSONResponse({}, False, '')
+	return resp
+#return  '<br/>Welcome to pyGeno visual interface! <br/> Please enter a command in the URL <br> <br> i.e: /genomeId/... ' \
+#  '<br> &nbsp &nbsp &nbsp &nbsp gene/geneId/ <br> &nbsp &nbsp &nbsp &nbsp exon/exonId/ <br> &nbsp &nbsp &nbsp &nbsp ' \
+# 'transcript/transcriptId/ <br> &nbsp &nbsp &nbsp &nbsp protein/proteinId/'
 
 # ask to write a complete path as /<genomeId>/...
 @app.route('/<genomeId>/')
@@ -62,13 +59,7 @@ def startPos (genomeId,chromosomeId, startPosition):
 
     genomeReferent = Genome (name = str(genomeId))
 
-
-
-"""
-    ####################################################################################################################################
-    #1ere facon de faire la position basee sur les index
-    ####################################################################################################################################
-    try :
+   try :
         exonReferent = genomeReferent.get(Exon, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
         resp = K.JSONResponse(F.formatExon(exonReferent[0]), False, 'ok') #==> Exon
 
@@ -85,44 +76,6 @@ def startPos (genomeId,chromosomeId, startPosition):
 
     return flask.jsonify(**resp)
 
-"""
-#########################################################################
-#2eme facon d'avoir la position basee sur des iterget /iterative
-#########################################################################
-"""
-
-    Exon.dropGlobalIndex('genome')
-    Gene.dropGlobalIndex('genome')
-    Exon.ensureGlobalIndex('start')
-    Exon.ensureGlobalIndex('end')
-    Exon.dropGlobalIndex('start')
-    Exon.dropGlobalIndex('end')
-
-    Exon.ensureGlobalIndex(['start','end'])
-    genomeReferent = Genome (name = str(genomeId))
-
-
-
-    #version iterative fonctionnelle...mais longue comme l'hiver
-    try :
-        for exon in genomeReferent.iterGet(Exon, { "chromosome.number" : str(chromosomeId) }):
-            if exon.start <= startPosition and exon.end > startPosition:
-                print 'position est dans l\'exon : '+ str(exon)
-                return str(exon.id)
-
-    except ValueError:
-        for gene in genomeReferent.iterGet(Gene, { "chromosome.number" : str(chromosomeId) }):
-            if gene.start <= startPosition and gene.end > startPosition:
-                print 'position est dans un intron du gene : '+ str(gene)
-                return str(gene.name)
-
-    # A faire, verifier que la position est comprise entre 0 et chromosome length
-    return 'position est dans une region intergenique du chromosome '+ str(chromosomeId)
-"""
-
-#############################################################################################
-##range
-##########################################################################
 @app.route('/<genomeId>/<chromosomeId>/<int:startPosition>/<int:endPosition>/')
 def range (genomeId,chromosomeId, startPosition, endPosition):
     from pyGeno.Genome import Genome
@@ -135,18 +88,6 @@ def range (genomeId,chromosomeId, startPosition, endPosition):
 
     chro =  genomeReferent.get(Chromosome, number = str(chromosomeId))[0]
     return chro.sequence[startPosition:endPosition]
-
-
-    #print genomeReferent.get(ChromosomeSequence_getSequence, {'start =': startPosition, 'end =': endPosition, "chromosome.number =" str(chromosomeId)})
-    #return Chromosome.ChromosomeSequence_getSequence(startPosition, endPosition)
-
-
-
-
-
-
-
-
 
 #print to screen complet information for gene
 @app.route('/<genomeId>/gene/<geneId>/')
@@ -236,27 +177,3 @@ def proteinId (genomeId,proteinId):
 if __name__ == '__main__':
     app.debug=True
     app.run()
-
-"""
-########################################################################################################################
-#brouillon
-########################################################################################################################
-
-string = ''
-#imprime les informations sur le genome de reference
-string += genomeReferent.genome + '<br>'
-
-#imprime les informations sur le gene de reference
-string += geneReferent.genome + '<br>'
-
-#imprime la liste des sequences d'exons existants pour ce gene dans le genome de ref et le transcript associe
-x=0
-for seq in geneReferent.get(Exon):
-    string += seq.transcript + "<br>"+ "sequence => " + seq.sequence + "<br>"
-    x+=1
-
-string += '%d exons trouves' %x
-
-return string
-
-"""

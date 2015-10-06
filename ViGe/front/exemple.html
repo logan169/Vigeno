@@ -1,0 +1,149 @@
+<!doctype html>
+<html ng-app="crudapp">
+<head>
+<meta charset="UTF-8">
+<title>AngularJS and CRUD</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+</head>
+
+<body ng-controller="productController">
+	
+    <!-- Table to output data -->
+    <table cellpadding="5" cellspacing="0" border="1">
+    <thead>
+            <tr>
+                <th>AngularJS ID</th>
+                <th>SKU CODE</th>
+                <th>PRODUCT</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>OPTIONS</th>
+            </tr>
+    </thead>
+    <tbody>
+            <tr ng-repeat="product in listProducts">
+                <td>{{product.id = $index}}</td>
+                <td>{{product.sku}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.quantity}}</td>
+                <td>
+                    <a href="#" ng-click="del(product.id)">DELETE</a>
+                    <a href="#" ng-click="selectEdit(product.id)">EDIT</a>
+                </td>
+            </tr>
+    </tbody>
+    </table>
+    
+    <h1>Product Information</h1>
+    
+    <form name="commentForm" method="post">
+    <table cellpadding="5" cellspacing="5">
+    	<tr>
+        	<td>SKU</td>
+            <td>
+            	<input type="text" ng-model="sku">
+            </td>
+        </tr>
+    	<tr>
+        	<td>Product Name</td>
+            <td>
+            	<input type="text" ng-model="name">
+            </td>
+        </tr>
+    	<tr>
+        	<td>Price</td>
+            <td>
+            	<input type="text" ng-model="price">
+            </td>
+        </tr>
+    	<tr>
+        	<td>Quantity</td>
+            <td>
+            	<input type="text" ng-model="quantity">
+            </td>
+        </tr>
+    	<tr>
+        	<td>&nbsp;</td>
+            <td>
+                <input type="button" value="Add" ng-click="add()">
+                <input type="button" value="Save" ng-click="edit()">
+			</td>
+        </tr>
+    </table>
+    </form>
+
+	<script type="text/javascript">
+	
+		<!-- Define crudapp as a Angular application. -->
+		var crudapp = angular.module('crudapp', []);
+		
+		<!-- Application controller for the module. -->
+		crudapp.controller('productController', function($scope){
+			
+			<!-- Populate table with products data -->
+			$scope.listProducts = [
+				{sku:'SKU1', name:'Product Name 1', price:199, quantity: 50},
+				{sku:'SKU2', name:'Product Name 2', price:220, quantity: 100},
+				{sku:'SKU3', name:'Product Name 3', price:55, quantity: 25},
+				{sku:'SKU4', name:'Product Name 4', price:100, quantity: 50},
+				{sku:'SKU5', name:'Product Name 5', price:10, quantity: 1000}
+			];
+			
+			<!-- Delete function -->
+			$scope.del = function(id){
+				var result = confirm('Are you sure?');
+				if (result===true){	
+					var index = getSelectedIndex(id);
+					$scope.listProducts.splice(index, 1);
+				};
+			};
+			
+			<!-- Edit and update row function -->
+			$scope.edit = function(){
+				var index = getSelectedIndex($scope.id);
+				$scope.listProducts[index].sku = $scope.sku;
+				$scope.listProducts[index].name = $scope.name;
+				$scope.listProducts[index].price = $scope.price;
+				$scope.listProducts[index].quantity = $scope.quantity;
+			};
+			
+			<!-- Select the row of data and update the form function -->
+			$scope.selectEdit = function(id){
+				var index = getSelectedIndex(id);
+				var product = $scope.listProducts[index];
+				$scope.id = product.id;
+				$scope.sku = product.sku;
+				$scope.name = product.name;
+				$scope.price = product.price;
+				$scope.quantity = product.quantity;
+			};
+			
+			<!-- Add a new product function -->
+			$scope.add = function(id){
+				$scope.listProducts.push({
+					sku:$scope.sku, 
+					name:$scope.name, 
+					price:$scope.price, 
+					quantity:$scope.quantity 	
+				});
+				<!-- Resets the form -->
+				$scope.sku = '';
+				$scope.name = '';
+				$scope.price = '';
+				$scope.quantity = '';
+			};
+			
+			<!-- Function finds unique product data based on its id -->
+			function getSelectedIndex(id){
+				for(var i=0; i<$scope.listProducts.length; i++)
+					if($scope.listProducts[i].id==id)
+						return i;
+					return -1;	
+			};
+			
+		});
+    </script>
+	
+</body>
+</html>
