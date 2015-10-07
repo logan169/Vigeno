@@ -1,21 +1,27 @@
-__author__ = 'schwartzl'
 
-import flask
-from flask import Flask, url_for, redirect
 
-import ViGe.format as F
-import ViGe.kernel as K
+
+from flask import Flask, url_for, redirect, send_from_directory
+import sys
+sys.path.append('/u/schwartzl/py/ViGe/ViGe/common/')
+import format as F
+import kernel as K
 
 app = Flask(__name__)
 
 # Home sweet home!!!
 @app.route('/')
 def home():
-	resp = JSONResponse({}, False, '')
+    return send_from_directory('../front/index.html','main')
+
+
+
+    '''
+	resp = K.JSONResponse({}, False, 'Welcome to pyGeno visual interface! <br/> Please enter a command in the URL \n\n'
+                                   +'i.e: /genomeId/\n \ngene/geneId/\n \nexon/exonId/\n \ntranscript/transcriptId/\n\n'
+                                    +'protein/proteinId/ \n \n position/startPosition')
 	return resp
-#return  '<br/>Welcome to pyGeno visual interface! <br/> Please enter a command in the URL <br> <br> i.e: /genomeId/... ' \
-#  '<br> &nbsp &nbsp &nbsp &nbsp gene/geneId/ <br> &nbsp &nbsp &nbsp &nbsp exon/exonId/ <br> &nbsp &nbsp &nbsp &nbsp ' \
-# 'transcript/transcriptId/ <br> &nbsp &nbsp &nbsp &nbsp protein/proteinId/'
+    '''
 
 # ask to write a complete path as /<genomeId>/...
 @app.route('/<genomeId>/')
@@ -24,9 +30,11 @@ def genomeId(genomeId):
 
     try:
         genomeReferent = str(Genome (name = str(genomeId)))
-        return '<br/><br/> %s <br/> <br> Please enter  a command as followed in the URL to continue <br> <br> i.e: /genomeId/... <br> ' \
-           '&nbsp &nbsp &nbsp &nbsp gene/geneId/ <br> &nbsp &nbsp &nbsp &nbsp exon/exonId/ <br> &nbsp &nbsp &nbsp &nbsp transcript/transcriptId/' \
-           ' <br> &nbsp &nbsp &nbsp &nbsp protein/proteinId/ <br> &nbsp &nbsp &nbsp &nbsp position/startPosition' % genomeReferent
+        resp = K.JSONResponse({}, False, '%s \n\n Welcome to pyGeno visual interface! <br/> Please enter a command in the URL \n\n'
+                                   +'i.e: /genomeId/\n \ngene/geneId/\n \nexon/exonId/\n \ntranscript/transcriptId/\n\n'
+                                    +'protein/proteinId/ \n \n position/startPosition' % genomeReferent)
+	return resp
+
     except:
         return redirect(url_for('home'))
 
@@ -59,7 +67,7 @@ def startPos (genomeId,chromosomeId, startPosition):
 
     genomeReferent = Genome (name = str(genomeId))
 
-   try :
+    try :
         exonReferent = genomeReferent.get(Exon, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
         resp = K.JSONResponse(F.formatExon(exonReferent[0]), False, 'ok') #==> Exon
 
