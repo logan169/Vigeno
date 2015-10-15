@@ -17,7 +17,13 @@ var mainCtrl = function($scope,$http) {
 	   	      	'message': 'ok',
 	   	      	'error': false,
 	   	      	};
-	$scope.modifyPolWin=function(item,seq,start,chrom){ $scope.index =item; $scope.sequence=seq; $scope.rangeSeqPol=start-10+'-'+(11+start);$scope.chromosome = chrom};
+
+	$scope.modifyPolWin=function(index, item){
+		$scope.index =index;
+		$scope.sequence=item.sequence;
+		$scope.rangeSeqPol= item.start-10+'-'+(11+item.start);
+		$scope.chromosome = item.chromosome;
+	};
 
 };
 
