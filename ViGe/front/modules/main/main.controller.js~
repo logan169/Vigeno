@@ -1,0 +1,7 @@
+var app = angular.module('ViGeFront.main.controllers', []);
+
+var mainCtrl = function($scope) {
+	$scope.toto = "toto";
+}
+
+app.controller('mainCtrl', mainCtrl);
