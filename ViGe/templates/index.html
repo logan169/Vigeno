@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>GVV-Home</title>
+
+    <!--On load, launch modules-->
+    <!-- Jquery (bootstrap ) besoin de ça)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!--angular js , angular-route-->
+    <script src="/static/angular.js"></script>
+    <script src="/static/angular-route.js"></script>
+
+    <!--d3-->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+
+
+
+    <!-- lien vers l'application qui va gerer l'affichage des pages html -->
+    <script src="/static/VigeFront.js"></script>
+
+</head>
+<body ng-app="VigeFront">
+    <!--va chercher les modules necessaires à l'affichage de la nouvelle vue-->
+
+            <div id="view" ng-view></div>
+
+
+</body>
+</html>
+
+

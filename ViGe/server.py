@@ -1,27 +1,27 @@
 
 
 
-from flask import Flask, url_for, redirect, send_from_directory
+from flask import Flask, url_for, redirect, send_from_directory,request,render_template
 import sys
 sys.path.append('/u/schwartzl/py/ViGe/ViGe/common/')
 import format as F
 import kernel as K
+
 
 app = Flask(__name__)
 
 # Home sweet home!!!
 @app.route('/')
 def home():
-    return send_from_directory('../front/index.html','main')
+    return render_template('index.html')
 
 
 
-    '''
+    """
 	resp = K.JSONResponse({}, False, 'Welcome to pyGeno visual interface! <br/> Please enter a command in the URL \n\n'
                                    +'i.e: /genomeId/\n \ngene/geneId/\n \nexon/exonId/\n \ntranscript/transcriptId/\n\n'
                                     +'protein/proteinId/ \n \n position/startPosition')
-	return resp
-    '''
+	return resp"""
 
 # ask to write a complete path as /<genomeId>/...
 @app.route('/<genomeId>/')
