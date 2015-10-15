@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/front/modules/main/tab.css" />
 
 <div id="main" class="container-fluid" ng-controller="mainCtrl">
 
@@ -65,7 +66,7 @@
                                 </thead>
                                 <tbody>
                                 <!--acceder au contenu de la liste data-->
-                                <tr ng-repeat="item in results.data" ng-click= "modifyPolWin($index+1, item)">
+                                <tr class="clickableTr" ng-repeat="item in results.data" ng-click= "modifyPolWin($index+1, item)">
                                     <td> {{$index+1}} </td>
                                     <td>{{item.chromosome}}</td>
                                     <td>{{item.gene}}</td>

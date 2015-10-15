@@ -1,7 +1,9 @@
-    <!--tab scrolling specification-->
-    <style type="text/css">
-        .span3 {
-        height: 200px;
-        overflow: auto;
-        }
-    </style>
+.span3 {
+	height: 200px;
+	overflow: auto;
+}
+
+
+.clickableTr {
+    cursor:pointer;
+}
