@@ -59,6 +59,7 @@
                                     <th>Chromosome #</th>
                                     <th>Gene</th>
                                     <th>Id</th>
+                                    <th>Strand</th>
                                     <th>Start position #</th>
                                     <th>Annotation</th>
                                     <th>Sequence #</th>
@@ -71,6 +72,7 @@
                                     <td>{{item.chromosome}}</td>
                                     <td>{{item.gene}}</td>
                                     <td>{{item.id}}</td>
+                                    <td>{{item.strand}}</td>
                                     <td>{{item.start}}</td>
                                     <td>{{item.annotation}}</td>
                                     <td>{{item.sequence}}</td>
@@ -130,6 +132,16 @@
                                         <div class="col-sm-10">
                                             <p class="form-control-static">{{rangeSeqPol}}</p>
                                         </div>
+
+                                        <label class="control-label col-sm-2" for="Annotation">Annotation:</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static">{{annotation}}</p>
+                                        </div>
+
+                                        <label class="control-label col-sm-2" for="strand">strand:</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static">{{strand}}</p>
+                                        </div>
                                         <br><br>
 
 
@@ -138,11 +150,11 @@
 
                                         <label class="control-label col-sm-2" for="Sequence ADN de reference">Reference:</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static"></p>
+                                            <p class="form-control-static">{{sequenceRef}}</p>
                                         </div>
                                         <label class="control-label col-sm-2" for="Sequence du patient">Patient:</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static">{{sequence}}</p>
+                                            <p class="form-control-static">{{sequencePat}}</p>
                                         </div>
                                         <label class="control-label col-sm-2" for="Sequence DBSNP">DB SNP:</label>
                                         <div class="col-sm-10">

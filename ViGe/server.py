@@ -19,7 +19,7 @@ def send_file():
 
 
 # ask to write a complete path as /<genomeId>/...
-@app.route('/api/<genomeId>/')
+@app.route('/api/v0/<genomeId>/')
 def genomeId(genomeId):
     from pyGeno.Genome import Genome
 
@@ -42,7 +42,7 @@ def incompletPath(genomeId,l):
 
 
 #print to screen complet information for position
-@app.route('/<genomeId>/<chromosomeId>/<int:startPosition>/')
+@app.route('/api/v0/<genomeId>/<chromosomeId>/<int:startPosition>/')
 def startPos (genomeId,chromosomeId, startPosition):
 
     #faire le menage dans le code
@@ -106,7 +106,7 @@ def startPos (genomeId,chromosomeId, startPosition):
 
     return flask.jsonify(**resp)
 
-@app.route('/<genomeId>/<chromosomeId>/<int:startPosition>/<int:endPosition>/')
+@app.route('/api/v0/<genomeId>/<chromosomeId>/<int:startPosition>/<int:endPosition>/')
 def range (genomeId,chromosomeId, startPosition, endPosition):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Gene
@@ -120,7 +120,7 @@ def range (genomeId,chromosomeId, startPosition, endPosition):
     return chro.sequence[startPosition:endPosition]
 
 #print to screen complet information for gene
-@app.route('/<genomeId>/gene/<geneId>/')
+@app.route('/api/v0/<genomeId>/gene/<geneId>/')
 def geneId (genomeId,geneId):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Gene
@@ -143,7 +143,7 @@ def geneId (genomeId,geneId):
     return flask.jsonify(**resp)
 
 #print to screen complet information for exon
-@app.route('/api/<genomeId>/exon/<exonId>/')
+@app.route('/api/v0/<genomeId>/exon/<exonId>/')
 def exon (genomeId,exonId):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Exon
@@ -159,7 +159,7 @@ def exon (genomeId,exonId):
     return flask.jsonify(**resp)
 
 #print to screen complet information for transcript
-@app.route('/<genomeId>/transcript/<transcriptId>/')
+@app.route('/api/v0/<genomeId>/transcript/<transcriptId>/')
 def transcriptId (genomeId,transcriptId):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Transcript
@@ -182,7 +182,7 @@ def transcriptId (genomeId,transcriptId):
 
 
 #print to screen complet information for protein
-@app.route('/api/<genomeId>/protein/<proteinId>/')
+@app.route('/api/v0/<genomeId>/protein/<proteinId>/')
 def proteinId (genomeId,proteinId):
     from pyGeno.Genome import Genome
     from pyGeno.Genome import Protein
