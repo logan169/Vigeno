@@ -51,7 +51,6 @@ def formatProtein(protein) :
     return {
         'id': protein.id,
         'name': protein.name,
-
         'genome': protein.genome.name,
         'chromosome': protein.chromosome.name,
         'gene': protein.gene.name,
