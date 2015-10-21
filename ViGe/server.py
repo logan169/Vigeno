@@ -1,20 +1,18 @@
 
 
+import flask
 
-from flask import Flask, url_for, redirect, send_from_directory,request,render_template
-import sys
 
 import common.format as F
 import common.kernel as K
 
 
-app = Flask(__name__, static_folder='front')
+app = flask.Flask(__name__, static_folder='front')
 
-"""
+
 @app.route('/')
 def send_file():
-  return send_from_directory(app.static_folder,"index.html")
-"""
+  return flask.send_from_directory(app.static_folder,"index.html")
 
 #print to screen complet information for position
 @app.route('/api/v0/<genomeId>/<chromosomeId>/<int:startPosition>/')
@@ -74,7 +72,7 @@ def startPos (genomeId,chromosomeId, startPosition):
 
     else:
 
-        resp = K.JSONResponse(None, True, 'La position %s est soit a l\'exterieur de la sequence du chromosome %s soit a moins de 10 nucleotides d\'une extermite de la sequence' %startPosition,chromosomeId) #==> Region intergenique
+        resp = K.JSONResponse(None, True, 'La position %s est soit a l.txt\'exterieur de la sequence du chromosome %s soit a moins de 10 nucleotides d\'une extermite de la sequence' %startPosition,chromosomeId) #==> Region intergenique
 
     return flask.jsonify(**resp)
 
