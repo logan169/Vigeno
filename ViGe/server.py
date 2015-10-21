@@ -14,6 +14,20 @@ app = flask.Flask(__name__, static_folder='front')
 def send_file():
   return flask.send_from_directory(app.static_folder,"index.html")
 
+
+
+
+#upload a file
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    print (send_from_directory(app.config['UPLOAD_FOLDER'],filename))
+    return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
+
+
+
+
+
+
 #print to screen complet information for position
 @app.route('/api/v0/<genomeId>/<chromosomeId>/<int:startPosition>/')
 def startPos (genomeId,chromosomeId, startPosition):
@@ -98,6 +112,13 @@ def proteinId (genomeId,proteinId):
 
     resp = K.JSONResponse(F.formatProtein(proteinReferent), False, 'ok')
     return flask.jsonify(**resp)
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

@@ -9,6 +9,7 @@ var mainCtrl = function($scope,$http) {
 	$scope.rangeSeqPol='';
 	$scope.strand='';
 	$scope.annotation='';
+	$scope.path='';
 	/*$scope.results = {
 	   	  'data':
 	   	      	[{'CDS_start': 2655029,'chromosome': 'Y','frame': 0,'number': 0,'CDS_length': 615,'protein': null,'transcript': 'SRY-001','CDS_end': 2655644,'strand': '-','id': 'ENSE00001494622','start': 2654895,'length': 845,'genome': 'GRCh37.75','sequence':'CATGACTAGCACGCAGCAA','gene': 'SRY','annotation': 'Exon',
@@ -31,7 +32,7 @@ var mainCtrl = function($scope,$http) {
 		$scope.strand=item.strand;
 	};
 
-
+/*
 	$http({
   		method: 'GET',
   		url: '/api/v0/GRCh37.75/Y/2654895/'
@@ -46,7 +47,25 @@ var mainCtrl = function($scope,$http) {
   			console.log('Noooooo!!!!');
   			console.log(response);
 
-  	});
+  	});*/
+
+
+  	$scope.sendlist=function(path){
+  	$http({
+  		method: 'GET',
+  		url: '/uploads/'+path
+		}).then(function successCallback(response) {
+			// this callback will be called asynchronously
+			// when the response is available
+			$scope.results=response;
+
+  			}, function errorCallback(response) {
+    		// called asynchronously if an error occurs
+    		// or server returns response with an error status.
+  			console.log('Noooooo!!!!');
+  			console.log(response);
+
+  	});}
 
 
 
