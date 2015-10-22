@@ -5,6 +5,7 @@ import flask
 
 import common.format as F
 import common.kernel as K
+import common.parser as P
 
 
 app = flask.Flask(__name__, static_folder='front')
@@ -18,10 +19,24 @@ def send_file():
 
 
 #upload a file
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    print (send_from_directory(app.config['UPLOAD_FOLDER'],filename))
-    return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
+@app.route('/uploads/')
+def uploaded_file():
+
+    filename='/u/schwartzl/py/projetIric/22oct2015/ViGe/front/modules/main/test.txt'
+
+    data={}
+
+    file=P.parse(filename)
+
+    #maintenant on utilise le dictionaire data pour iterer sur la vue de position
+    for key in file:
+        for value in file[key]:
+            print key,value
+            #redirect et capture de l'information avec append dans data?
+
+    return flask.jsonify(**data)
+
+
 
 
 
