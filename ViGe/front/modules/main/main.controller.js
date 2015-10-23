@@ -9,7 +9,50 @@ var mainCtrl = function($scope,$http) {
 	$scope.rangeSeqPol='';
 	$scope.strand='';
 	$scope.annotation='';
+
+
+
 	$scope.path='';
+	$scope.input='';
+
+	$scope.sendData=function(data){
+
+	    $scope.index ='';
+		$scope.sequenceRef='';
+		$scope.sequencePat='';
+		$scope.rangeSeqPol= '';
+		$scope.chromosome = '';
+		$scope.annotation = '';
+		$scope.strand='';
+
+
+
+
+
+	    $scope.input=data;
+	    $http({
+  		method: 'GET',
+  		url: 'api/v0/uploadURL/'+data+'/'
+		}).then(function successCallback(response) {
+			// this callback will be called asynchronously
+			// when the response is available
+			console.log(response);
+			console.log(response.data);
+			$scope.results=response;
+
+
+  			}, function errorCallback(response) {
+    		// called asynchronously if an error occurs
+    		// or server returns response with an error status.
+  			console.log('Noooooo!!!!');
+  			console.log(response);
+  			})
+  		};
+
+
+
+
+
 	/*$scope.results = {
 	   	  'data':
 	   	      	[{'CDS_start': 2655029,'chromosome': 'Y','frame': 0,'number': 0,'CDS_length': 615,'protein': null,'transcript': 'SRY-001','CDS_end': 2655644,'strand': '-','id': 'ENSE00001494622','start': 2654895,'length': 845,'genome': 'GRCh37.75','sequence':'CATGACTAGCACGCAGCAA','gene': 'SRY','annotation': 'Exon',

@@ -67,15 +67,15 @@
                                 </thead>
                                 <tbody>
                                 <!--acceder au contenu de la liste data-->
-                                <tr class="clickableTr" ng-repeat="item in results.data" ng-click= "modifyPolWin($index+1, item)">
+                                <tr class="clickableTr" ng-repeat="item in results.data" ng-click= "modifyPolWin($index+1, item.data)">
                                     <td> {{$index+1}} </td>
-                                    <td>{{item.chromosome}}</td>
-                                    <td>{{item.gene}}</td>
-                                    <td>{{item.id}}</td>
-                                    <td>{{item.strand}}</td>
-                                    <td>{{item.start}}</td>
-                                    <td>{{item.annotation}}</td>
-                                    <td>{{item.sequence}}</td>
+                                    <td>{{item.data.chromosome}}</td>
+                                    <td>{{item.data.gene}}</td>
+                                    <td>{{item.data.id}}</td>
+                                    <td>{{item.data.strand}}</td>
+                                    <td>{{item.data.start}}</td>
+                                    <td>{{item.data.annotation}}</td>
+                                    <td>{{item.data.sequence}}</td>
                                 </tr>
 
                                 </tbody>
@@ -95,20 +95,22 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Arbre interactif:Annotation<div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div></a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Upload data box<div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div></a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <input>
-                            <input type="file" name="nom" ng-bind="path" onload="sendlist({{path}})"/>
-
-
+                           <body>
+                            <!--
                             <p ng-if=!results.error>{{results.data}}</p>
                             <p ng-if=results.error>{{results.error}}</p>
+                            -->
+                            <row>
+                            <textarea class="table-responsive" cols="50" rows="6" ng-model="input"></textarea>
+                            <a href class="btn btn-primary btn-lg" ng-click="sendData(input)"><span class="glyphicon glyphicon-upload"></span> Upload</a>
+                            <row>
 
-
-                            </body>
+                                </body>
 
                         </div>
                     </div>
@@ -132,7 +134,7 @@
                                 <form class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <p><big><strong><ins>Position</big></ins></strong></p>
-                                        <label class="control-label col-sm-2" for="chromosome">Chromosome:</label>
+                                        <label class="control-label col-sm-2" for="chromosome">Chromosome: </label>
                                         <div class="col-sm-10">
                                             <p class="form-control-static">{{chromosome}}</p>
                                         </div>

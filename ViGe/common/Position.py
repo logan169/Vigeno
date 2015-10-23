@@ -1,56 +1,9 @@
+__author__ = 'schwartzl'
+
+import format as F
+import kernel as K
 
 
-import flask
-
-
-import common.format as F
-import common.kernel as K
-import common.parser as P
-import common.Position as Pos
-
-
-app = flask.Flask(__name__, static_folder='front')
-
-
-@app.route('/')
-def send_file():
-  return flask.send_from_directory(app.static_folder,"index.html")
-
-
-
-
-#upload a file
-@app.route('/api/v0/uploadURL/<input>/')
-def uploaded_file(input):
-
-    data={}
-    file=P.parseURL(input)
-
-
-    print file
-
-    #maintenant on utilise le dictionaire data pour iterer sur la vue de position
-    x=0
-    for key in file:
-        for value in file[key]:
-            print key,value
-            #utilise la fonction startPos dans le dossier common directement au lieu de faire une redirection
-            data[str(x)]=Pos.startPos('GRCh37.75',str(key),int(value))
-            x+=1
-
-
-    return flask.jsonify(**data)
-
-
-
-
-
-
-
-
-
-#print to screen complet information for position
-@app.route('/api/v0/<genomeId>/<chromosomeId>/<int:startPosition>/')
 def startPos (genomeId,chromosomeId, startPosition):
 
     #faire le menage dans le code
@@ -109,39 +62,7 @@ def startPos (genomeId,chromosomeId, startPosition):
 
         resp = K.JSONResponse(None, True, 'La position %s est soit a l.txt\'exterieur de la sequence du chromosome %s soit a moins de 10 nucleotides d\'une extermite de la sequence' %startPosition,chromosomeId) #==> Region intergenique
 
-    return flask.jsonify(**resp)
-
-#print to screen complet information for protein
-@app.route('/api/v0/<genomeId>/protein/<proteinId>/')
-def proteinId (genomeId,proteinId):
-    from pyGeno.Genome import Genome
-    from pyGeno.Genome import Protein
-    Protein.ensureGlobalIndex('name')
-    Protein.ensureGlobalIndex('id')
-    genomeReferent = Genome (name = str(genomeId))
-
-    try :
-        proteinReferent = genomeReferent.get(Protein, name = str(proteinId)) [0]
-
-
-    except IndexError:
-        try:
-            proteinReferent = genomeReferent.get(Protein, id = str(proteintId))[0]
-        except :
-            resp = K.JSONResponse(None, True, 'Protein not found')
-            return flask.jsonify(**resp)
-
-    resp = K.JSONResponse(F.formatProtein(proteinReferent), False, 'ok')
-    return flask.jsonify(**resp)
+    return resp
 
 
 
-
-
-
-
-
-
-if __name__ == '__main__':
-    app.debug=True
-    app.run(host='0.0.0.0',port=8091)
