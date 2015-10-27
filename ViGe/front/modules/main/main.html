@@ -37,163 +37,167 @@
 
     <br><br>
 
-    <!--tableau et animattion accordeon-->
-
-    <div class="panel-group" id="accordion">
-
-        <!--premier panel contenant tableau-->
+    <!--premier panel contenant tableau-->
+    <div class="row">
+        <!--tableau et animattion accordeon-->
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Tableau<div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div></a>
+                    Tableau
+                    <div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <div class="span3">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>index #</th>
-                                    <th>Chromosome #</th>
-                                    <th>Gene</th>
-                                    <th>Id</th>
-                                    <th>Strand</th>
-                                    <th>Start position #</th>
-                                    <th>Annotation</th>
-                                    <th>Sequence #</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!--acceder au contenu de la liste data-->
-                                <tr class="clickableTr" ng-repeat="item in results.data" ng-click= "modifyPolWin($index+1, item.data)">
-                                    <td> {{$index+1}} </td>
-                                    <td>{{item.data.chromosome}}</td>
-                                    <td>{{item.data.gene}}</td>
-                                    <td>{{item.data.id}}</td>
-                                    <td>{{item.data.strand}}</td>
-                                    <td>{{item.data.start}}</td>
-                                    <td>{{item.data.annotation}}</td>
-                                    <td>{{item.data.sequence}}</td>
-                                </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div class="span3">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>index #</th>
+                                <th>Chromosome #</th>
+                                <th>Gene</th>
+                                <th>Id</th>
+                                <th>Strand</th>
+                                <th>Start position #</th>
+                                <th>Annotation</th>
+                                <th>Sequence #</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--acceder au contenu de la liste data-->
+                            <tr class="clickableTr" ng-repeat="item in results.data" ng-click= "modifyPolWin($index+1, item.data)">
+                                <td> {{$index+1}} </td>
+                                <td>{{item.data.chromosome}}</td>
+                                <td>{{item.data.gene}}</td>
+                                <td>{{item.data.id}}</td>
+                                <td>{{item.data.strand}}</td>
+                                <td>{{item.data.start}}</td>
+                                <td>{{item.data.annotation}}</td>
+                                <td>{{item.data.sequence}}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
 
-    <p><br></p>
+    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel-group" id="accordion">
+    <p><br></p>
+    <div class="panel-group" id="accordion">
+        <div class="row">
+            <div class="col-md-6">
+
                 <!--deuxieme panel contenant l.txt'animation d3 annotation-->
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Upload data box<div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div></a>
+                            Upload data box
+                            <div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div>
                         </h4>
                     </div>
-                    <div id="collapseTwo" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                           <body>
-                            <!--
-                            <p ng-if=!results.error>{{results.data}}</p>
-                            <p ng-if=results.error>{{results.error}}</p>
-                            -->
-                            <row>
+
+                    <div class="panel-body">
+                        <body>
+                        <!--
+                        <p ng-if=!results.error>{{results.data}}</p>
+                        <p ng-if=results.error>{{results.error}}</p>
+                        -->
+                        <row>
                             <textarea class="table-responsive" cols="50" rows="6" ng-model="input"></textarea>
                             <a href class="btn btn-primary btn-lg" ng-click="sendData(input)"><span class="glyphicon glyphicon-upload"></span> Upload</a>
                             <row>
 
-                                </body>
+                        </body>
 
-                        </div>
                     </div>
+
+
+
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="panel-group" id="accordion">
+            <div class="col-md-6">
+
                 <!--troisieme panel contenant l.txt'animation d3 polymorphisme-->
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Polymorphisme : sequence {{index}}<div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div></a>
+                            Polymorphisme : sequence {{index}}
+                            <div class="pull-right"><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-floppy-disk"></span> Save output</button></div>
                         </h4>
 
                     </div>
-                    <div id="collapseThree" class="panel-collapse in">
-                        <div class="panel-body">
-                            <div class="modal-body">
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <p><big><strong><ins>Position</big></ins></strong></p>
-                                        <label class="control-label col-sm-2" for="chromosome">Chromosome: </label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static">{{chromosome}}</p>
-                                        </div>
 
-                                        <label class="control-label col-sm-2" for="position">Position:</label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static">{{rangeSeqPol}}</p>
-                                        </div>
-
-                                        <label class="control-label col-sm-2" for="Annotation">Annotation:</label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static">{{annotation}}</p>
-                                        </div>
-
-                                        <label class="control-label col-sm-2" for="strand">strand:</label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static">{{strand}}</p>
-                                        </div>
-                                        <br><br>
-
-
-
-                                        <p><big><strong><ins>ADN:</big></ins></strong></p>
-
-                                        <label class="control-label col-sm-2" for="Sequence ADN de reference">Reference:</label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static">{{sequenceRef}}</p>
-                                        </div>
-                                        <label class="control-label col-sm-2" for="Sequence du patient">Patient:</label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static">{{sequencePat}}</p>
-                                        </div>
-                                        <label class="control-label col-sm-2" for="Sequence DBSNP">DB SNP:</label>
-                                        <div class="col-sm-10">
-                                            <p class="form-control-static"></p>
-                                        </div>
-
-
-                                        <br><br>
-
-
-                                            <p><big><strong><ins>Proteine:</big></strong></ins></p>
-
-                                            <label class="control-label col-sm-2" for="Sequence Prot de reference">Reference:</label>
-                                            <div class="col-sm-10">
-                                                <p class="form-control-static"></p>
-                                            </div>
-                                            <label class="control-label col-sm-2" for="Sequence Prot patient">Patient:</label>
-                                            <div class="col-sm-10">
-                                                <p class="form-control-static"></p>
-                                            </div>
-                                            <label class="control-label col-sm-2" for="Prot cryptique">Type:</label>
-                                            <div class="col-sm-10">
-                                                <p class="form-control-static"></p>
-                                            </div>
-
+                    <div class="panel-body">
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <p><big><strong><ins>Position</big></ins></strong></p>
+                                    <label class="control-label col-sm-2" for="chromosome">Chromosome: </label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">&nbsp;&nbsp;&nbsp;{{chromosome}}</p>
                                     </div>
-                                </form>
-                            </div>
+
+                                    <label class="control-label col-sm-2" for="position">Position:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">{{rangeSeqPol}}</p>
+                                    </div>
+
+                                    <label class="control-label col-sm-2" for="Annotation">Annotation:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">{{annotation}}</p>
+                                    </div>
+
+                                    <label class="control-label col-sm-2" for="strand">strand:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">{{strand}}</p>
+                                    </div>
+                                    <br><br>
+
+
+
+                                    <p><big><strong><ins>ADN:</big></ins></strong></p>
+
+                                    <label class="control-label col-sm-2" for="Sequence ADN de reference">Reference:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">{{sequenceRef}}</p>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="Sequence du patient">Patient:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">{{sequencePat}}</p>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="Sequence DBSNP">DB SNP:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static"></p>
+                                    </div>
+
+
+                                    <br><br>
+
+
+                                    <p><big><strong><ins>Proteine:</big></strong></ins></p>
+
+                                    <label class="control-label col-sm-2" for="Sequence Prot de reference">Reference:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static"></p>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="Sequence Prot patient">Patient:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static"></p>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="Prot cryptique">Type:</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static"></p>
+                                    </div>
+
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -205,7 +209,8 @@
 
 
 
-    </div>
+</div>
+</div>
 
 
 
@@ -237,9 +242,9 @@
 
 
 
-                    <!--acceder au contenu de la liste data
-                    <div ng-repeat="item in results.data">
-                        {{item}} : {{item.start}}
+<!--acceder au contenu de la liste data
+<div ng-repeat="item in results.data">
+    {{item}} : {{item.start}}
 
 
 
@@ -251,8 +256,8 @@
 
 
 
-                </form>
-            </div>
-        </div>
-    </div>
+</form>
+</div>
+</div>
+</div>
 </div>-->
