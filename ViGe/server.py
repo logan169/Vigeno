@@ -11,7 +11,8 @@ import common.Position as Pos
 
 app = flask.Flask(__name__, static_folder='front')
 
-
+#premier call envoie vers index.html
+#ensuite c'est Angular qui gere les vues
 @app.route('/')
 def send_file():
   return flask.send_from_directory(app.static_folder,"index.html")
@@ -19,25 +20,41 @@ def send_file():
 
 
 
-#upload a file
+#route pour uploader des data du client a partir de l'URL et construire le tableau
 @app.route('/api/v0/uploadURL/<input>/')
 def uploaded_file(input):
 
+
+    #on stock l'information a renvoyer au client dans data
     data={}
+
+    #l'input est parse par parseURL puis manipule de sorte a construire data par la suite
+    #la variable file est un dict sous la forme file={Chromosome1=[pos1,pos2,pos3,....],Chromosome2=[....],....}
     file=P.parseURL(input)
-
-
     print file
 
-    #maintenant on utilise le dictionaire data pour iterer sur la vue de position
-    x=0
+
+    #maintenant on utilise le dictionaire file pour iterer sur toutes les values pour chacune des keys en appellant
+    # la fonction Position a chaque fois. Au final, le dict data a la forme suivante, chaques sequences de l'input est
+    # associees a un index correspondant a un dictionnaire contenant toutes l'info pour cette sequence.
+    # IL y a donc une key error et message et une key pour chaque sequence soumise
+
+    #ex d'output
+    #{'0': {'message': 'ok', 'data': {'CDS_start': 2655074, 'chromosome': u'Y', 'sequence': 'ATGATTGCATTGTCAAAAA',
+    #  'frame': 0, 'number': 0, 'sequenceDbSNP': 'ATGATTGCADTGTCAAAAA', 'CDS_length': 570, 'protein': None,
+    #  'transcript': u'SRY-201', 'CDS_end': 2655644, 'strand': u'-', 'end': 2655644, 'id': u'ENSE00002201849',
+    #  'start': 2655074, 'length': 570, 'genome': u'GRCh37.75', 'annotation': 'Exon', 'gene': u'SRY'}, 'error': False}}
+
+
+    x=0 #correspond a l'iterateur d'index du dictionnaire data
     for key in file:
         for value in file[key]:
-            print key,value
-            #utilise la fonction startPos dans le dossier common directement au lieu de faire une redirection
+
+            #utilise la fonction startPos dans le dossier common, cette fonction prends 3 parametre en entree:
+            # startPos(genome,chromosome,position) et renvoie un dict contenant toutes les infos necessaires au client
+            #pour cette sequence
             data[str(x)]=Pos.startPos('GRCh37.75',str(key),int(value))
             x+=1
-
 
     return flask.jsonify(**data)
 
@@ -133,13 +150,6 @@ def proteinId (genomeId,proteinId):
 
     resp = K.JSONResponse(F.formatProtein(proteinReferent), False, 'ok')
     return flask.jsonify(**resp)
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

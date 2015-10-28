@@ -13,17 +13,24 @@ def startPos (genomeId,chromosomeId, startPosition):
     from pyGeno.Genome import Exon
     from pyGeno.Genome import Transcript
     from pyGeno.Genome import Chromosome
-    import pyGeno.configuration as conf
+    from pyGeno.SNP import getSNPSetsList
+
+    from pyGeno.Chromosome import ChrosomeSequence
 
     Exon.ensureGlobalIndex('start')
     Exon.ensureGlobalIndex('end')
-    Exon.dropGlobalIndex('genome')
-    Gene.dropGlobalIndex('genome')
+    #Exon.dropGlobalIndex('genome')
+    #Gene.dropGlobalIndex('genome')
     #Gene.ensureGlobalIndex('start')
     #Gene.ensureGlobalIndex('end')
 
+
+    #print getSNPSetsList()
+
+
     genomeReferent = Genome (name = str(genomeId))
-    chro =  genomeReferent.get(Chromosome, number = str(chromosomeId))[0]
+    chro =  genomeReferent.get(Chromosome, number=str(chromosomeId))[0]
+
 
 
 
@@ -48,14 +55,20 @@ def startPos (genomeId,chromosomeId, startPosition):
                 resp['data']['annotation']='Intergene'
 
 
-
+        start=startPosition-9
+        end=startPosition+10
         if resp['error']==False:
-            start=startPosition-9
-            end=startPosition+10
+
 
             resp['data']['sequence']=chro.sequence[start:end]
 
-        print resp['data']['sequence']
+        #print resp['data']['sequence']
+
+        genomeReferent = Genome (name = str(genomeId), SNPs='dummySRY_AGN')
+        chro =  genomeReferent.get(Chromosome, number=str(chromosomeId))[0]
+
+        resp['data']['sequenceDbSNP']=chro.sequence[start:end]
+        #print resp['data']['sequenceDbSNP']
 
 
     else:
@@ -63,6 +76,5 @@ def startPos (genomeId,chromosomeId, startPosition):
         resp = K.JSONResponse(None, True, 'La position %s est soit a l.txt\'exterieur de la sequence du chromosome %s soit a moins de 10 nucleotides d\'une extermite de la sequence' %startPosition,chromosomeId) #==> Region intergenique
 
     return resp
-
 
 

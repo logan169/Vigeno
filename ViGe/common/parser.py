@@ -25,7 +25,7 @@ def parseFile( filePath, separator = '\t', lineseparator='\n'):
             elif ' ' in line:
                 line = line.split(' ')
                 if len(line)>2:
-                    print 'errrrooooor!!!!!!!!!'
+                    print 'errrrooooor!!!!!'
 
             elif '%' in line:
                 line = line.split('%')
