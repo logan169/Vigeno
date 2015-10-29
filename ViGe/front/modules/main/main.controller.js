@@ -8,11 +8,13 @@ var mainCtrl = function($scope,$http) {
 		$scope.sequenceRef = '';
 		$scope.sequencePat = '';
 		$scope.sequenceDbSNP='';
+		$scope.sequenceProtein='';
 		$scope.chromosome = '';
 		$scope.rangeSeqPol='';
+
 		$scope.strand='';
 		$scope.annotation='';
-		$scope.results=""
+		$scope.results="";
 		};
 
 
@@ -42,6 +44,7 @@ var mainCtrl = function($scope,$http) {
 		$scope.sequenceRef=item.sequence;
 		$scope.sequencePat=item.sequence.substring(0,9)+'─'+item.sequence.substring(10,21)
 		$scope.sequenceDbSNP=item.sequenceDbSNP;
+		//$scope.sequenceProtein=item.seqProt;
 		$scope.rangeSeqPol= item.start-9+'-'+(10+item.start);
 		$scope.chromosome = item.chromosome;
 		$scope.annotation = item.annotation;
