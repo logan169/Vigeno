@@ -4,33 +4,37 @@
     <meta charset="utf-8">
 
     <title>GVV-index</title>
-
     <!--On load, launch modules-->
     <!-- Jquery (bootstrap ) besoin de ça)-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <!--angular js , angular-route-->
     <script src="/front/lib/angular.js"></script>
     <script src="/front/lib/angular-route.js"></script>
 
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!--modal-->
+
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
+
+    <script src="/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload-shim(.min).js"></script> <!-- for no html5 browsers support -->
+    <script src="/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload(.min).js"></script>
+
+
     <!--d3-->
+
     <script src="http://d3js.org/d3.v3.min.js"></script>
-
-
-    <!-- lien vers l.txt'application qui va gerer l.txt'affichage des pages html -->
+    <!-- lien vers l'application qui va gerer l'affichage des pages html -->
     <script src="/front/VigeFront.js"></script>
-    <script src="/front/modules/main/main.controller.js"></script>
-
-
+    <script src="/front/modules/main/controller/main.controller.js"></script>
+    <script src="/front/modules/main/controller/upload.controller.js"></script>
 
 </head>
-<body ng-app="VigeFront">
+
+<body ng-app="VigeFront" ng-controller="mainCtrl">
     <!--va chercher les modules necessaires à l.txt'affichage de la nouvelle vue-->
 
             <div id="view" ng-view></div>
