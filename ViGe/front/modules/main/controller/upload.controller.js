@@ -1,4 +1,4 @@
-var app = angular.module('ViGeFront.main.controllers','flow');
+var app = angular.module('ViGeFront.main.controllers');
 
 app.controller('uploadController', function($modalInstance, $scope,$http,$rootScope) {
 

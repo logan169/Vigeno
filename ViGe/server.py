@@ -5,6 +5,7 @@ import common.parser as P
 import common.Position as Pos
 
 
+
 app = flask.Flask(__name__, static_folder='front')
 
 #premier call envoie vers index.html
