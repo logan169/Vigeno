@@ -12,17 +12,30 @@
 
                     <!--title-->
                     <div class="panel-heading">
-                        <p> Enter queries or upload a file!</p>
+                        <p> Enter queries </p>
                     </div>
 
 
                     <div class="panel-body">
-                        <p>chromosomeNumber startPosition </p>
+                        <p>chromosome startPosition </p>
                         <textarea class="table-responsive" cols="55" rows="6" ng-model="inputText"></textarea>
                     </div>
                 </div>
-            </ul>
 
+
+            <h6>Upload new File</h6>
+            <form action="" method=post enctype=multipart/form-data>
+                <p><input type=file ng-bind="file">
+
+
+                {{fileStatus}}
+                {{dataStatus}}
+
+
+
+                    <!--<input type=submit value=Upload ng-bind="sendFile()"> </p>-->
+            </form>
+</ul>
 
 
 
@@ -33,7 +46,7 @@
 
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click=" sendData(inputText); ok()">OK</button>
+            <button class="btn btn-primary" type="button" ng-click="changeDataStatus(inputText); changeFileStatus(file); evaluateInputType(data,file)">OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </div>

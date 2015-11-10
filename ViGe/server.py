@@ -4,15 +4,43 @@ import flask
 import common.parser as P
 import common.Position as Pos
 
+import os
+from flask import Flask, request, redirect, url_for
+from werkzeug import secure_filename
+
+UPLOAD_FOLDER = '/path/to/the/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 
 app = flask.Flask(__name__, static_folder='front')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@app.route('/api/v0/sendFile/<input>/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
+    return
+
 
 #premier call envoie vers index.html
 #ensuite c'est Angular qui gere les vues
 @app.route('/')
 def send_file():
   return flask.send_from_directory(app.static_folder,"index.html")
+
 
 
 ########################################################################################################################
