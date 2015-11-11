@@ -23,15 +23,14 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/api/v0/sendFile/<input>/', methods=['GET', 'POST'])
+@app.route('/api/v0/sendFile/<input>/', methods= 'GET')
 def upload_file():
-    if request.method == 'POST':
+    if request.method == 'GET':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+            return redirect(url_for('uploaded_file', filename=filename))
     return
 
 
@@ -48,7 +47,6 @@ def send_file():
 #route pour uploader des data du client a partir de l'URL et construire le tableau
 @app.route('/api/v0/uploadURL/<input>/')
 def uploaded_file(input):
-
 
     #on stock l'information a renvoyer au client dans data
     data={}
