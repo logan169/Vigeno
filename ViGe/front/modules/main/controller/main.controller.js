@@ -35,7 +35,6 @@ var mainCtrl = function($scope,$http,$modal,$rootScope) {
 	};
 
 	$scope.open = function () {
-		console.log('yes');
     	var modalUpload = $modal.open(
     		{
     		templateUrl: '/front/modules/main/html/upload.html',

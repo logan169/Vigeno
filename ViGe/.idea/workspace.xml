@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="669a3907-df1d-497a-8070-0ba12e093c5d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/161a70d3.favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/FileAPI.flash.swf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/FileAPI.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/FileAPI.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/bower.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload-all.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload-all.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload-shim.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload-shim.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/ng-file-upload.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/front/lib/ng-file-upload-bower-9.1.2/robots.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/index.html" afterPath="$PROJECT_DIR$/front/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.py" afterPath="$PROJECT_DIR$/server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/modules/main/controller/main.controller.js" afterPath="$PROJECT_DIR$/front/modules/main/controller/main.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/modules/main/controller/upload.controller.js" afterPath="$PROJECT_DIR$/front/modules/main/controller/upload.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/modules/main/html/upload.html" afterPath="$PROJECT_DIR$/front/modules/main/html/upload.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -58,8 +41,8 @@
       <file leaf-file-name="upload.controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/front/modules/main/controller/upload.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46698114">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.13202934">
+              <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -68,8 +51,8 @@
       <file leaf-file-name="upload.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front/modules/main/html/upload.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-31.74074">
-              <caret line="48" column="139" selection-start-line="48" selection-start-column="139" selection-end-line="48" selection-end-column="139" />
+            <state vertical-scroll-proportion="-18.666666">
+              <caret line="40" column="91" selection-start-line="40" selection-start-column="91" selection-end-line="40" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -79,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/front/modules/main/controller/main.controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="41" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="41" />
+              <caret line="36" column="31" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -156,10 +139,10 @@
         <option value="$PROJECT_DIR$/front/modules/main/html/main.html" />
         <option value="$PROJECT_DIR$/upload example.py" />
         <option value="$PROJECT_DIR$/front/VigeFront.js" />
-        <option value="$PROJECT_DIR$/front/modules/main/controller/main.controller.js" />
         <option value="$PROJECT_DIR$/front/modules/l.txt" />
         <option value="$PROJECT_DIR$/front/index.html" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/front/modules/main/controller/main.controller.js" />
         <option value="$PROJECT_DIR$/front/modules/main/html/upload.html" />
         <option value="$PROJECT_DIR$/front/modules/main/controller/upload.controller.js" />
       </list>
@@ -938,6 +921,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding>
+            <element signature="e#2#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/front/VigeFront.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -946,13 +939,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
+    <entry file="file://$PROJECT_DIR$/front/modules/main/controller/main.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="e#2#14#0" expanded="true" />
-          </folding>
+          <caret line="36" column="31" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -964,26 +955,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front/modules/main/controller/main.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="41" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/front/modules/main/html/upload.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-31.74074">
-          <caret line="48" column="139" selection-start-line="48" selection-start-column="139" selection-end-line="48" selection-end-column="139" />
+        <state vertical-scroll-proportion="-18.666666">
+          <caret line="40" column="91" selection-start-line="40" selection-start-column="91" selection-end-line="40" selection-end-column="91" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front/modules/main/controller/upload.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46698114">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.13202934">
+          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
           <folding />
         </state>
       </provider>

@@ -4,24 +4,24 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
 
     $scope.fileStatus=false,
     $scope.dataStatus=false,
+    $scope.inputText='Enter a querie directly in this box or upload a file!\n\nformat:\nchromosome<SPACE>startPosition<SPACE>',
 
-    $scope.changeFileStatus=function(file){
-        console.log(file)
-        /* si le fichier est different de undefined, le statut devient true*/
-        $scope.fileStatus=(angular.isUndefined(file))
-
+    $scope.resetUploadBox=function(){
+        $scope.inputText='';
     }
 
-    $scope.changeDataStatus=function(inputText){
-        console.log(inputText)
-        /* si la longueur du texte dans la boite est >0, le statut devient true*/
-        $scope.dataStatus=((angular.isUndefined(inputText) != true) && (inputText.length>0))
+    $scope.file_changed = function(element) {
+    $scope.$apply(function(scope) {$scope.fileStatus=angular.isDefined(element.files[0]) && element.files[0].name.length>0});
+    $scope.resetUploadBox()
     }
+
+    /* si la longueur du texte dans la boite est >0, le statut devient true*/
+    $scope.changeDataStatus=function(inputText){$scope.dataStatus= (angular.isDefined(inputText)) && inputText.length>0}
 
     $scope.evaluateInputType=function(data,file){
-        console.log(data,file)
+        /*console.log($scope.dataStatus,$scope.fileStatus)*/
 
-        if (($scope.dataStatus==true) && ($scope.fileStatus=false)){
+        if (($scope.dataStatus) && (!$scope.fileStatus)){
 
             /*envoie au serveur les inputs via l'URL*/
             $scope.sendData=function(data){
@@ -33,7 +33,7 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
 	            // when the response is available
 	            console.log(response);
 	            $rootScope.results=response;
-	            $scope.ok
+	            $scope.ok()
   	        },
    		    function errorCallback(response) {
    	            // called asynchronously if an error occurs
@@ -43,10 +43,10 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
   	            })
             };
         }
-        else if (($scope.dataStatus==false) && ($scope.fileStatus=true)){
+        
+        else if (($scope.dataStatus==false) && ($scope.fileStatus==true)){
             /*envoie au serveur un fichier*/
             $scope.sendFile=function(file,$scope){
-
             $http({
             method: 'POST',
             url: 'api/v0/uploadFile/'+file+'/'
@@ -55,7 +55,7 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
 	            // when the response is available
 	            console.log(response.data);
 	            $rootScope.results=response;
-                $scope.ok
+                $scope.ok()
   	        },
    		    function errorCallback(response) {
    	            // called asynchronously if an error occurs
@@ -65,23 +65,21 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
   	            })
             };
         }
-        else if (($scope.dataStatus==true) && ($scope.fileStatus=true)){
-            /* send error message, enter only one input! */
-            alert('Error!! enter multiple input detected!')
+
+         else if (($scope.dataStatus==true) && ($scope.fileStatus==true)) {
+        /* send error message, enter only one input! */
+            alert('Error!! enter only one input! ')
         }
-        else if (($scope.dataStatus==false) && ($scope.fileStatus=false)){
+
+        else if (($scope.fileStatus==false) && ($scope.inputText =='Enter a querie directly in this box or upload a file!\n\nformat:\nchromosome<SPACE>startPosition<SPACE>')){
+            alert('Error! enter an input')
+        }
+
+        else if (($scope.dataStatus==false) && ($scope.fileStatus==false)){
             /* send error message, enter only one input! */
             alert('upload canceled!')
         }
     }
-
-
-
-
-
-
-
-
 
   $scope.ok = function () {
         $modalInstance.close();
