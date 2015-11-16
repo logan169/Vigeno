@@ -1,7 +1,6 @@
 var app = angular.module('ViGeFront.main.controllers');
 
 app.controller('uploadController', function($modalInstance, $scope,$http,$rootScope,$window) {
-
     $scope.fileStatus=false,
     $scope.dataStatus=false,
     defaultInputText='Enter a querie directly in this box or upload a file!\n\nformat:\nchromosome<SPACE>startPosition<SPACE>',
@@ -9,12 +8,11 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
     $scope.Validation='',
     $scope.fileName=''
 
-
     /*envoie au serveur un fichier*/
     $scope.sendFile=function(file){
     $http({
-    method: 'GET',
-    url: '/api/v0/sendFile/'+file+'/'
+    method: 'POST',
+    url: '/import'
     }).then(function successCallback(response) {
 	    // this callback will be called asynchronously
 	    // when the response is available
@@ -79,13 +77,13 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
 
         if (($scope.dataStatus==false) && ($scope.fileStatus==true)){
             $scope.sendFile(file),
-            $scope.Validation='Analyse en cours! veuillez patienter'
+            $scope.Validation='Analyse en cours, veuillez patienter. '
         }
 
         else if (($scope.dataStatus==true) && ($scope.fileStatus==false)){
             console.log(data),
             $scope.sendData(data),
-            $scope.Validation='Analyse en cours! veuillez patienter'
+            $scope.Validation='Analyse en cours, veuillez patienter. '
 
         }
 

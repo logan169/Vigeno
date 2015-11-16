@@ -24,43 +24,53 @@
                     <div class="panel-heading">
                         <p>Upload new File</p></div>
                     <!--body-->
-                    <div class="panel-body">
-                        <form action="" method=post enctype=multipart/form-data>
+                        <div class="panel-body">
+                        <!--<form action="" method=post enctype=multipart/form-data>
                             <input type='file'  ng-model="file" onchange="angular.element(this).scope().file_changed(this)">
-                    </div>
+                        </form>-->
+
+                        <form action="/import" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file"><br /><br />
+                            <input type="submit" value="Upload">
+                        </form>
+
+
+
+                        </div>
                 </div>
                 <div>
-                    <p>{{Validation}}</p>
-                </div>
-
-
-
-
-                <div class="hidden"> {{fileStatus}}  {{dataStatus}} </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" ng-click="changeDataStatus(inputText); evaluateInputType(inputText,fileName)">OK</button>
-                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <p>{{Validation }} <i ng-if="Validation" class="fa fa-spinner fa-pulse"></i> </p>
                 </div>
 
 
 
 
 
+        <div class="hidden"> {{fileStatus}}  {{dataStatus}} </div>
 
-                <!--<input type=submit value=Upload ng-bind="sendFile()"-->
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" value="Upload" ng-click="changeDataStatus(inputText); evaluateInputType(inputText,fileName)">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
-        </form>
-        </ul>
 
 
 
 
 
-        <!--<a href class="btn btn-primary btn-xl"><span class="glyphicon glyphicon-upload"></span> Upload a file</a>-->
 
-
+        <!--<input type=submit value=Upload ng-bind="sendFile()"-->
     </div>
+    </form>
+    </ul>
+
+
+
+
+
+    <!--<a href class="btn btn-primary btn-xl"><span class="glyphicon glyphicon-upload"></span> Upload a file</a>-->
+
+
+</div>
 
 </div>
 
