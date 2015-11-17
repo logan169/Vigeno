@@ -6,13 +6,14 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
     defaultInputText='Enter a querie directly in this box or upload a file!\n\nformat:\nchromosome<SPACE>startPosition<SPACE>',
     $scope.inputText=defaultInputText,
     $scope.Validation='',
-    $scope.fileName=''
+    $scope.fileName='',
+    $scope.FileValidated=false,
 
     /*envoie au serveur un fichier*/
     $scope.sendFile=function(file){
     $http({
     method: 'POST',
-    url: '/import'
+    url: '/api/v0/upload/'
     }).then(function successCallback(response) {
 	    // this callback will be called asynchronously
 	    // when the response is available
@@ -28,13 +29,11 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
   	    })
     };
 
-
-
     /*envoie au serveur les inputs via l'URL*/
     $scope.sendData=function(data){
     $http({
     method: 'GET',
-    url: 'api/v0/uploadURL/'+data+'/'
+    url: '/api/v0/uploadURL/'+data+'/'
     }).then(function successCallback(response) {
 	    // this callback will be called asynchronously
 	    // when the response is available
@@ -58,7 +57,7 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
     }}
 
     $scope.file_changed = function(element) {
-    $scope.$apply(function(scope) {$scope.fileStatus=angular.isDefined(element.files[0]) && element.files[0].name.length>0});
+    $scope.$apply(function(scope) {console.log(angular.isDefined(element.files[0]) && element.files[0].name.length>0);$scope.fileStatus=angular.isDefined(element.files[0]) && element.files[0].name.length>0});
     $scope.resetUploadBox()
     $scope.fileName=element.files[0].name
     }

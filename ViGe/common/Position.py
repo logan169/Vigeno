@@ -97,7 +97,6 @@ def startPos (genomeId,chromosomeId, startPosition):
         # une erreur et une liste de donnee vide
         resp = K.JSONResponse(None, True, 'La position %s est soit a l.txt\'exterieur de la sequence du chromosome %s soit a moins de 10 nucleotides d\'une extermite de la sequence' %startPosition,chromosomeId) #==> Region intergenique
 
-    print resp
 
     return resp
 

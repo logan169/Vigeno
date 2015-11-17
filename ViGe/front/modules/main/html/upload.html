@@ -29,24 +29,24 @@
                             <input type='file'  ng-model="file" onchange="angular.element(this).scope().file_changed(this)">
                         </form>-->
 
-                        <form action="/import" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file"><br /><br />
-                            <input type="submit" value="Upload">
-                        </form>
+                            <form action="/api/v0/upload/" method="post" enctype="multipart/form-data">
+                                <input type="file" name="file" onchange="angular.element(this).scope().file_changed(this)"><br /><br />
+                                <input type="submit" value="Upload" ng-click="evaluateInputType(inputText,fileName)">
+                            </form>
 
 
 
                         </div>
                 </div>
                 <div>
-                <p>{{Validation }} <i ng-if="Validation" class="fa fa-spinner fa-pulse"></i> </p>
+                    <p>{{Validation}} <i ng-if="Validation" class="fa fa-spinner fa-pulse"></i> </p>
                 </div>
 
 
 
 
 
-        <div class="hidden"> {{fileStatus}}  {{dataStatus}} </div>
+        <div class='hidden'> {{fileStatus}}  {{dataStatus}} </div>
 
         <div class="modal-footer">
             <button class="btn btn-primary" type="submit" value="Upload" ng-click="changeDataStatus(inputText); evaluateInputType(inputText,fileName)">OK</button>
