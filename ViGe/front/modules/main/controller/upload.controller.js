@@ -5,19 +5,21 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
     $scope.dataStatus=false,
     defaultInputText='Enter a querie directly in this box or upload a file!\n\nformat:\nchromosome<SPACE>startPosition<SPACE>',
     $scope.inputText=defaultInputText,
-    $scope.Validation='',
+    $scope.ValidationMessage='',
+    $scope.Validation=false,
     $scope.fileName='',
-    $scope.FileValidated=false,
+    $scope.submit=false,
 
     /*envoie au serveur un fichier*/
-    $scope.sendFile=function(file){
+    $scope.sendFile=function(fileName){
     $http({
     method: 'POST',
-    url: '/api/v0/upload/'
+    url: '/api/v0/processFile/'+fileName+'/'
     }).then(function successCallback(response) {
 	    // this callback will be called asynchronously
 	    // when the response is available
 	    console.log(response.data);
+	    console.log(response);
 	    $rootScope.results=response;
         $scope.ok()
   	},
@@ -37,6 +39,7 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
     }).then(function successCallback(response) {
 	    // this callback will be called asynchronously
 	    // when the response is available
+	    console.log(response.data);
 	    console.log(response);
 	    $rootScope.results=response;
 	    $scope.ok()
@@ -60,6 +63,7 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
     $scope.$apply(function(scope) {console.log(angular.isDefined(element.files[0]) && element.files[0].name.length>0);$scope.fileStatus=angular.isDefined(element.files[0]) && element.files[0].name.length>0});
     $scope.resetUploadBox()
     $scope.fileName=element.files[0].name
+    $scope.fileName=$scope.fileName.replace(/ /g, "_")
     }
 
     /*######################################################################*/
@@ -72,34 +76,41 @@ app.controller('uploadController', function($modalInstance, $scope,$http,$rootSc
 
     $scope.evaluateInputType=function(data,file){
         console.log('data: ' + $scope.dataStatus, 'file:' +$scope.fileStatus)
-        $scope.Validation=''
+        $scope.Validation=false
 
-        if (($scope.dataStatus==false) && ($scope.fileStatus==true)){
-            $scope.sendFile(file),
-            $scope.Validation='Analyse en cours, veuillez patienter. '
+        if (($scope.dataStatus==false) && ($scope.fileStatus==true) && ($scope.submit==true)){
+            $scope.Validation=true,
+            $scope.ValidationMessage='Analyse en cours, veuillez patienter!',
+            $scope.sendFile(file)
+        }
+
+        else if (($scope.dataStatus==false) && ($scope.fileStatus==true) && ($scope.submit==false)){
+            $scope.Validation=false,
+            $scope.ValidationMessage='Fichier non uploadé, veuillez cliquer sur upload svp.'
         }
 
         else if (($scope.dataStatus==true) && ($scope.fileStatus==false)){
-            console.log(data),
-            $scope.sendData(data),
-            $scope.Validation='Analyse en cours, veuillez patienter. '
-
+            $scope.Validation=true,
+            $scope.ValidationMessage='Analyse en cours, veuillez patienter!',
+            $scope.sendData(data)
         }
 
          else if (($scope.dataStatus==true) && ($scope.fileStatus==true)) {
         /* send error message, enter only one input! */
-            $scope.Validation='Error!! enter only one input! '
+            $scope.Validation=false,
+            $scope.ValidationMessage="Veuillez n'entrez qu'un seul input!"
         }
 
         else if ((($scope.fileStatus==false) && ($scope.inputText ==defaultInputText))||(($scope.dataStatus==false) && ($scope.fileStatus==false)))
         {
-
-            $scope.Validation='Error! enter an input or click cancel!'
+            $scope.Validation=false,
+            $scope.ValidationMessage='Error!! enter an input or click cancel!'
         }
 
         else if (($scope.dataStatus==false) && ($scope.fileStatus==false)){
             /* send error message, enter only one input! */
-            $scope.Validation='upload canceled!'
+            $scope.Validation=false,
+            $scope.ValidationMessage='Error!! enter an input or click cancel!'
         }
     }
 
