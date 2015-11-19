@@ -45,7 +45,6 @@ def allowed_file(filename):
 @app.route('/api/v0/uploadFile/', methods=['POST'])
 def upload_File():
 
-
     if request.files['file'].filename == '':
         return flask.jsonify(**K.JSONResponse(None,True,'No file selected! please select a file!'))
     else:
@@ -69,20 +68,6 @@ def process_File(filename):
 
     dictFile= P.parseFile('/u/schwartzl/py/projetIric/17nov/ViGe/uploads/'+filename)
     return flask.jsonify(**dictFile)
-
-
-
-#route pour uploader des data du client a partir de l'URL et construire le tableau
-@app.route('/api/v0/uploadURL/<input>/')
-def uploaded_URL(input):
-
-    #on stock l'information a renvoyer au client dans data
-    data={}
-
-    #l'input est parse par parseURL puis manipule de sorte a construire data par la suite
-    #la variable file est un dict sous la forme file={Chromosome1=[pos1,pos2,pos3,....],Chromosome2=[....],....}
-    file=P.parseURL(input)
-    return flask.jsonify(**file)
 
 
 if __name__ == '__main__':

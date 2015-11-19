@@ -1,73 +1,29 @@
 
 <div modal="showModal" close="cancel()" ng-init="myFunction()">
-
     <div class="modal-content">
-
-        <div class="modal-header">
+        <div class="modal-header" >
             <h3>Upload data box</h3>
         </div>
         <div class="modal-body">
-            <ul>
-                <div class="panel panel-info">
-                    <!--title-->
-                    <div class="panel-heading">
-                        <p> Enter queries </p>
-                    </div>
-                    <!--body-->
-                    <div class="panel-body">
-                        <textarea class="table-responsive" cols="55" rows="6" ng-model="inputText" ng-click="resetUploadBox()"></textarea>
-                    </div>
+
+            <div class="panel panel-info">
+                <!--title-->
+                <div class="panel-heading">
+                    <p>Upload a CSV File</p></div>
+                <!--body-->
+                <div class="panel-body">
+                    <input type="file" file-model="myFile" />
                 </div>
-
-                <div class="panel panel-info">
-                    <!--title-->
-                    <div class="panel-heading">
-                        <p>Upload new CSV File</p></div>
-                    <!--body-->
-                        <div class="panel-body">
-                        <!--<form action="" method=post enctype=multipart/form-data>
-                            <input type='file'  ng-model="file" onchange="angular.element(this).scope().file_changed(this)">
-                        </form>-->
-                            <form action="/api/v0/uploadFile/" method="post" enctype="multipart/form-data">
-                                <input type="file" name="file" onchange="angular.element(this).scope().file_changed(this)"><br /><br />
-                                <input type="submit" value="Upload" ng-click="submit=true">
-                            </form>
-                        </div>
-                </div>
-                <div>
-                    <p>{{ValidationMessage}} <i ng-if="Validation" class="fa fa-spinner fa-pulse"></i> </p>
-                </div>
-
-
-
-
-
-        <div class='hidden'> {{fileStatus}}  {{dataStatus}} </div>
-
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="changeDataStatus(inputText); evaluateInputType(inputText,fileName)">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            </div>
+            <div>
+                <p>{{ValidationMessage}} <i ng-if="ValidationMessage!=''" class="fa fa-spinner fa-pulse"></i> </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="uploadFile()">OK</button>
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            </div>
         </div>
-
-
-
-
-
-
-        <!--<input type=submit value=Upload ng-bind="sendFile()"-->
     </div>
-    </form>
-    </ul>
-
-
-
-
-
-    <!--<a href class="btn btn-primary btn-xl"><span class="glyphicon glyphicon-upload"></span> Upload a file</a>-->
-
-
-</div>
-
 </div>
 
 
