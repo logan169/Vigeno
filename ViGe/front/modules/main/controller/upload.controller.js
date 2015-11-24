@@ -60,7 +60,7 @@ app.service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
         .then(function successCallback() {
             $http({
             method: 'POST',
-            url: '/api/v0/processFile/'+file.name+'/'
+            url: '/api/v0/processFile/'+file.name.replace(/ /g,'_')+'/'
             }).then(function successCallback(response) {
 	            // this callback will be called asynchronously
 	            // when the response is available

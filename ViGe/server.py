@@ -1,5 +1,4 @@
 
-
 import flask
 import common.parser as P
 import common.kernel as K
@@ -65,7 +64,6 @@ def upload_File():
 
 @app.route('/api/v0/processFile/<filename>/', methods=['POST'])
 def process_File(filename):
-
     dictFile= P.parseFile('/u/schwartzl/py/projetIric/17nov/ViGe/uploads/'+filename)
     return flask.jsonify(**dictFile)
 

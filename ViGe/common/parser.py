@@ -6,11 +6,9 @@ import common.kernel as K
 import common.Position as Pos
 
 def parseFile(filename):
-
     file=C.CSVFile()
     file.parse(filename)
     dict={}
-
     print str(file)
 
     x=0
@@ -18,11 +16,9 @@ def parseFile(filename):
         print line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']
         dict[x]=[line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']]
         x+=1
-
     print dict
 
     data={}
-
     y=0 #correspond a l'iterateur d'index du dictionnaire data qui accumule les dictinnaire
     for key in dict:
         #utilise la fonction startPos dans le dossier common, cette fonction prends 3 parametre en entree:
@@ -30,7 +26,6 @@ def parseFile(filename):
         #pour cette sequence
         temp=Pos.startPos('GRCh37.75',str(dict[key][3]),int(dict[key][1]))
         print temp
-
         if temp['error']==False:
             data[str(y)]=temp
         else:
