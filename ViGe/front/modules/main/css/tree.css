@@ -1,6 +1,12 @@
 <!--tree specification-->
 
     <style type="text/css">
+        .tree-responsive {
+    width:100%;
+    height: 0px;
+    padding-bottom: 75%;
+}
+
         .node {
         cursor: pointer;
         }
@@ -32,4 +38,23 @@
         .ghostCircle, .activeDrag .ghostCircle{
         display: none;
         }
+        .node {
+		cursor: pointer;
+		}
+
+		.node circle {
+		fill: #fff;
+		stroke: steelblue;
+		stroke-width: 3px;
+		}
+
+		.node text {
+		font: 12px sans-serif;
+		}
+
+		.link {
+		fill: none;
+		stroke: #ccc;
+		stroke-width: 2px;
+		}
     </style>

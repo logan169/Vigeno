@@ -68,6 +68,7 @@ app.service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
 	            console.log(response);
 	            $rootScope.FileSentCloseModal();
 	            $rootScope.results=response;
+	            console.log(response)
 
   	            },
             function errorCallback(response) {

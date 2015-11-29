@@ -1,72 +1,32 @@
-var treeData = [
-  {
-    "name": "Annotation",
-    "parent": "null",
-    "children": [
-      {
-        "name": "Gene",
-        "parent": "Annotation",
-        "children": [
-          {
-            "name": "Exon",
-            "parent": "Gene",
-            "children": [
-            {
-              "name": "Sequence 1",
-              "parent": "Exon"
-            },
-            {
-              "name": "Sequence 2",
-              "parent": "Exon"
-            },
-            {
-              "name": "Sequence 3",
-              "parent": "Exon"
-            },
-            ]
-          },
-          {
-            "name": "Intron",
-            "parent": "Gene",
-            "children":[
-            {
-              "name": "Sequence 4",
-              "parent": "Exon"
-            }
-            ]
-          },
-          {
-            "name": "UTR",
-            "parent": "Gene",
-            "children":[
-            {
-              "name": "Sequence 7",
-              "parent": "Exon"
-            }
-            ]
-          }
-        ]
-      },
+var treeData = [{
+  'name': 'annotation',
+  'parent': null,
+  'children': [{
+                'name': 'Intron',
+                'parent': 'annotation',
+                'children': [{'name': '1', 'parent': 'Intron'}]
+                },
+                {
+                  'name': 'Exon',
+                  'parent': 'annotation',
+                  'children': [
+                      {'name': '0', 'parent': 'Exon'},
+                      {'name': '3', 'parent': 'Exon'},
+                      {'name': '2', 'parent': 'Exon'}
+                  ]
+                }
+              ]
+  }]
 
-      {
-        "name": "Intergene",
-        "parent": "Annotation",
-        "children":[
-                     {
-            "name": "Sequence 6",
-            "parent": "Intergene"
-          }
-          ]
-      }
-    ]
-  }
-];
+
 
 
 
 
 //************************************************************functions************************************************
 function update(source) {
+
+
 
   // Compute the new tree layout.
   var nodes = tree.nodes(root).reverse(),
@@ -165,10 +125,13 @@ function click(d) {
   update(d);
 }
 
+
+
 // ************** Generate the tree diagram	 *****************
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
-	width = 960 - margin.right - margin.left,
-	height = 500 - margin.top - margin.bottom;
+	width = window.innerWidth - margin.right - margin.left,
+	height = window.innerHeight - margin.top - margin.bottom
+
 
 var i = 0,
 	duration = 750,
@@ -183,14 +146,20 @@ var diagonal = d3.svg.diagonal()
 var svg = d3.select("#visRow").append("svg")
 	.attr("width", width + margin.right + margin.left)
 	.attr("height", height + margin.top + margin.bottom)
-  .append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .append("g")
+    .attr("viewBox", "0 0 " + width + " " + height )
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .attr("pointer-events", "all")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
 root = treeData[0];
 root.x0 = height / 2;
 root.y0 = 0;
 
 update(root);
+
+
 
 
 

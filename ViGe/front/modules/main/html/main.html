@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="/front/modules/main/css/tab.css" />
 <link rel="stylesheet" href="/front/modules/main/css/font-awesome-4.4.0/css/font-awesome.css" />
-<div id="main" class="container-fluid" data-ng-init="reset()">
+<link rel="stylesheet" href="/front/modules/main/css/tree.css"
+<div id="main" class="container-fluid" data-ng-init="reset(); rapido()">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
 
     <!-- top page-->
     <div class="row">
@@ -45,20 +47,20 @@
                 <div class="span3">
                     <table class="table table-bordered">
                         <thead>
-                        <tr>
+                        <tr class="clickableTr">
                             <th>index #</th>
-                            <th>Chromosome #</th>
-                            <th>Gene</th>
-                            <th>Id</th>
-                            <th>Strand</th>
-                            <th>Start position #</th>
-                            <th>Annotation</th>
-                            <th>Sequence #</th>
+                            <th> <div ng-click= "modifyTree('chromosome')">Chromosome #</div></th>
+                            <th> <div ng-click= "modifyTree('gene')">Gene</div></th>
+                            <th> <div ng-click= "modifyTree('id')">Id</div></th>
+                            <th> <div ng-click= "modifyTree('strand')">Strand</div></th>
+                            <th> <div ng-click= "modifyTree('CDS_start')">Start position #</div></th>
+                            <th> <div ng-click= "modifyTree('annotation')">Annotation</div></th>
+                            <th> <div ng-click= "modifyTree('sequence')">Sequence #</div></th>
                         </tr>
                         </thead>
                         <tbody>
                         <!--acceder au contenu de la liste data-->
-                        <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item.data)">
+                        <tr class="clickableTr"  data-ng-init="rapido()" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item.data)">
                             <td> {{$index+1}} </td>
                             <td>{{item.data.chromosome}}</td>
                             <td>{{item.data.gene}}</td>
@@ -93,12 +95,16 @@
 
                 <!--body-->
                 <div class="panel-body">
-                    <body>
-
-                    <script src="/front/modules/main/script/tree.js"></script>
+                    <div class="row svg">
 
 
-                    </body>
+
+                            <div class="svg" id="visRow">
+                                <style type="text/css">svg {display: block; width: auto; height:auto; }</style>
+
+                            </div>
+
+                    </div>
                 </div>
             </div>
         </div>
