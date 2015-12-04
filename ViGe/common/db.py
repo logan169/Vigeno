@@ -50,13 +50,18 @@ except:
 
 
 #print all elements in usercollection:
-def printAllElements():
-    for doc in usersCollection.fetchAll():
+def printAllElements(collection):
+    for doc in collection.fetchAll():
         print doc
 
 #print an element of usercollection:
 def printOneElement(email):
     print usersCollection[str(email)]
+
+#erase all collection
+def EraseAll(collection):
+    for doc in collection.fetchAll():
+        doc.delete()
 
 
 #########################################################################
@@ -88,29 +93,36 @@ def addUser(username,mdp,mail):
 # pour bd Annotation
 #########################################################################
 def addExon(dict):
-    doc=annotationCollection.createDocument()
+    doc = annotationCollection.createDocument()
+
+
+
+    doc._key =str(dict['key'])
+    print doc._key
+
+    doc['id']=dict['id']
     doc['CDS_start'] =       dict['CDS_start']
-    doc['chromosome'] =      dict['chromosome']
-    doc['sequence'] =        dict['sequence']
     doc['frame'] =           dict['frame']
-    doc['sequenceDbSNP'] =   dict['sequenceDbSNP']
     doc['CDS_length'] =      dict['CDS_length']
-    doc['protein']=          dict['protein']
-    doc['transcript']=       dict['transcript']
     doc['CDS_end']=          dict['CDS_end']
     doc['strand']=           dict['strand']
     doc['end']=              dict['end']
     doc['start']=            dict['start']
-    doc['gene']=             dict['gene']
-    doc['id']=               dict['id']
     doc['length'] =          dict['length']
-    #doc._key =
+    doc['sequence']=dict['sequence']
+    doc['number']=dict['number']
+
     doc.save()
+
 
 #########################################################################
 # pour bd file
 #########################################################################
 
-def addFile(File)
+#fonction permettant de copier une ligne de l'input dans la bd
+#def addFile(Fileline):
 
-print addUser('ll','pp','log@hotmail.com')
+
+
+#print addUser('ll','pp','log@hotmail.com')
+

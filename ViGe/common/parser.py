@@ -13,7 +13,8 @@ def parseFile(filename):
 
     x=0
     for line in file :
-        print line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']
+        print line
+        #print line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']
         dict[x]=[line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']]
         x+=1
     print dict
