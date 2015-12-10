@@ -29,6 +29,7 @@ def formatExon(exon) :
         'gene': exon.gene.name,
         'transcript': exon.transcript.name,
         'protein': exon.protein,
+        'sequence':exon.sequence,
     }
 
 def formatTranscript(transcript) :
@@ -55,3 +56,4 @@ def formatProtein(protein) :
         'gene': protein.gene.name,
         'transcript': protein.transcript.name,
     }
+

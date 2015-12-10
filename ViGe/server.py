@@ -3,14 +3,11 @@ import flask
 import common.parser as P
 import common.kernel as K
 import common.tree as T
-
-
 import os
+
 
 # Initialize the Flask application
 app = flask.Flask(__name__, static_folder='front')
-
-
 
 # We'll render HTML templates and access data sent by POST
 # using the request object from flask. Redirect and url_for
@@ -19,10 +16,6 @@ app = flask.Flask(__name__, static_folder='front')
 # browser the file that the user just uploaded
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
-
-
-
-
 
 
 #premier call envoie vers index.html
@@ -71,15 +64,16 @@ def upload_File():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return flask.jsonify(**K.JSONResponse(None,False,'file uploaded'))
 
-
 dictTab={}
 @app.route('/api/v0/processFile/<filename>/', methods=['POST'])
 def process_File(filename):
+    from common import time_processing
     dictFile= P.parseFile('/u/schwartzl/py/projetIric/17nov/ViGe/uploads/'+filename)
     print dictFile
     global dictTab
     dictTab= dictFile   #j'enregistre mon nouveau dict du tableau dans ma variable global dictTab
     print dictFile
+    time_processing.endlog()
     return flask.jsonify(**dictFile)
 
 

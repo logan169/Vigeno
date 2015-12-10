@@ -44,6 +44,8 @@ except:
     fileCollection=db["File"]
 
 
+
+
 #######################################################################################################################
 ##fonction pour manipuler toutes les  bd
 #######################################################################################################################
@@ -55,14 +57,42 @@ def printAllElements(collection):
         print doc
 
 #print an element of usercollection:
-def printOneElement(email):
-    print usersCollection[str(email)]
+def printOneElement(collection,element):
+    print collection[str(element)]
 
 #erase all collection
 def EraseAll(collection):
     for doc in collection.fetchAll():
         doc.delete()
 
+#print querie results:
+def printQuerieResults(startPosition,chromosome):
+
+
+    bindVars={
+        'startPosition':startPosition,
+        'chromosome':chromosome,
+        }
+
+    aql = "FOR c IN Exon FILTER c.chromosome==@chromosome && c.start <= @startPosition && c.end >= @startPosition RETURN c"
+
+    """
+    #modifier la requête dépendamment du strand
+    if strand == '+':
+        aql = "FOR c IN Exon FILTER c.chromosome==@chromosome && c.start <= @startPosition && c.end >= @startPosition RETURN c"
+
+    elif strand == '-':
+        aql = "FOR c IN Exon FILTER c.chromosome==@chromosome && c.start >= @startPosition && c.end <= @startPosition RETURN c"
+
+    else:
+        return 'error in strand submitted!\n supported strand : "+", "-"'
+    """
+
+    print aql
+    # by setting rawResults to True you'll get dictionaries instead of Document objects, useful if you want to result to set of fields for example
+    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 1, bindVars = bindVars)
+
+    return queryResult
 
 #########################################################################
 # pour bd User
@@ -96,11 +126,7 @@ def addExon(dict):
     doc = annotationCollection.createDocument()
 
 
-
-    doc._key =str(dict['key'])
-    print doc._key
-
-    doc['id']=dict['id']
+    doc['id']=               dict['id']
     doc['CDS_start'] =       dict['CDS_start']
     doc['frame'] =           dict['frame']
     doc['CDS_length'] =      dict['CDS_length']
@@ -109,8 +135,12 @@ def addExon(dict):
     doc['end']=              dict['end']
     doc['start']=            dict['start']
     doc['length'] =          dict['length']
-    doc['sequence']=dict['sequence']
-    doc['number']=dict['number']
+    doc['sequence']=         dict['sequence']
+    doc['number']=           dict['number']
+    doc['transcript']=       dict['transcript']
+    doc['chromosome']=       dict['chromosome']
+    doc['gene']=             dict['gene']
+    doc['protein']=          dict['protein']
 
     doc.save()
 
@@ -126,3 +156,4 @@ def addExon(dict):
 
 #print addUser('ll','pp','log@hotmail.com')
 
+#printOneElement(annotationCollection,'Exon/296553284292')
