@@ -1,4 +1,0 @@
-peptide_sequence	chr	start	stop	peptide_length	peptide_strand	spliced_status	best_HLA_allele	best_IC50	Ensembl_gene_id	gene_strand	gene_biotype	gene_FPKM	Ensembl_transcript_id	transcript_FPKM	nb_expr_transcript	Ensembl_protein_id	mascot_score	peptide_PTM	nb_rep	detection_intensity_rep1	detection_intensity_rep2	detection_intensity_rep3	detection_intensity_rep4
-AAAKRQVL	2	3405592	3405616	8	+	false	HLA-B08:01	497.98	ENSG00000171853	+	protein_coding	26.9033	ENST00000324266	12.2393	22	ENSP00000324318	25.97	none	1	116439.8672	0	0	0
-AAAKVILKK	6	126667452	126669626	9	+	true	HLA-A03:01	143.49	ENSG00000203760	+	protein_coding	40.0564	ENST00000368328	28.0736	3	ENSP00000357311	59.61	none	3	499924.9375	232753.8008	0	306705.1563
-

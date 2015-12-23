@@ -26,12 +26,17 @@ for exon in exons:
         'CDS_end': exon.CDS_end,
         'frame': exon.frame,
         'strand': exon.strand,
-        'genome': exon.genome.name,
         'chromosome': exon.chromosome.number,
-        'gene': exon.gene.name,
-        'transcript': exon.transcript.name,
-        'protein': exon.protein,
+        'gene_name': exon.gene.name,
+        'transcript_name': exon.transcript.name,
+        'protein_name': exon.protein,
         'sequence':exon.sequence,
+        'gene_id': exon.gene.id,
+        'transcript_id': exon.transcript.id,
+
+        if exon.protein != None:
+                'protein_id': exon.protein.id,
+
     }
 
 

@@ -4,21 +4,6 @@ import format as F
 import kernel as K
 
 
-def startPos111(chromosomeId, startPosition,genomeId='Grch37.5'):
-
-    from common.db import printQuerieResults
-
-    resp=printQuerieResults(startPosition)
-
-    try:
-        doc=resp[0]
-        print doc
-        print doc['CDS_start']
-        return doc
-    except:
-        print resp
-        return resp
-
 
 
 #startPos est une fonction prenant 3 arguments (str,str,int) en entree et donne en output
@@ -33,45 +18,88 @@ def startPos (genomeId,chromosomeId, startPosition):
     from pyGeno.Genome import Protein
     from pyGeno.configuration import db
 
-    print Exon.getIndexes()
+
     #Exon.dropGlobalIndex('chromosome')
     #Gene.dropGlobalIndex('chromosome')
     #Exon.dropGlobalIndex('start')
     #Exon.dropGlobalIndex('end')
-    Exon.dropGlobalIndex(['chromosome','start', 'end'])
-    Exon.dropGlobalIndex(['start', 'end'])
-    Exon.dropGlobalIndex('chromosome')
-    Exon.ensureGlobalIndex('start')
-    Exon.ensureGlobalIndex('end')
-
-    #Exon.ensureGlobalIndex('start')
-    #Exon.ensureGlobalIndex('end')
-
-
-    Gene.dropGlobalIndex('start')
-    Gene.dropGlobalIndex('end')
-    Gene.ensureGlobalIndex(['start', 'end'])
-
     #Exon.ensureGlobalIndex('start')
     #Exon.ensureGlobalIndex('end')
     #Gene.ensureGlobalIndex('start')
     #Gene.ensureGlobalIndex('end')
-    print Exon.getIndexes()
+    #Exon.dropGlobalIndex(['chromosome','start', 'end'])
+    #Exon.ensureGlobalIndex('start')
+    #Exon.ensureGlobalIndex('end')
+    #Chromosome.ensureGlobalIndex('number')
+
+    #drop:
+    Exon.dropGlobalIndex('chromosome')
+    Exon.dropGlobalIndex('start')
+    Exon.dropGlobalIndex('end')
+    Gene.dropGlobalIndex('start')
+    Gene.dropGlobalIndex('end')
+    Gene.dropGlobalIndex(['start', 'end'])
 
 
-    #on initialise nos variables de pyGeno en les associant au genome et chromosome de l'input
-    genomeReferent = Genome (name = str(genomeId))
+    #active index:
+    Chromosome.ensureGlobalIndex('number')
+    Exon.ensureGlobalIndex(['start', 'end','chromosome'])
+    Gene.ensureGlobalIndex(['start', 'end','chromosome'])
+
+    #print 'index Exon:', Exon.getIndexes()
+    #print 'index Gene:', Gene.getIndexes()
+
+
+    #########################
+
+
+    genomeReferent = Genome(name = str(genomeId))
     chro = genomeReferent.get(Chromosome, number=str(chromosomeId))[0]
 
+    try:#renvoie un dic si spl est un Exon
+        db.enableDebug(True)
+        exonReferent = chro.get(Exon, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
+        resp = K.JSONResponse(F.formatExon(exonReferent[0]), False, 'ok')
+        resp['data']['annotation']='Exon'
+        db.enableDebug(False)
+    except IndexError:
+
+        try:#renvoie un dic si spl est un Intron
+            geneReferent = chro.get(Gene, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
+            resp = K.JSONResponse(F.formatGene(geneReferent[0]), False, 'ok')
+            resp['data']['annotation']='Intron'
+
+        except IndexError:#creer un dic si spl est un Intergene
+            resp = K.JSONResponse({}, False, '')
+            resp['data']['annotation']='Intergene'
+            resp['data']['chromosome']= chromosomeId
+            resp['data']['start']= startPosition
+            resp['data']['gene']= 'N/A'
+            resp['data']['strand']= 'Inconnue'
+            resp['data']['id']= 'N/A'
+            resp['data']['sequence']=chro.sequence[startPosition-10:startPosition+10]
+
+    #print resp
+    return resp
+    #########################
+
+
+    """
+    #on initialise nos variables de pyGeno en les associant au genome et chromosome de l'input
+    genomeReferent = Genome (name = str(genomeId))
+    chro = genomeReferent.get(Chromosome, number = str(chromosomeId))[0]
 
     #1ere verification:verifie si la position soumise est bien dans la sequence du chromosome
-    if startPosition<=len(chro.sequence[0:]) and startPosition>=0:
+    if startPosition<=len(chro[0:len(chro.sequence)]) and startPosition>=0: #verifier le len(chro.sequence)
 
         #2eme verification:verifie si la position soumise est dans l'index des exons de ce chromosome => exon
         try :
             db.enableDebug(True)
             exonReferent = genomeReferent.get(Exon, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
-            print Exon.getIndexes()
+
+            #exonReferent = chro.get(Exon, {'start <=': startPosition, 'end >': startPosition, "chromosome.number" : str(chromosomeId)})
+
+
 
             resp = K.JSONResponse(F.formatExon(exonReferent[0]), False, 'ok')
             resp['data']['annotation']='Exon'
@@ -81,7 +109,7 @@ def startPos (genomeId,chromosomeId, startPosition):
         except IndexError:
             try:
                 geneReferent = genomeReferent.get(Gene, {'start >=': startPosition, 'end <': startPosition, "chromosome.number" : str(chromosomeId)})
-                print Gene.getIndexes()
+
                 if len(geneReferent) == 0:
                     print 'b'
                     geneReferent = genomeReferent.get(Gene, {'start <': startPosition, 'end >=': startPosition, "chromosome.number" : str(chromosomeId)})
@@ -118,13 +146,13 @@ def startPos (genomeId,chromosomeId, startPosition):
         #on ajoute la sequence de DBSNP au dict
         resp['data']['sequenceDbSNP']=chro.sequence[start:end]
 
-        """
+        '''
         #print frame
         try:
             print resp['data']['frame']
         except:
             print('no frame?')
-        """
+        '''
         
         try:
             proteinReferent = genomeReferent.get(Protein,{'name like':resp['data']['transcript']})[0]
@@ -138,6 +166,12 @@ def startPos (genomeId,chromosomeId, startPosition):
         # une erreur et une liste de donnee vide
         resp = K.JSONResponse(None, True, 'La position %s est soit a l.txt\'exterieur de la sequence du chromosome %s soit a moins de 10 nucleotides d\'une extermite de la sequence' %startPosition,chromosomeId) #==> Region intergenique
 
+    """
     return resp
+
+
+
+
+
 
 

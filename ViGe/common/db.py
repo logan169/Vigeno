@@ -2,6 +2,7 @@
 
 import hashlib, uuid
 from pyArango.connection import *
+import time
 
 
 ###############################################################"
@@ -23,7 +24,7 @@ conn = Connection()
 
 #Creation/initialisation des collections
 try :
-    db = conn.createDatabase(name = "ViGe")
+    l
 except:
     db=conn["ViGe"]
 
@@ -31,7 +32,6 @@ try:
     usersCollection= db.createCollection(name = "Users")
 except:
     usersCollection=db["Users"]
-
 
 try:
     annotationCollection=db.createCollection(name="Exon")
@@ -43,7 +43,10 @@ try:
 except:
     fileCollection=db["File"]
 
-
+try:
+    permissionCollection=db.createCollection(name='Permissions')
+except:
+    permissionCollection=db['Permissions']
 
 
 #######################################################################################################################
@@ -51,22 +54,11 @@ except:
 #######################################################################################################################
 
 
-#print all elements in usercollection:
-def printAllElements(collection):
-    for doc in collection.fetchAll():
-        print doc
 
-#print an element of usercollection:
-def printOneElement(collection,element):
-    print collection[str(element)]
 
-#erase all collection
-def EraseAll(collection):
-    for doc in collection.fetchAll():
-        doc.delete()
 
 #print querie results:
-def printQuerieResults(startPosition,chromosome):
+def getExons(startPosition,chromosome):
 
 
     bindVars={
@@ -74,23 +66,16 @@ def printQuerieResults(startPosition,chromosome):
         'chromosome':chromosome,
         }
 
-    aql = "FOR c IN Exon FILTER c.chromosome==@chromosome && c.start <= @startPosition && c.end >= @startPosition RETURN c"
-
-    """
-    #modifier la requête dépendamment du strand
-    if strand == '+':
-        aql = "FOR c IN Exon FILTER c.chromosome==@chromosome && c.start <= @startPosition && c.end >= @startPosition RETURN c"
-
-    elif strand == '-':
-        aql = "FOR c IN Exon FILTER c.chromosome==@chromosome && c.start >= @startPosition && c.end <= @startPosition RETURN c"
-
-    else:
-        return 'error in strand submitted!\n supported strand : "+", "-"'
+    aql = """
+    FOR c IN Exon
+        FILTER  c.start <= @startPosition && c.end >= @startPosition && c.chromosome==@chromosome
+        RETURN c
     """
 
-    print aql
+
+
     # by setting rawResults to True you'll get dictionaries instead of Document objects, useful if you want to result to set of fields for example
-    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 1, bindVars = bindVars)
+    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
 
     return queryResult
 
@@ -98,27 +83,43 @@ def printQuerieResults(startPosition,chromosome):
 # pour bd User
 #########################################################################
 #add a new user infos to the data bank
-#Attention verifier que la clef de cette adresse email n'existe pas avant d'ajouter à la banque de donnée
 def addUser(username,mdp,mail):
 
     try:
-        printOneElement(mail)
-        print ("Erreur, cette email dispose déjà d'un compte dans notre banque de donnée.")
-        return (False)
-
-    except:
         doc=usersCollection.createDocument()
+        doc._key=str(username)
         doc['username'] = str(username)
-        doc['ID'] = len(usersCollection.fetchAll())
         doc['salt'] = str(newSalt())
         doc['mdp'] = str(mdp_hash(str(mdp),doc['salt']))
         doc['mail'] = str(mail)
-        doc._key = str(mail)
+        doc['fileOwned']={}
+        doc['fileReadPermission']={}
         doc.save()
         return True
 
+    except:#renvois un message d'erreur si utilisateur déjà dans bd
+        print ("Erreur, nom d'utilisateur non disponible, veuillez changer.")
+        return (False)
 
 
+
+#modifie les dictionnaires filereadpermission et/ou fileownpermission d'un utilisateur
+def modUserFilePerm(username,fileowned=None,fileread=None):
+
+    #open document
+    temp=usersCollection[str(username)]
+
+    if fileowned != None:
+        #change fileowned
+        tempFileOwned=temp['fileOwned']
+        tempFileOwned.update({str(len(tempFileOwned)+1):str(fileowned)})
+
+    if fileread != None:
+        #change fileread
+        tempFileReadPerm=temp['fileReadPermission']
+        tempFileReadPerm.update({str(len(tempFileReadPerm)+1):str(fileread)})
+
+    temp.save()
 #########################################################################
 # pour bd Annotation
 #########################################################################
@@ -150,10 +151,52 @@ def addExon(dict):
 #########################################################################
 
 #fonction permettant de copier une ligne de l'input dans la bd
-#def addFile(Fileline):
+def addFile(name,userID):
+    doc = fileCollection.createDocument()
+    doc['fileName']= name
+    doc['uploadDate']= time.time()
+    doc['owner']=userID
+
+    addPermission(userID,name,1,1,1)
+    modifyPerm(userId,name,name)
 
 
+#########################################################################
+# pour bd permission
+#########################################################################
+
+#fonction permettant de copier une ligne de l'input dans la bd
+def addPermission(userID,filename,fileReadPermission,fileWritePermission,fileSharePermission):
+    try:
+        doc = permissionCollection.createDocument()
+        doc._key=userId+filename
+        doc['user']=str(userID)
+        doc['file']=str(filename)
+        doc['fileReadPermission']=fileReadPermission
+        doc['fileWritePermission']=fileWritePermission
+        doc['fileSharePermission']=fileSharePermission
+
+    except:#l'user dispose déjà d'un accès à ce fichier
+
+        print ("Erreur, cet utilisateur disponible déjà, veuillez changer.")
+        return (False)
+
+
+
+
+
+#########################################################################
 
 #print addUser('ll','pp','log@hotmail.com')
 
-#printOneElement(annotationCollection,'Exon/296553284292')
+
+"""
+print usersCollection['logan']['fileOwned']
+print usersCollection['logan']['fileReadPermission']
+
+
+modUserFilePerm('logan',fileread='logan.tsv')
+
+print usersCollection['logan']['fileOwned']
+print usersCollection['logan']['fileReadPermission']
+"""

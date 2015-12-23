@@ -61,6 +61,7 @@ def upload_File():
             # Move the file form the temporal folder to
             # the upload folder we setup
             #print os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            #print str(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return flask.jsonify(**K.JSONResponse(None,False,'file uploaded'))
 
@@ -68,11 +69,13 @@ dictTab={}
 @app.route('/api/v0/processFile/<filename>/', methods=['POST'])
 def process_File(filename):
     from common import time_processing
-    dictFile= P.parseFile('/u/schwartzl/py/projetIric/17nov/ViGe/uploads/'+filename)
-    print dictFile
+    fileuploadedPath= (str(os.path.join(app.config['UPLOAD_FOLDER'])+filename))
+    #print fileuploadedPath
+    dictFile= P.parseFile(fileuploadedPath)
+    #print dictFile
     global dictTab
     dictTab= dictFile   #j'enregistre mon nouveau dict du tableau dans ma variable global dictTab
-    print dictFile
+    #print dictFile
     time_processing.endlog()
     return flask.jsonify(**dictFile)
 
@@ -80,12 +83,12 @@ def process_File(filename):
 
 @app.route('/api/v0/modifyTree/<userChoice>/', methods=['GET'])
 def modifyTree(userChoice):
-    print 'userChoice : '+userChoice
+    #print 'userChoice : '+userChoice
 
     global dictTab  #j'improte mon nouveau dict du tableau a partir de  ma variable global dictTab
 
     temp= K.JSONResponse(T.TreeJsInput(userChoice,dictTab),False,'yeas')
-    print temp
+    #print temp
     return flask.jsonify(**temp)
 
 

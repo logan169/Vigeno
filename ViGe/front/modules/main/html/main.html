@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                         <!--acceder au contenu de la liste data-->
-                        <tr class="clickableTr"  data-ng-init="rapido()" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item.data)">
+                        <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item.data)">
                             <td> {{$index+1}} </td>
                             <td>{{item.data.chromosome}}</td>
                             <td>{{item.data.gene}}</td>

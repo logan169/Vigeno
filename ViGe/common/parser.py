@@ -5,48 +5,52 @@ from pyGeno.tools.parsers import CSVTools as C
 import common.kernel as K
 import common.format as F
 import common.Position as Pos
-from common.db import printQuerieResults as qc
-
+from common.db import getExons
 
 
 def parseFile(filename):
-    file=C.CSVFile()
-    file.parse(filename)
-    dict={}
-    print str(file)
+    #print filename
+    f = C.CSVFile()
+    f.parse(filename, separator=",")
+    liste=[]
 
-    x=0
-    for line in file :
-        print line
-        #print line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']
-        dict[x]=[line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']]
-        x+=1
-    print dict
+    for line in f :
+        liste.append([line['peptide'],line['start'],line['end'],line['chromosome'],line['strand'],line['ensg'],line['enst']])
 
     data={}
     y=0 #correspond a l'iterateur d'index du dictionnaire data qui accumule les dictinnaire
-    for key in dict:
-        #utilise la fonction startPos dans le dossier common, cette fonction prends 3 parametre en entree:
-        # startPos(genome,chromosome,position) et renvoie un dict contenant toutes les infos necessaires au client
-        #pour cette sequence
+
+    retour={}
+    for element in liste:
+        exons=getExons(int(element[1]),str(element[3]))
+
+        for e in exons:
+            eid = e["id"]
+            trans = (e["transcript"], e["number"])
+            if eid in retour :
+                retour[eid]["transcripts"].append(trans)
+            else :
+                retour[eid] = e
+                retour[eid]["transcripts"] = [trans]
+                del(retour[eid]["number"])
+                del(retour[eid]["transcript"])
 
 
-        temp=Pos.startPos('GRCh37.75',str(dict[key][3]),int(dict[key][1]))
+    #print retour
+    return retour
 
-        """
-        temp=qc(int(dict[key][1]),str(dict[key][3]))
-
-        print temp
-
+"""
         exonID=''
-        exon={}
+        dictexon={}
         sameExon=True
-        for element in temp:
+        for element in exons:
 
+            #verifie que les resultats sont redondant (il y a plusieurs numero pour le meme exon)
             if exonID=='':
                 exonID=element['id']
-                for key in element:
-                    exon[str(key)]=element[key]
+                for cle in element:
+                    exons[str(cle)]=element[cle]
+
             '''
             print element
 
@@ -54,7 +58,7 @@ def parseFile(filename):
                 sameExon=False
                 return 'Error position fall in 2 separate regions!'
             '''
-        print exon
+        #print exon
 
         if sameExon == True:
             t=K.JSONResponse(exon,False,'ok')
@@ -66,13 +70,5 @@ def parseFile(filename):
         y+=1
 
 
-        """
-        temp= K.JSONResponse(temp,False, 'ok')
-
-        if temp['error']==False:
-            data[str(y)]=temp
-        else:
-            data= K.JSONResponse(None,True,'error at line '+str(y)+' in the input file')
-        y+=1
-
     return data
+"""

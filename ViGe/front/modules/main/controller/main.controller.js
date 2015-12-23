@@ -2,7 +2,7 @@ var app = angular.module('ViGeFront.main.controllers', ['ui.bootstrap']);
 
 
 
-var mainCtrl = function($scope,$http,$modal,$rootScope,rapido) {
+var mainCtrl = function($scope,$http,$modal,$rootScope) {
 
 	/*(re)initialise les variables au chargement de la vue et lors d'une nouvelle recherche*/
 	$scope.reset=function(){
@@ -48,6 +48,7 @@ var mainCtrl = function($scope,$http,$modal,$rootScope,rapido) {
 
 	/*modifie la fenetre polymorphisme*/
 	$scope.modifyPolWin=function(index, item){
+		console.log(item.data.start)
 		$scope.index =index;
 		$scope.sequenceRef=item.sequence;
 		$scope.sequencePat=item.sequence.substring(0,9)+'─'+item.sequence.substring(10,22)
@@ -70,103 +71,6 @@ var mainCtrl = function($scope,$http,$modal,$rootScope,rapido) {
 
 };
 
-app.factory('rapido',function(){
-
-	return{
-  	'message': 'ok',
-  	'error': false,
-  	'data':{
-  		'1': {
-  		'message': 'ok',
-  		 'data': {
-  		 	'CDS_start': null,
-  		 	 'chromosome': '6',
-  		 	  'sequence': 'TTCCCCACGCATCTGAGGG',
-  		 	  'frame': null, 'number': 4,
-  		 	   'sequenceDbSNP': 'TTCCCCACGCATCTGAGGG',
-  		 	    'CDS_length': null, 'seqProt': 'N/A',
-  		 	     'protein': null,
-  		 	      'transcript': 'FLOT1-011',
-  		 	      'CDS_end': null,
-  		 	       'strand': '-',
-  		 	       'end': 30698342, 'id': 'ENSE00003564703',
-  		 	        'start': 30698204, 'length': 138,
-  		 	         'genome': 'GRCh37.75',
-  		 	          'annotation': 'Exon',
-  		 	           'gene': 'FLOT1'},
-  		 	            'error': false},
- 		 '0': {
- 		 	'message': 'ok',
- 		 	 'data': {
- 		 	 	'CDS_start': 3405547,
- 		 	 	 'chromosome': '2',
- 		 	 	  'sequence': 'GGTGAAAAAGCTGCAGCAA',
- 		 	 	   'frame': 0,
- 		 	 	    'number': 2,
- 		 	 	     'sequenceDbSNP': 'GGTGAAAAAGCTGCAGCAA',
- 		 	 	      'CDS_length': 117,
- 		 	 	       'seqProt': 'MEDAGGGEETPAPEAP/LHPPQ/K/*/ELA/TPPEEQGLLFQEETIDLGGDEFGSEENK/ETASEGSSPLADKLNEHMMESVLISDSPNSEGDAGDLGRVRDEAEPGGEGDPGPEPAGTPSPSGEADGDCAPK/EDAAPSSGGAPRQDAAREVPGSEAAH/RPEQEPPVAEPVPVCTIFSQRAPPASGDGFEPQMVKSPSFGGASEASARTPPQVVQPSPSLSTFFGDTAASHSLASDFFDSL/FTTSAFISVSNPGAGSPAP/SASPPPLAVPGTEGRPEPVAMRGPQAAAPPASPEPFAHIQAVFAGSDDPFATALSMS/GEMDRRNDAWLPGEATRGVLRAVATQQRGAVFVDKENLTMPGLRFDNIQGDAVKDLMLRFLGEKAAAKRQVLNADSVEQSFVGLKQLISCRNWRAAVDLCGRLLTAHGQGYS/GKSE/GLLTSHTTDSLQLWFVRLALLVKLGLFQNAEMEFEPFGNLDQPDLYYEYYPHVYPGRRGSMVPFSMRILHAELQQYLGNPQESLDRLHKVKTVCSKILANLEQGLAEDGGMSSVTQEGRQASIRLWRSRLGRVMYSMANCLLLMKDYVLAVEAYHSVIKYYPEQEPQLLSGIGRISLQIGDIKTAEKYFQDVEKVTQKLDGLQGK/EIMVLMNSAFLHLGQNNFAEAHRFFTEILRMDPRNAVANNNAAVCLLYLGKLKDSLRQLEAMVQQDPRHYLHESVLFNLTTMYELESSRSMQKKQALLEAVAGKEGDSFNTQCLKLA',
- 		 	 	        'protein': null,
- 		 	 	         'transcript': 'TRAPPC12-001',
- 		 	 	          'CDS_end': 3405664,
- 		 	 	           'strand': '+',
- 		 	 	            'end': 3405664,
- 		 	 	            'id': 'ENSE00001145941',
- 		 	 	             'start': 3405547,
- 		 	 	              'length': 117,
- 		 	 	               'genome': 'GRCh37.75',
- 		 	 	                'annotation': 'Exon',
- 		 	 	                 'gene': 'TRAPPC12'},
- 		 	 	                  'error': false},
-		 '3': {
-		 'message': 'ok',
-		  'data': {
-		  	'CDS_start': 36142145,
-		  	 'chromosome': '19',
-		  	  'sequence': 'AGCACCATGGCGGAAGACA',
-		  	   'frame': 0,
-		  	    'number': 1,
-		  	     'sequenceDbSNP': 'AGCACCATGGCGGAAGACA',
-		  	      'CDS_length': 106,
-		  	       'seqProt': 'MAEDMETKIKNYKTAPFDSRFPNQNQTRNCWQNYLDFHRCQKAMTAKGGDISVCEWYQRVYQSLCPTSWVTDWDEQRAEGTFPGKI',
-		  	        'protein': null,
-		  	         'transcript': 'COX6B1-003',
-		  	          'CDS_end': 36142251,
-		  	           'strand': '+',
-		  	            'end': 36142251,
-		  	             'id': 'ENSE00003125961',
-		  	              'start': 36142134,
-		  	               'length': 117,
-		  	                'genome': 'GRCh37.75',
-		  	                 'annotation': 'Exon',
-		  	                  'gene': 'COX6B1'},
-		  	                   'error': false},
-		  '2': {
-		  'message': 'ok',
-		   'data': {
-		   	 'CDS_start': 48887293,
-		   	  'chromosome': '8',
-		   	   'sequence': 'ATCCGCTTAGCAGAAGCCC',
-		   	    'frame': 0,
-		   	     'number': 14,
-		   	      'sequenceDbSNP': 'ATCCGCTTAGCAGAAGCCC',
-		   	       'CDS_length': 229,
-		   	        'seqProt': 'MSSPASTPSRRGSRRGRATPAQTPRSEDARSSPSQRRRGEDSTSTGELQPMPTSPGVDLQSPAAQDVLFSSPPQMHSSAIPLDFDVSSPLTYGTPSSRVEGTPRSGVRGTPVRQRPDLGSA/SQKGLQVDLQSDGAAAEDIVASEQSLGQKLVIWGTDVNVAACKENFQRFLQRFIDPLAKEEENVGIDITEPLYMQRLGEINVIGEPFLNVNCEHIKSFDKNLYRQLISYPQEVIPTFDMAVNEIFFDH/RYPDSILEHQIQVRPL/FNALKTKNMRNLNPEDIDQLITISGI/MVIRTSQLIPEMQEAFFQCQVCAHTTRVEMDRGC/RIAEPSVCGRCHTTHSMALIHNRSLFSDKQMIKLQESPEDMPAGQTPHTVILFAHNDLVDKVQPGDRVNVTGIYRAVPIRVNPRVSNVKSVYKTHIDVIHYRKTDAKRLHGLDEEAEQKLFSEKRVELLKELSRKPDIYERLASALAPS/TIYEHEDIKKGILLQLFGGTRKDFSHTGRGKFRAEINILLCGDPGTSKSQLLQYVYNLVPRGQYTSGKGSSAVGLTAYVMKDPETRQLVLQTGALVLSDNGICCIDEFDKMNESTRSVLHEVMEQQTLSIAKAGIICQLNARTSVLAAANPIESQWNPKKTTIENIQLPHTLLSRFDLIFLM/LLDPQDEAYDRRLAHHLVALYYQSEEQAEEELLDMAVLKDYIAYAHSTIMPRLSEEASQALIEAYVDMRKIGSSRGMVSAYPRQLESLIRLAEAHAKVRLSNKVEAIDVEEAKRLHREALKQSATDPRTGIVDISILTTGMSATSRKRKEELAEALKKLILSKGKTPALKYQQLFEDIRGQSDIAITKDMFEEALH/RALADDDFLTVTGKTVRLL',
-		   	         'protein': null,
-		   	          'transcript': 'MCM4-004',
-		   	           'CDS_end': 48887522,
-		   	            'strand': '+',
-		   	             'end': 48887522,
-		   	              'id': 'ENSE00003323524',
-		   	               'start': 48887293,
-		   	                'length': 229,
-		   	                 'genome': 'GRCh37.75',
-		   	                  'annotation': 'Exon',
-		   	                   'gene': 'MCM4'},
-		   	                    'error': false}
-		   }
-  		};
-  	});
 
 
 
