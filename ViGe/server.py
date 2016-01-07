@@ -18,7 +18,16 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug import secure_filename
 
 
-username='log'
+###########################################################################################################
+def authentification(username=None):
+    user= 'log'
+    if username is not None:
+        user=str(username)
+    return user
+
+dictFile={}
+dictTab={}
+###########################################################################################################
 
 #premier call envoie vers index.html
 #ensuite c'est Angular qui gere les vues
@@ -57,33 +66,18 @@ def upload_File():
             # Make the filename safe, remove unsupported chars
             filename = secure_filename(file.filename)
             filename=filename.replace(' ','_')
+            #path=os.path.join(app.config['UPLOAD_FOLDER'])
             # Move the file form the temporal folder to
             # the upload folder we setup
-            #print os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            #print str(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return flask.jsonify(**K.JSONResponse(None,False,'file uploaded'))
+            global dictTab
+            dictTab=P.parseFile(os.path.join(app.config['UPLOAD_FOLDER']),filename,authentification())
+            return flask.jsonify(**dictTab)
 
 
 
-dictTab={}
-@app.route('/api/v0/processFile/<filename>/', methods=['POST'])
-def process_File(filename):
-    from common import time_processing
-    fileuploadedPath= (str(os.path.join(app.config['UPLOAD_FOLDER'])+filename))
-    #print fileuploadedPath
-    #dictFile= P.parseFile(fileuploadedPath)
-    global username
-    path=os.path.join(app.config['UPLOAD_FOLDER'])
 
 
-    dictFile=P.parseFile(path,filename,username)
-    print dictFile
-    global dictTab
-    dictTab= dictFile   #j'enregistre mon nouveau dict du tableau dans ma variable global dictTab
-    #print dictFile
-    time_processing.endlog()
-    return flask.jsonify(**dictFile)
 
 
 

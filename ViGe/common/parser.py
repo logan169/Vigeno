@@ -12,13 +12,16 @@ from db import *
 
 
 def parseFile(path,filename,username):
+
+    ExonsNotFound=open('ExonsNotFound','a')
+
     csv = C.CSVFile()
     csv.parse(path+filename,separator=',')
 
     typs={'chromosome':'string'}
-    docLignes=[]
+    docLignes={}
 
-    print csv.legend
+
 
     numeroLigne=1
     for ligne in csv[1:len(csv)]:
@@ -45,16 +48,16 @@ def parseFile(path,filename,username):
                     return message
 
             #ajoute l'element de la colonne au dict qui vient de passer la validation de typage dans le docLigne
-
             docLigne[colonne]=ligne[colonne]
 
         #ajoute le dict docligne a liste doclignes
-        docLignes.append(docLigne)
+        docLignes[numeroLigne]=(docLigne)
+        numeroLigne+=1
 
     #une fois que toutes les lignes ont ete validees, on integre les infos dans les bd:
 
     # on process chaque ligne et on ajoute le dict de resultat dans File_Content
-    for x in range (len(docLignes)):
+    for x in range (1,len(docLignes)):
         augmentedContent=getExons(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
         if len(augmentedContent) >0:
             if len(augmentedContent) == 1:
@@ -65,10 +68,10 @@ def parseFile(path,filename,username):
 
                 except:
                     message= 'You already own a file with this name, please change the name of the file you are uploading'
-                    print message
-                    return message
+                    return K.JSONResponse(None,True,message)
         else:
-            print '##########################\n###########Exon not found############# infos :'+str(docLignes[x])+'\n#############################'
+            ExonsNotFound.write(str(docLignes[x])+'\n')
+
 
     #l'overview dans file_Overview
     addFileOverview(filename=filename,username=username,colonnes=typs)
@@ -76,9 +79,8 @@ def parseFile(path,filename,username):
     #la permission de lire,ecrire,'overview et le file owned dans file_Overview
     modifyPermissionDoc(username=username,fileReadPermission=filename,fileWritePermission=filename,fileOwned=filename)
 
-    print docLignes
+    ExonsNotFound.close()
 
-
-
+    return K.JSONResponse(docLignes,False,'file uploaded')
 
 

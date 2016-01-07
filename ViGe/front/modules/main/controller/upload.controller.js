@@ -57,7 +57,7 @@ app.service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-        .then(function successCallback() {
+        .then(function successCallback(response) {
             $http({
             method: 'POST',
             url: '/api/v0/processFile/'+file.name.replace(/ /g,'_')+'/'
