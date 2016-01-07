@@ -7,13 +7,18 @@ import common.format as F
 import common.Position as Pos
 from common.db import getExons
 from db import *
+folder_path='/u/schwartzl/py/projetIric/20151223/vige/ViGe/uploads/'
 
+filename='pep_pep_pep.csv'
+
+path=folder_path+filename
+print path
 #filename='/u/schwartzl/Bureau/fichier_celine_input.tsv'
-
+username='log'
 
 def parseFile(path,filename,username):
     csv = C.CSVFile()
-    csv.parse(path+filename,separator=',')
+    csv.parse(path,separator=',')
 
     typs={'chromosome':'string'}
     docLignes=[]
@@ -56,6 +61,7 @@ def parseFile(path,filename,username):
     # on process chaque ligne et on ajoute le dict de resultat dans File_Content
     for x in range (len(docLignes)):
         augmentedContent=getExons(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
+
         if len(augmentedContent) >0:
             if len(augmentedContent) == 1:
                 docLignes[x].update(augmentedContent[0])
@@ -70,15 +76,18 @@ def parseFile(path,filename,username):
         else:
             print '##########################\n###########Exon not found############# infos :'+str(docLignes[x])+'\n#############################'
 
+
+
+
+
     #l'overview dans file_Overview
     addFileOverview(filename=filename,username=username,colonnes=typs)
 
     #la permission de lire,ecrire,'overview et le file owned dans file_Overview
     modifyPermissionDoc(username=username,fileReadPermission=filename,fileWritePermission=filename,fileOwned=filename)
 
-    print docLignes
 
 
-
+parseFile(path,filename,username)
 
 

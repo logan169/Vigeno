@@ -18,6 +18,8 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug import secure_filename
 
 
+username='log'
+
 #premier call envoie vers index.html
 #ensuite c'est Angular qui gere les vues
 @app.route('/')
@@ -27,14 +29,11 @@ def index():
 
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
+
+
 # These are the extension that we are accepting to be uploaded
 app.config['ALLOWED_EXTENSIONS'] = set(['csv'])
 
-
-@app.route('/api/v0/rapido/', methods='GET')
-def rapido():
-    dict={'1': {'message': 'ok', 'data': {'CDS_start': None, 'chromosome': u'6', 'sequence': 'TTCCCCACGCATCTGAGGG', 'frame': None, 'number': 4, 'sequenceDbSNP': 'TTCCCCACGCATCTGAGGG', 'CDS_length': None, 'seqProt': 'N/A', 'protein': None, 'transcript': u'FLOT1-011', 'CDS_end': None, 'strand': u'-', 'end': 30698342, 'id': u'ENSE00003564703', 'start': 30698204, 'length': 138, 'genome': u'GRCh37.75', 'annotation': 'Exon', 'gene': u'FLOT1'}, 'error': False}, '0': {'message': 'ok', 'data': {'CDS_start': 3405547, 'chromosome': u'2', 'sequence': 'GGTGAAAAAGCTGCAGCAA', 'frame': 0, 'number': 2, 'sequenceDbSNP': 'GGTGAAAAAGCTGCAGCAA', 'CDS_length': 117, 'seqProt': 'MEDAGGGEETPAPEAP/LHPPQ/K/*/ELA/TPPEEQGLLFQEETIDLGGDEFGSEENK/ETASEGSSPLADKLNEHMMESVLISDSPNSEGDAGDLGRVRDEAEPGGEGDPGPEPAGTPSPSGEADGDCAPK/EDAAPSSGGAPRQDAAREVPGSEAAH/RPEQEPPVAEPVPVCTIFSQRAPPASGDGFEPQMVKSPSFGGASEASARTPPQVVQPSPSLSTFFGDTAASHSLASDFFDSL/FTTSAFISVSNPGAGSPAP/SASPPPLAVPGTEGRPEPVAMRGPQAAAPPASPEPFAHIQAVFAGSDDPFATALSMS/GEMDRRNDAWLPGEATRGVLRAVATQQRGAVFVDKENLTMPGLRFDNIQGDAVKDLMLRFLGEKAAAKRQVLNADSVEQSFVGLKQLISCRNWRAAVDLCGRLLTAHGQGYS/GKSE/GLLTSHTTDSLQLWFVRLALLVKLGLFQNAEMEFEPFGNLDQPDLYYEYYPHVYPGRRGSMVPFSMRILHAELQQYLGNPQESLDRLHKVKTVCSKILANLEQGLAEDGGMSSVTQEGRQASIRLWRSRLGRVMYSMANCLLLMKDYVLAVEAYHSVIKYYPEQEPQLLSGIGRISLQIGDIKTAEKYFQDVEKVTQKLDGLQGK/EIMVLMNSAFLHLGQNNFAEAHRFFTEILRMDPRNAVANNNAAVCLLYLGKLKDSLRQLEAMVQQDPRHYLHESVLFNLTTMYELESSRSMQKKQALLEAVAGKEGDSFNTQCLKLA', 'protein': None, 'transcript': u'TRAPPC12-001', 'CDS_end': 3405664, 'strand': u'+', 'end': 3405664, 'id': u'ENSE00001145941', 'start': 3405547, 'length': 117, 'genome': u'GRCh37.75', 'annotation': 'Exon', 'gene': u'TRAPPC12'}, 'error': False}, '3': {'message': 'ok', 'data': {'CDS_start': 36142145, 'chromosome': u'19', 'sequence': 'AGCACCATGGCGGAAGACA', 'frame': 0, 'number': 1, 'sequenceDbSNP': 'AGCACCATGGCGGAAGACA', 'CDS_length': 106, 'seqProt': 'MAEDMETKIKNYKTAPFDSRFPNQNQTRNCWQNYLDFHRCQKAMTAKGGDISVCEWYQRVYQSLCPTSWVTDWDEQRAEGTFPGKI', 'protein': None, 'transcript': u'COX6B1-003', 'CDS_end': 36142251, 'strand': u'+', 'end': 36142251, 'id': u'ENSE00003125961', 'start': 36142134, 'length': 117, 'genome': u'GRCh37.75', 'annotation': 'Exon', 'gene': u'COX6B1'}, 'error': False}, '2': {'message': 'ok', 'data': {'CDS_start': 48887293, 'chromosome': u'8', 'sequence': 'ATCCGCTTAGCAGAAGCCC', 'frame': 0, 'number': 14, 'sequenceDbSNP': 'ATCCGCTTAGCAGAAGCCC', 'CDS_length': 229, 'seqProt': 'MSSPASTPSRRGSRRGRATPAQTPRSEDARSSPSQRRRGEDSTSTGELQPMPTSPGVDLQSPAAQDVLFSSPPQMHSSAIPLDFDVSSPLTYGTPSSRVEGTPRSGVRGTPVRQRPDLGSA/SQKGLQVDLQSDGAAAEDIVASEQSLGQKLVIWGTDVNVAACKENFQRFLQRFIDPLAKEEENVGIDITEPLYMQRLGEINVIGEPFLNVNCEHIKSFDKNLYRQLISYPQEVIPTFDMAVNEIFFDH/RYPDSILEHQIQVRPL/FNALKTKNMRNLNPEDIDQLITISGI/MVIRTSQLIPEMQEAFFQCQVCAHTTRVEMDRGC/RIAEPSVCGRCHTTHSMALIHNRSLFSDKQMIKLQESPEDMPAGQTPHTVILFAHNDLVDKVQPGDRVNVTGIYRAVPIRVNPRVSNVKSVYKTHIDVIHYRKTDAKRLHGLDEEAEQKLFSEKRVELLKELSRKPDIYERLASALAPS/TIYEHEDIKKGILLQLFGGTRKDFSHTGRGKFRAEINILLCGDPGTSKSQLLQYVYNLVPRGQYTSGKGSSAVGLTAYVMKDPETRQLVLQTGALVLSDNGICCIDEFDKMNESTRSVLHEVMEQQTLSIAKAGIICQLNARTSVLAAANPIESQWNPKKTTIENIQLPHTLLSRFDLIFLM/LLDPQDEAYDRRLAHHLVALYYQSEEQAEEELLDMAVLKDYIAYAHSTIMPRLSEEASQALIEAYVDMRKIGSSRGMVSAYPRQLESLIRLAEAHAKVRLSNKVEAIDVEEAKRLHREALKQSATDPRTGIVDISILTTGMSATSRKRKEELAEALKKLILSKGKTPALKYQQLFEDIRGQSDIAITKDMFEEALH/RALADDDFLTVTGKTVRLL', 'protein': None, 'transcript': u'MCM4-004', 'CDS_end': 48887522, 'strand': u'+', 'end': 48887522, 'id': u'ENSE00003323524', 'start': 48887293, 'length': 229, 'genome': u'GRCh37.75', 'annotation': 'Exon', 'gene': u'MCM4'}, 'error': False}}
-    return flask.jsonify(**dict)
 
 # For a given file, return whether it's an allowed type or not
 def allowed_file(filename):
@@ -65,14 +64,21 @@ def upload_File():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return flask.jsonify(**K.JSONResponse(None,False,'file uploaded'))
 
+
+
 dictTab={}
 @app.route('/api/v0/processFile/<filename>/', methods=['POST'])
 def process_File(filename):
     from common import time_processing
     fileuploadedPath= (str(os.path.join(app.config['UPLOAD_FOLDER'])+filename))
     #print fileuploadedPath
-    dictFile= P.parseFile(fileuploadedPath)
-    #print dictFile
+    #dictFile= P.parseFile(fileuploadedPath)
+    global username
+    path=os.path.join(app.config['UPLOAD_FOLDER'])
+
+
+    dictFile=P.parseFile(path,filename,username)
+    print dictFile
     global dictTab
     dictTab= dictFile   #j'enregistre mon nouveau dict du tableau dans ma variable global dictTab
     #print dictFile

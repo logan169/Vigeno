@@ -2,19 +2,21 @@ __author__ = 'schwartzl'
 
 from pyGeno.Genome import Genome
 from pyGeno.Genome import Exon
-from common import db as db
+from pyGeno.tools.ProgressBar import ProgressBar
 
+try:
+      from common import db as db
+except:
+      import db as db
 
 genomeId='GRCh37.75'
-chromosomeId='Y'
-
-genomeReferent = Genome ( name = str(genomeId))
+genomeReferent = Genome(name = str(genomeId))
 
 exons=genomeReferent.iterGet(Exon)
-
-
+count = genomeReferent.count(Exon)
+pg = ProgressBar(nbEpochs=count)
 for exon in exons:
-
+  pg.update(label=exon.id)
   dict={
         'id': exon.id,
         'number': exon.number,
@@ -33,14 +35,15 @@ for exon in exons:
         'sequence':exon.sequence,
         'gene_id': exon.gene.id,
         'transcript_id': exon.transcript.id,
+  }
 
-        if exon.protein != None:
-                'protein_id': exon.protein.id,
-
-    }
-
-
+  if exon.protein is not None:
+        dict['protein_id']=exon.protein.id
+  else :
+        dict['protein_id']=None
   db.addExon(dict)
+
+pg.close()
 
 
 

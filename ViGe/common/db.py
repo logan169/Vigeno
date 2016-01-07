@@ -4,7 +4,6 @@ import hashlib, uuid
 from pyArango.connection import *
 import time
 
-
 ###############################################################"
 ##mdp
 ###############################################################
@@ -20,7 +19,7 @@ def mdp_hash(mdp,salt):
 ###############################################################"
 ##db
 ###############################################################
-conn = Connection()
+conn = Connection(arangoURL='http://132.204.81.223:1375')
 
 #Creation/initialisation des collections
 try :
@@ -39,164 +38,166 @@ except:
     annotationCollection=db["Exon"]
 
 try:
-    fileCollection=db.createCollection(name='File')
+    fileOverviewCollection=db.createCollection(name='File_Overview')
 except:
-    fileCollection=db["File"]
+    fileOverviewCollection=db["File_Overview"]
+
+try:
+    fileContentCollection=db.createCollection(name='File_Content')
+except:
+    fileContentCollection=db["File_Content"]
 
 try:
     permissionCollection=db.createCollection(name='Permissions')
 except:
     permissionCollection=db['Permissions']
 
-
 #######################################################################################################################
 ##fonction pour manipuler toutes les  bd
 #######################################################################################################################
 
-
-
-
-
 #print querie results:
-def getExons(startPosition,chromosome):
 
+def getExons(startPosition,endPosition,transcript_id):
 
     bindVars={
         'startPosition':startPosition,
-        'chromosome':chromosome,
+        'endPosition':endPosition,
+        'transcript_id':transcript_id,
         }
 
     aql = """
     FOR c IN Exon
-        FILTER  c.start <= @startPosition && c.end >= @startPosition && c.chromosome==@chromosome
+        FILTER  c.start <= @startPosition && c.end >= @endPosition && c.transcript_id==@transcript_id
         RETURN c
     """
-
-
 
     # by setting rawResults to True you'll get dictionaries instead of Document objects, useful if you want to result to set of fields for example
     queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
 
     return queryResult
 
+
+
 #########################################################################
 # pour bd User
 #########################################################################
+
+#validate if an username exist and return doc for an user in collection user
+def FindUsername(username,mail):
+    bindVars={
+        'username':username,
+        'mail':mail,
+        }
+    aql = """
+
+    For c IN Users
+    FILTER  c.username==@username OR c.mail==@mail
+    RETURN c
+
+    """
+    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
+    return queryResult
+
 #add a new user infos to the data bank
 def addUser(username,mdp,mail):
 
-    try:
-        doc=usersCollection.createDocument()
-        doc._key=str(username)
-        doc['username'] = str(username)
-        doc['salt'] = str(newSalt())
-        doc['mdp'] = str(mdp_hash(str(mdp),doc['salt']))
-        doc['mail'] = str(mail)
-        doc['fileOwned']={}
-        doc['fileReadPermission']={}
-        doc.save()
+    if len(FindUsername(str(username),str(mail)))==0:
+        docUser=usersCollection.createDocument()
+        docUser._key=str(username)
+        docUser['username'] = str(username)
+        docUser['salt'] = str(newSalt())
+        docUser['mdp'] = str(mdp_hash(str(mdp),docUser['salt']))
+        docUser['mail'] = str(mail)
+        docUser.save()
+        createPermissionDoc(str(username))
         return True
 
-    except:#renvois un message d'erreur si utilisateur déjà dans bd
-        print ("Erreur, nom d'utilisateur non disponible, veuillez changer.")
+    else:#renvois un message d'erreur si utilisateur déjà dans bd
+        print ("Erreur, nom d'utilisateur ou mail déjà présent dans la banque de donnée, veuillez tenter de recuperer votre compte ou changer l'username")
         return (False)
-
-
-
-#modifie les dictionnaires filereadpermission et/ou fileownpermission d'un utilisateur
-def modUserFilePerm(username,fileowned=None,fileread=None):
-
-    #open document
-    temp=usersCollection[str(username)]
-
-    if fileowned != None:
-        #change fileowned
-        tempFileOwned=temp['fileOwned']
-        tempFileOwned.update({str(len(tempFileOwned)+1):str(fileowned)})
-
-    if fileread != None:
-        #change fileread
-        tempFileReadPerm=temp['fileReadPermission']
-        tempFileReadPerm.update({str(len(tempFileReadPerm)+1):str(fileread)})
-
-    temp.save()
-#########################################################################
-# pour bd Annotation
-#########################################################################
-def addExon(dict):
-    doc = annotationCollection.createDocument()
-
-
-    doc['id']=               dict['id']
-    doc['CDS_start'] =       dict['CDS_start']
-    doc['frame'] =           dict['frame']
-    doc['CDS_length'] =      dict['CDS_length']
-    doc['CDS_end']=          dict['CDS_end']
-    doc['strand']=           dict['strand']
-    doc['end']=              dict['end']
-    doc['start']=            dict['start']
-    doc['length'] =          dict['length']
-    doc['sequence']=         dict['sequence']
-    doc['number']=           dict['number']
-    doc['transcript']=       dict['transcript']
-    doc['chromosome']=       dict['chromosome']
-    doc['gene']=             dict['gene']
-    doc['protein']=          dict['protein']
-
-    doc.save()
-
-
-#########################################################################
-# pour bd file
-#########################################################################
-
-#fonction permettant de copier une ligne de l'input dans la bd
-def addFile(name,userID):
-    doc = fileCollection.createDocument()
-    doc['fileName']= name
-    doc['uploadDate']= time.time()
-    doc['owner']=userID
-
-    addPermission(userID,name,1,1,1)
-    modifyPerm(userId,name,name)
-
 
 #########################################################################
 # pour bd permission
 #########################################################################
 
-#fonction permettant de copier une ligne de l'input dans la bd
-def addPermission(userID,filename,fileReadPermission,fileWritePermission,fileSharePermission):
-    try:
+#initialise un document dans la collection permission pour un nouvel user
+def createPermissionDoc(username):
         doc = permissionCollection.createDocument()
-        doc._key=userId+filename
-        doc['user']=str(userID)
-        doc['file']=str(filename)
-        doc['fileReadPermission']=fileReadPermission
-        doc['fileWritePermission']=fileWritePermission
-        doc['fileSharePermission']=fileSharePermission
+        doc._key=username
+        doc['username']=username
+        doc['fileReadPermission']=[]
+        doc['fileWritePermission']=[]
+        doc['fileOwned']=[]
+        doc.save()
 
-    except:#l'user dispose déjà d'un accès à ce fichier
+#########################################################################
+#########################################################################
+#fonction permettant de copier une ligne de l'input dans la bd
+def modifyPermissionDoc(username,fileReadPermission=None,fileWritePermission=None,fileOwned=None):
 
-        print ("Erreur, cet utilisateur disponible déjà, veuillez changer.")
-        return (False)
+    doc = permissionCollection[str(username)]
+    if fileReadPermission is not None:
+        doc['fileReadPermission'].append(fileReadPermission)
+    if fileWritePermission is not None:
+        doc['fileWritePermission'].append(fileWritePermission)
+    if fileOwned is not None:
+        doc['fileOwned'].append(fileOwned)
+    doc.save()
 
+#########################################################################
+#########################################################################
 
-
+#########################################################################
+# pour bd Annotation
+#########################################################################
+def addExon(dict):
+    doc = annotationCollection.createDocument()
+    for k in dict :
+        doc[k] = dict[k]
+        doc.save()
 
 
 #########################################################################
+# pour bd fileOverview
+#########################################################################
 
-#print addUser('ll','pp','log@hotmail.com')
+#fonction permettant de creer un doc dans la collection file overview qui sera utilisé pour la page utilisateur
+def addFileOverview(filename,username,colonnes):
+    docFileOverview = fileOverviewCollection.createDocument()
+    docFileOverview._key=str(username)+','+str(filename)
+    docFileOverview['fileName']= filename
+    docFileOverview['uploadDate']= time.time()
+    docFileOverview['originalOwner']=username
+    docFileOverview['column']=colonnes
+    docFileOverview.save()
 
 
-"""
-print usersCollection['logan']['fileOwned']
-print usersCollection['logan']['fileReadPermission']
+#########################################################################
+# pour bd fileContent
+#########################################################################
 
+#fonction permettant de creer un doc dans la collection file Content qui sera utilisé pour la page main  resultat
+def addFileContent(filename,line, username, content=None):
+    docFileContent = fileContentCollection.createDocument()
+    docFileContent._key=str(username)+','+str(filename)+','+str(line)
+    docFileContent['filename']=filename
+    docFileContent['line']= line
+    docFileContent['content']=content
+    docFileContent.save()
 
-modUserFilePerm('logan',fileread='logan.tsv')
+#########################################################################
 
-print usersCollection['logan']['fileOwned']
-print usersCollection['logan']['fileReadPermission']
-"""
+#collection possible : File_Content, File_Overview
+def findfiles(collection, filename):
+    bindVars={
+        'filename':filename,
+        }
+    aql = """
+    For c IN """+collection+"""
+    FILTER  c.filename==@filename
+    SORT c.line
+    RETURN c
+    """
+    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
+    return queryResult
