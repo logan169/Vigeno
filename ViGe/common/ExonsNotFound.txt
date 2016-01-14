@@ -1,0 +1,6 @@
+{'enst': 'ENST00000376389', 'end': '30698485', 'start': '30698339', 'ensg': 'ENSG00000137312', 'chromosome': '6', 'peptide': 'AEAEAASVRM', 'strand': '-'}
+{'enst': 'ENST00000376389', 'end': '30698485', 'start': '30698339', 'ensg': 'ENSG00000137312', 'chromosome': '6', 'peptide': 'AEAEAASVRM', 'strand': '-'}
+{'enst': 'ENST00000376389', 'end': '30698485', 'start': '30698339', 'ensg': 'ENSG00000137312', 'chromosome': '6', 'peptide': 'AEAEAASVRM', 'strand': '-'}
+{'enst': 'ENST00000376389', 'end': '30698485', 'start': '30698339', 'ensg': 'ENSG00000137312', 'chromosome': '6', 'peptide': 'AEAEAASVRM', 'strand': '-'}
+{'enst': 'ENST00000376389', 'end': '30698485', 'start': '30698339', 'ensg': 'ENSG00000137312', 'chromosome': '6', 'peptide': 'AEAEAASVRM', 'strand': '-'}
+{'enst': 'ENST00000376389', 'end': '30698485', 'start': '30698339', 'ensg': 'ENSG00000137312', 'chromosome': '6', 'peptide': 'AEAEAASVRM', 'strand': '-'}

@@ -85,22 +85,21 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
             #dict=parseFile("/u/schwartzl/py/projetIric/20160114/ViGe/uploads/",'pep_pep_pep.csv','log')
 
             dictTab=P.parseFile(os.path.join(app.config['UPLOAD_FOLDER']),filename,authentification())
-            print dictTab
 
             if dictTab['error']==True:
                 return dictTab ######################################message d'erreur
             else:
                 print 'DictTab done!'
-                outputDict=A(**dictTab['data'])
+                outputDict=A.addDictInDb(**dictTab['data'])
 
             if outputDict['error'] ==True:
                 return outputDict ######################################message d'erreur
             else:
                 print 'copy_File_and_his_output_in_DB_File_Content'+' passed!'
-                return flask.jsonify(**K.JSONResponse(None,False,'file copied in db'))
+                return flask.jsonify(**K.JSONResponse(outputDict['data'],False,'file in db!'))
 
 ########################################################################################################################
-@app.route('/api/v0/loadFile/<fileName>/')
+@app.route('/api/v0/loadFile/<fileName>/', methods=['POST'])
 def load_File_in_DB_File_Content_to_client(filename):
     return('',204)
 

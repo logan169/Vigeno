@@ -45,8 +45,8 @@ def parseFile(path,filename,username):
         docLignes[numeroLigne]=docLigne
         numeroLigne+=1
 
-        outputDoc={'docLignes':docLignes,'filename':filename,'username':username,'typs':typs}
-        return K.JSONResponse(outputDoc,False,'file uploaded')
+    outputDoc={'docLignes':docLignes,'filename':filename,'username':username,'typs':typs}
+    return K.JSONResponse(outputDoc,False,'file uploaded')
 
 #######################################################################################################################
 #une fois que toutes les lignes ont ete validees, on integre les infos dans les bd avec la fonction du fichier

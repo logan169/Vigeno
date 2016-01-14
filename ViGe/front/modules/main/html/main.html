@@ -62,13 +62,13 @@
                         <!--acceder au contenu de la liste data-->
                         <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item.data)">
                             <td> {{$index+1}} </td>
-                            <td>{{item.data.chromosome}}</td>
-                            <td>{{item.data.gene}}</td>
-                            <td>{{item.data.id}}</td>
-                            <td>{{item.data.strand}}</td>
-                            <td>{{item.data.start}}</td>
-                            <td>{{item.data.annotation}}</td>
-                            <td>{{item.data.sequence}}</td>
+                            <td>{{item.chromosome}}</td>
+                            <td>{{item.gene}}</td>
+                            <td>{{item.id}}</td>
+                            <td>{{item.strand}}</td>
+                            <td>{{item.start}}</td>
+                            <td>{{item.annotation}}</td>
+                            <td>{{item.sequence}}</td>
                         </tr>
 
                         </tbody>

@@ -65,8 +65,10 @@ app.service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
 	            // this callback will be called asynchronously
 	            // when the response is available
 	            $rootScope.FileSentCloseModal();
-	            $rootScope.results=response;
+	            $rootScope.results=response.data;
 	            console.log(response)
+	            console.log(response.data)
+	            console.log()
 
   	            },
             function errorCallback(response) {
