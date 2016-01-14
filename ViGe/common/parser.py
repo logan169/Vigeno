@@ -1,27 +1,18 @@
-__author__ = 'schwartzl'
 
-import flask
 from pyGeno.tools.parsers import CSVTools as C
-import common.kernel as K
-import common.format as F
-import common.Position as Pos
-from common.db import getExons
-from db import *
-
-#filename='/u/schwartzl/Bureau/fichier_celine_input.tsv'
+import kernel as K
 
 
 def parseFile(path,filename,username):
 
-    ExonsNotFound=open('ExonsNotFound','a')
-
+    #parserpyGeno
     csv = C.CSVFile()
     csv.parse(path+filename,separator=',')
 
+    #ici on verifie le type de chaque colonne pour chaque ligne et on accumule l'info dans un \
+    # dict , si le test passe le dict est copie dans la bd file_content
     typs={'chromosome':'string'}
     docLignes={}
-
-
 
     numeroLigne=1
     for ligne in csv[1:len(csv)]:
@@ -45,42 +36,21 @@ def parseFile(path,filename,username):
                 if typs[colonne] != typ and colonne != 'chromosome':
                     message='Type error in ligne '+str(numeroLigne)+' and column '+str(colonne)+':\n'+'ligne '+str(numeroLigne)+':'+str(ligne)
                     print  message
-                    return message
+                    return K.JSONResponse(None,True,message)
 
             #ajoute l'element de la colonne au dict qui vient de passer la validation de typage dans le docLigne
             docLigne[colonne]=ligne[colonne]
 
         #ajoute le dict docligne a liste doclignes
-        docLignes[numeroLigne]=(docLigne)
+        docLignes[numeroLigne]=docLigne
         numeroLigne+=1
 
-    #une fois que toutes les lignes ont ete validees, on integre les infos dans les bd:
+        outputDoc={'docLignes':docLignes,'filename':filename,'username':username,'typs':typs}
+        return K.JSONResponse(outputDoc,False,'file uploaded')
 
-    # on process chaque ligne et on ajoute le dict de resultat dans File_Content
-    for x in range (1,len(docLignes)):
-        augmentedContent=getExons(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
-        if len(augmentedContent) >0:
-            if len(augmentedContent) == 1:
-                docLignes[x].update(augmentedContent[0])
-
-                try:
-                    addFileContent(filename=filename,line=x,username=username,content=docLignes[x])
-
-                except:
-                    message= 'You already own a file with this name, please change the name of the file you are uploading'
-                    return K.JSONResponse(None,True,message)
-        else:
-            ExonsNotFound.write(str(docLignes[x])+'\n')
-
-
-    #l'overview dans file_Overview
-    addFileOverview(filename=filename,username=username,colonnes=typs)
-
-    #la permission de lire,ecrire,'overview et le file owned dans file_Overview
-    modifyPermissionDoc(username=username,fileReadPermission=filename,fileWritePermission=filename,fileOwned=filename)
-
-    ExonsNotFound.close()
-
-    return K.JSONResponse(docLignes,False,'file uploaded')
+#######################################################################################################################
+#une fois que toutes les lignes ont ete validees, on integre les infos dans les bd avec la fonction du fichier
+#addDictInDb.py
+#######################################################################################################################
 
 

@@ -201,3 +201,4 @@ def findfiles(collection, filename):
     """
     queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
     return queryResult
+
