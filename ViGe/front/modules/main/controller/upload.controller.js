@@ -66,7 +66,6 @@ app.service('fileUpload', ['$http','$rootScope', function ($http,$rootScope) {
 	            // when the response is available
 	            $rootScope.FileSentCloseModal();
 	            $rootScope.results=response.data;
-	            console.log(response)
 	            console.log(response.data)
 	            console.log()
 

@@ -15,18 +15,24 @@ def addDictInDb(docLignes,filename,username,typs):
     ExonsNotFound=open('ExonsNotFound.txt','a')
 
     # on process chaque lignes et on ajoute le dict de resultat dans File_Content
-    for key in docLignes:
-        augmentedContent=getExons(startPosition=int(docLignes[key]['start']),endPosition=int(docLignes[key]['end']),transcript_id=docLignes[key]['enst'])
+    for x in range (1,len(docLignes)):
+
+        augmentedContent=getExons(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
         if len(augmentedContent)>0:
             if len(augmentedContent)==1:
-                docLignes[key].update(augmentedContent[0])
+                docLignes[x]['start_mutation']=docLignes[x]['start']
+                docLignes[x]['end_mutation']=docLignes[x]['end']
+                docLignes[x]['strand_mutation']=docLignes[x]['strand']
+                docLignes[x].update(augmentedContent[0])
+                print docLignes[x]
+
                 try:
-                    addFileContent(filename=filename,line=key,username=username,content=docLignes[key])
+                    addFileContent(filename=filename,line=x,username=username,content=docLignes[x])
                 except:
                     message= 'You already own a file with this name, please change the name of the file you are uploading'
                     return K.JSONResponse(None,True,message)
         else:
-            ExonsNotFound.write(str(docLignes[key])+'\n')
+            ExonsNotFound.write(str(docLignes[x])+'\n')
 
     ExonsNotFound.close()
 

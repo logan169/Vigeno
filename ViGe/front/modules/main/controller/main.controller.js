@@ -48,7 +48,7 @@ var mainCtrl = function($scope,$http,$modal,$rootScope) {
 
 	/*modifie la fenetre polymorphisme*/
 	$scope.modifyPolWin=function(index, item){
-		console.log(item.data.start)
+		console.log(item.start)
 		$scope.index =index;
 		$scope.sequenceRef=item.sequence;
 		$scope.sequencePat=item.sequence.substring(0,9)+'─'+item.sequence.substring(10,22)

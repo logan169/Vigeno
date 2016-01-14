@@ -49,28 +49,56 @@
                         <thead>
                         <tr class="clickableTr">
                             <th>index #</th>
-                            <th> <div ng-click= "modifyTree('chromosome')">Chromosome #</div></th>
-                            <th> <div ng-click= "modifyTree('gene')">Gene</div></th>
-                            <th> <div ng-click= "modifyTree('id')">Id</div></th>
-                            <th> <div ng-click= "modifyTree('strand')">Strand</div></th>
-                            <th> <div ng-click= "modifyTree('CDS_start')">Start position #</div></th>
-                            <th> <div ng-click= "modifyTree('annotation')">Annotation</div></th>
-                            <th> <div ng-click= "modifyTree('sequence')">Sequence #</div></th>
+                            <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
+                            <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
+                            <th ng-click = "modifyTree('end_mutation')">Mutation end</th>
+                            <th ng-click = "modifyTree('chromosome')">Chromosome</th>
+                            <th ng-click = "modifyTree('strand')">Strand</th>
+                            <th ng-click = "modifyTree('start')">Start position</th>
+                            <th ng-click = "modifyTree('end')">End position</th>
+                            <th ng-click = "modifyTree('length')">Length</th>
+                            <th ng-click = "modifyTree('frame')">Frame</th>
+                            <th ng-click = "modifyTree('CDS_start')">CDS start position</th>
+                            <th ng-click = "modifyTree('CDS_end')">CDS end position</th>
+                            <th ng-click = "modifyTree('gene_name')">Gene Name</th>
+                            <th ng-click = "modifyTree('gene_id')">Gene Id</th>
+                            <th ng-click = "modifyTree('transcript_name')">Transcript Name</th>
+                            <th ng-click = "modifyTree('transcript_id')">Transcript Id</th>
+                            <th ng-click = "modifyTree('id')">Exon Id</th>
+                            <th ng-click = "modifyTree('number')">Position in Transcript</th>
+                            <th ng-click = "modifyTree('protein_name')">Protein Name</th>
+                            <th ng-click = "modifyTree('protein_id')">Protein Id</th>
+                            <th ng-click = "modifyTree('peptide')">Peptide</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!--acceder au contenu de la liste data-->
-                        <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item.data)">
+                        <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item)">
                             <td> {{$index+1}} </td>
+                            <td>{{item.strand_mutation}}</td>
+                            <td>{{item.start_mutation}}</td>
+                            <td>{{item.end_mutation}}</td>
                             <td>{{item.chromosome}}</td>
-                            <td>{{item.gene}}</td>
-                            <td>{{item.id}}</td>
                             <td>{{item.strand}}</td>
                             <td>{{item.start}}</td>
-                            <td>{{item.annotation}}</td>
-                            <td>{{item.sequence}}</td>
-                        </tr>
+                            <td>{{item.end}}</td>
+                            <td>{{item.length}}</td>
+                            <td>{{item.frame}}</td>
+                            <td>{{item.CDS_start}}</td>
+                            <td>{{item.CDS_end}}</td>
+                            <td>{{item.gene_name}}</td>
+                            <td>{{item.gene_id}}</td>
+                            <td>{{item.transcript_name}}</td>
+                            <td>{{item.transcript_id}}</td>
+                            <td>{{item.id}}</td>
+                            <td>{{item.number}}</td>
+                            <td>{{item.protein_name}}</td>
+                            <td>{{item.protein_id}}</td>
+                            <td>{{item.peptide}}</td>
 
+
+
+                        </tr>
                         </tbody>
                     </table>
                 </div>
