@@ -4,33 +4,56 @@
     <meta charset="UTF-8">
     <title></title>
 
+    <style>
+    scroll{
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    font-weight:normal;
+    padding:20px 20px;
+    border-style:solid;
+    border-width:1px;
+    overflow:auto;
+    max-width:50px;
+}
+</style>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 </head>
-<body onload="startSeq();changeColor(0)">
+<body onload="startSeq();changeColor('rawSeq',0);changeColor('seq',0)">
 
 <!--ici on imprime les variable dans le navigateur-->
+
+<table class="scroll">
+    <thead>
+    <th></th>
+    </thead>
+    <tbody>
+    <td>
 <p id="rawSeq">acgtagctgagctgcagctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtaagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtatagctgactgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtagatgtacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgatgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgactgatcgtactcatgctgatgcgta</p>
-<p id="rawSeqLength"></p>
-<p id="seq" ></p>
-<p id="seqLength"></p>
-<p id="start">10</p>
-<p id="end">110</p>
-<button onclick="moveSeqLeft(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor(0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> </button>
-<button onclick="moveSeqRigth(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor(0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-right"></span> </button>
+</td>
+     <td><p id="rawSeqLength" ></p></td>
+ <td><p id="seq" ></p></td>
+ <td><p id="seqLength"></p></td>
+ <td><p id="start">0</p></td>
+ <td><p id="end">100</p></td>
+    </tbody>
+</div>
+<button onclick="moveSeqLeft(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor('seq',0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> </button>
+<button onclick="moveSeqRigth(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor('seq',0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-right"></span> </button>
 
 <script>
 //ON LOAD, seq is seq.substr(start,end)
 
 var startSeq= function(){
 console.log((document.getElementById('rawSeq').innerHTML).substr(document.getElementById('start').innerHTML,document.getElementById('end').innerHTML));
+document.getElementById('seq').innerHTML='';
 document.getElementById('seq').innerHTML=(document.getElementById('rawSeq').innerHTML).substr(document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);
 }
 
 /* Need to add the id seq to the line */
 
-var changeColor=function(readingFrame){
+var changeColor=function(id, readingFrame){
 
     var output=function(str,readingFrame){
 		var codons = [];
@@ -58,8 +81,7 @@ var changeColor=function(readingFrame){
     	return(outputStr);
     	};
 
-document.getElementById('seq').innerHTML= (output(document.getElementById('seq').innerHTML,readingFrame));
-
+document.getElementById(id).innerHTML= (output(document.getElementById(id).innerHTML,readingFrame));
 };
 
 </script>
@@ -68,26 +90,26 @@ document.getElementById('seq').innerHTML= (output(document.getElementById('seq')
 /*
 Ce script permet d'afficher une nouvelle sous string d'une string mere
 
-output type: ["***end of sequence***atcgtagcg", 0, 9] string fille, new start, new end
+output type: ["***atcgtagcg", 0, 9] string fille, new start, new end
 */
 
 
 
 var moveSeqRigth=function(str,oldStart,oldEnd){
 
-    newStart=parseInt(oldStart)+37;
-    newEnd=parseInt(oldEnd)+37;
+    newStart=parseInt(oldStart)+1;
+    newEnd=parseInt(oldEnd)+1;
     message="***";
 
     console.log(oldEnd);
-    console.log(parseInt(oldEnd)+37);
+    console.log(parseInt(oldEnd)+1);
     console.log(newEnd<(document.getElementById('seq').innerHTML).length);
 
     if (newEnd<str.length){
     	newStr= str.substr(newStart,newEnd);
     }
     else{
-        newStart=parseInt(str.length)-37;
+        newStart=parseInt(str.length)-1;
         newEnd=str.length;
         newStr= str.substr(newStart,newEnd)+message;
     }
@@ -105,8 +127,8 @@ var moveSeqRigth=function(str,oldStart,oldEnd){
 
 var moveSeqLeft=function(str,oldStart,oldEnd){
 
-    newStart=parseInt(oldStart)-37;
-    newEnd=parseInt(oldEnd)-37;
+    newStart=parseInt(oldStart)-1;
+    newEnd=parseInt(oldEnd)-1;
     message="***";
 
     if (newStart>=0){
@@ -115,7 +137,7 @@ var moveSeqLeft=function(str,oldStart,oldEnd){
 
     else{
         newStart=0;
-        newEnd=37;
+        newEnd=1;
         newStr=message+str.substr(newStart,newEnd);
     }
 

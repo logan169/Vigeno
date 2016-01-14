@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        tg  {
+        border-collapse:collapse;
+        border-spacing:0;
+        margin:0px auto;
+        }
+        .tg th{
+        font-family:Arial, sans-serif;
+        font-size:100%;
+        font-weight:normal;
+        padding:20px 20px;
+        border-style:solid;
+        border-width:0px;
+        overflow:auto;
+        max-width:50px;
+        }
+        .tg slide{
+        font-family:Courier New, sans-serif;
+        border-style:solid;
+        border-width:0px;
+        overflow:auto;
+        max-width:1000px;
+        }
+
+        .AA{
+        letter-spacing: 15px;
+        }
+
+        .blok{
+        height:1.5em;
+        width:2.5em;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+</head>
+<body onload="colorCodons('patient','readFrame');startingScrollPosition(1000); alignAA('FdSeq1');alignAA('FdSeq2');alignAA('FdSeq3');alignAA('RvSeq1');alignAA('RvSeq2');alignAA('RvSeq3')">
+
+
+<div id="peptideStartPosition">75</div>
+<div id="peptideEndPosition">95</div>
+<div id="peptideCenterPosition"></div>
+
+<div> reading Frame<div id="readFrame">1</div></div>
+<br>
+<table>
+    <thead>
+    </thead>
+    <tbody class="tg">
+    <div class="slide blok text-center" >
+        <p id="patient" >acgtagctgagctgcagctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtaagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtatagctgactgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtagatgtacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgatgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgactgatcgtactcatgctgatgcgta</p>
+        <p id="Ref" ></p>
+        <p id="DBSNP"></p>
+        <div>
+        <p id="FdSeq1">T*LSCS*HVAELHVAELLARS*AARS*AAST*LSCT*LSC*HVAELHVAELLARS*AARS*AAST*LSCT*LSC*HVAELHVAELLARS*AARS*AAAS*LTGCRCD*SYSC*CVS*LADWMSMRLIVLMLMRIAD*RS*AAAS*LTGCRCD*SYSC*CVDVRS*AAAS*LTGCRCD*SYSC*CVR*RS*AAAS*LTGCRCD*SYSC*CVRLIVLMLMR</p>
+        <p id="FdSeq2">RS*AAAST*LSCT*LSC*HVAELHVAELLARS*AARS*AAST*LSCT*LSC*HVAELHVAELLARS*AARS*AAST*LSCT*LSC*HVAELHVAELQLAS*LDVDApRTHADA*AS*LTGCRCD*SYSC*CV*LpVAELQLAS*LDVDApRTHADA*MYVAELQLAS*LDVDApRTHADAYDDVAELQLAS*LDVDApRTHADAYD*SYSC*CV</p>
+        <p id="FdSeq3">VAELQLARS*AARS*AAST*LSCT*LSC*HVAELHVAELLARS*AARS*AAST*LSCT*LSC*HVAELHVAELLARS*AARS*AAST*LSCT*LSCS*LADWMSMRLIVLMLMRKLAS*LDVDApRTHADAYS*LT*LSCS*LADWMSMRLIVLMLMRRCT*LSCS*LADWMSMRLIVLMLMRTMT*LSCS*LADWMSMRLIVLMLMRTpRTHADA</p>
+        <p id="RvSeq1">YASA*VRSVVRISMSTISRIDIQSAS*LQLSYVIVRISMSTISRIDIQSAS*LQLSYVHLRISMSTISRIDIQSAS*LQLSYVSQLYASA*VRSVASTSSQLASLRISMSTISRIDIQSAS*LQLSYVQLSYVLAAQLRAAQLRASSSATCSSATC*QLSYVQLSYVLAAQLRAAQLRASSSATCSSATC*QLSYVQLSYVLAAQLRAAQLRASCSSAT</p>
+        <p id="RvSeq2">THQHEYDQSYASA*VRSVASTSSQLASCSSATSSYASA*VRSVASTSSQLASCSSATYIYASA*VRSVASTSSQLASCSSATSVSYTHQHEYDQSHRHPVS*LAYASA*VRSVASTSSQLASCSSATCSSATC*QLSYVQLSYVLAAQLRAAQLRASSSATCSSATC*QLSYVQLSYVLAAQLRAAQLRASSSATCSSATC*QLSYVQLSYVLAAAQLR</p>
+        <p id="RvSeq3">RISMSTISRTHQHEYDQSHRHPVS*LAAAQLRHRTHQHEYDQSHRHPVS*LAAAQLRTSTHQHEYDQSHRHPVS*LAAAQLRQSAIRISMSTISRIDIQSAS*LTHQHEYDQSHRHPVS*LAAAQLRAAQLRASSSATCSSATC*QLSYVQLSYVLAAQLRAAQLRASSSATCSSATC*QLSYVQLSYVLAAQLRAAQLRASSSATCSSATC*LQLS</p>
+    </div>
+    </div>
+    </tbody>
+    </tbody>
+</table>
+
+<br>
+
+
+
+
+
+
+</body>
+
+<script>
+
+var alignAA=function(id){
+    var output=function(id,seqAA){
+        outputString=''
+        if(id.indexOf('1')==-1){
+            if (id.indexOf('2')>-1){outputString+='<span class="blok">Q</span>'}
+            else{outputString+='<span style="visibility: hidden">qq</span>'}
+            }
+        for (i=0;i<seqAA.length;i++){
+            outputString+='<span style="visibility: hidden">q</span>'+seqAA[i]+'<span style="visibility: hidden">q</span>'
+            }
+        return outputString
+    }
+
+    console.log((document.getElementById(id).innerHTML).length)
+    document.getElementById(id).innerHTML=(output(id,document.getElementById(id).innerHTML));
+
+}
+
+var startingScrollPosition=function(position){
+document.getElementsByClassName('slide').scrollLeft=position
+}
+
+var colorCodons=function(id, readingFrame){
+    var output=function(str,readingFrame){
+		var codons = [];
+		for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
+    		codons.push(str.substring(i+readingFrame, i + 3 +readingFrame));
+		};
+        outputStr='';
+        for (var element=0, listeLength=codons.length; element<listeLength; element++){
+
+            if (element%2==0){
+        	outputStr+='<font style="background-color:red;">';
+        	outputStr+= (codons[element]);
+            outputStr+= '</font>';
+            }
+        else{
+            outputStr+='<font style="background-color:yellow;">';
+        	outputStr+= (codons[element]);
+            outputStr+= '</font>' ;
+        	}
+    	};
+    	return(outputStr);
+    	};
+
+document.getElementById(id).innerHTML= (output(document.getElementById(id).innerHTML,parseInt(document.getElementById(readingFrame).innerHTML))).toUpperCase();
+};
+</script>
+
+
+
+</html>
