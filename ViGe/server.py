@@ -8,6 +8,7 @@ from common.DNA_and_6FramesTraduction import *
 import os
 
 
+
 # Initialize the Flask application
 app = flask.Flask(__name__, static_folder='front')
 
@@ -90,24 +91,30 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
                 return dictTab ######################################message d'erreur
             else:
                 print 'DictTab done!'
-                outputDict=A.addDictInDb(**dictTab['data'])
+                try:
+                    outputDict=A.addDictInDb(**dictTab['data'])
+                except:
+                    outputDict=O()
+                    return flask.jsonify(**K.JSONResponse(outputDict,False,'file in db!'))
 
             if outputDict['error'] ==True:
                 return outputDict ######################################message d'erreur
             else:
                 print 'copy_File_and_his_output_in_DB_File_Content'+' passed!'
+                print outputDict['data']
                 return flask.jsonify(**K.JSONResponse(outputDict['data'],False,'file in db!'))
 
 ########################################################################################################################
-@app.route('/api/v0/loadFile/<fileName>/', methods=['POST'])
+@app.route('/api/v0/loadFile/<fileName>/', methods=['POST','GET'])
 def load_File_in_DB_File_Content_to_client(filename):
+
     return('',204)
 
 
 ########################################################################################################################
 #produit un dict contenant les 6 frames d'ADN et leur traduction respectives
 
-@app.route('/api/v0/getDNA&AA/<seq>/')
+@app.route('/api/v0/getDNA&AA/<seq>/', methods=['POST','GET'])
 def getSequences(seq):
     seq=str(seq)
     temp= K.JSONResponse(DNA_and_6FramesTraduction(seq),False,'')
@@ -135,3 +142,5 @@ def modifyTree(userChoice):
 if __name__ == '__main__':
     app.debug=True
     app.run(host='0.0.0.0',port=8091)
+
+

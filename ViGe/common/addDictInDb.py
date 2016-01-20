@@ -9,6 +9,9 @@
 from db import getExons,addFileOverview,modifyPermissionDoc,addFileContent
 import kernel as K
 
+
+
+
 def addDictInDb(docLignes,filename,username,typs):
 
     #cree un fichier pour noter tout les exons n'ayant pas ete trouves dans la bd
@@ -24,7 +27,7 @@ def addDictInDb(docLignes,filename,username,typs):
                 docLignes[x]['end_mutation']=docLignes[x]['end']
                 docLignes[x]['strand_mutation']=docLignes[x]['strand']
                 docLignes[x].update(augmentedContent[0])
-                print docLignes[x]
+
 
                 try:
                     addFileContent(filename=filename,line=x,username=username,content=docLignes[x])
@@ -40,6 +43,8 @@ def addDictInDb(docLignes,filename,username,typs):
     addFileOverview(filename=filename,username=username,colonnes=typs)
     #la permission de lire,ecrire,'overview et le file owned dans file_Overview
     modifyPermissionDoc(username=username,fileReadPermission=filename,fileWritePermission=filename,fileOwned=filename)
+
+
 
     return K.JSONResponse(docLignes,False,'augmented content for this file is now in db')
 

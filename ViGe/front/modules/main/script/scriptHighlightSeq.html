@@ -57,11 +57,17 @@ var changeColor=function(id, readingFrame){
 
     var output=function(str,readingFrame){
 		var codons = [];
+
+		outputStr='';
+    	outputStr+='<font style="background-color:yellow;">';
+        outputStr=str.substring(0,readingFrame);
+        outputStr+= '</font>' ;
+
 		for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
     		codons.push(str.substring(i+readingFrame, i + 3 +readingFrame));
 		};
 
-        outputStr='';
+
 
         for (var element=0, listeLength=codons.length; element<listeLength; element++){
 

@@ -8,7 +8,7 @@ from pyGeno.tools.UsefulFunctions import *
 
 def DNA_and_6FramesTraduction(seq):
     seq=seq.upper()
-    outputDict={}
+    outputListe=[]
 
     seqf1=seq
     seqf2=seq[1:]
@@ -19,10 +19,10 @@ def DNA_and_6FramesTraduction(seq):
 
     translation=translateDNA_6Frames(sequence=seq)
 
-    outputDict['f1']=[seqf1,translation[0]]
-    outputDict['f2']=[seqf2,translation[1]]
-    outputDict['f3']=[seqf3,translation[2]]
-    outputDict['r1']=[seqr1,translation[3]]
-    outputDict['r2']=[seqr2,translation[4]]
-    outputDict['r3']=[seqr3,translation[5]]
-    return outputDict
+    outputListe.append([seqf1,translation[0]])
+    outputListe.append([seqf2,translation[1]])
+    outputListe.append([seqf3,translation[2]])
+    outputListe.append([seqr1,translation[3]])
+    outputListe.append([seqr2,translation[4]])
+    outputListe.append([seqr3,translation[5]])
+    return outputListe

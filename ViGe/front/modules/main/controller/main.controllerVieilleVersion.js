@@ -1,127 +1,30 @@
 var app = angular.module('ViGeFront.main.controllers', ['ui.bootstrap']);
 
-app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
-    /*ouvre le modal de l'upload*/
-    $scope.open = function () {
-    var modalUpload = $modal.open({
-    	templateUrl: '/front/modules/main/html/upload.html',
-    	controller:'uploadController',
-    	});
-  	};
 
-    /*set result = $rootScope.results*/
-    $scope.results=$rootScope.results
 
-    /*(re)initialise les variables au chargement de la vue et lors d'une nouvelle recherche*/
-    $scope.reset=function(){
-        $scope.strand_mutation='';
-        $scope.start_mutation='';
-        $scope.end_mutation='';
-        $scope.chromosome='';
-        $scope.strand='';
-        $scope.start='';
-        $scope.end='';
-        $scope.length='';
-        $scope.frame='';
-        $scope.CDS_start='';
-        $scope.CDS_end='';
-        $scope.CDS_length='';
-        $scope.gene_name='';
-        $scope.gene_id='';
-        $scope.transcript_name='';
-        $scope.transcript_id='';
-        $scope.id='';
-        $scope.number='';
-        $scope.protein_name='';
-        $scope.protein_id='';
-        $scope.peptide='';
-        $scope.sequence='';
-        };
+var mainCtrl = function($scope,$http,$modal,$rootScope) {
 
-  	    //colorie une sequence en fonction de ses codons
-  	    $scope.changeColor=function(str,readingFrame){
-  	        var codons = [];
-    		outputStr='';
-    		outputStr+='<font style="background-color:yellow;">'+str.substring(0,readingFrame)+'</font>';
+	/*(re)initialise les variables au chargement de la vue et lors d'une nouvelle recherche*/
+	$scope.reset=function(){
+		$scope.index = ' Veuillez cliquer sur un element # du tableau';
+		$scope.sequenceRef = '';
+		$scope.sequencePat = '';
+		$scope.sequenceDbSNP='';
+		$scope.sequenceProtein='';
+		$scope.chromosome = '';
+		$scope.rangeSeqPol='';
+		$scope.strand='';
+		$scope.annotation='';
+		$scope.results= '';
+	};
 
-			for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
-    			codons.push(str.substring(i+readingFrame, i + 3 +readingFrame));
-				};
+	$scope.results=$rootScope.results
 
-    		for (var element=0, listeLength=codons.length; element<listeLength; element++){
-        	    if (element%2==0){
-        		outputStr+='<font style="background-color:red;">';
-        		outputStr+= (codons[element]);
-        	    outputStr+= '</font>';
-        	    }
-        	else{
-        	    outputStr+='<font style="background-color:yellow;">';
-        		outputStr+= (codons[element]);
-        	    outputStr+= '</font>' ;
-        		}
-    		};
-    		return(outputStr);
-    	};
-
-    	$scope.get6frameslist=function(seq){
-			 $http({
-			 	method: 'GET',
-			 	url: '/api/v0/getDNA&AA/'+seq+'/'
-				}).then(function successCallback(response) {
-					// this callback will be called asynchronously
-					// when the response is available
-					$scope.F1=response.data.data[0]
-					$scope.F2=response.data.data[1]
-					$scope.F3=response.data.data[2]
-					$scope.R1=response.data.data[3]
-					$scope.R2=response.data.data[4]
-					$scope.R3=response.data.data[5]
-					console.log('yes');
-					}, function errorCallback(response) {
-					// called asynchronously if an error occurs
-					// or server returns response with an error status.
-					console.log('Noooooo!!!!');
-					console.log(response);
-					});
-			 };
-
-        /*modifie la fenetre polymorphisme*/
-        $scope.modifyPolWin=function(index, item){
-            $scope.index =index;
-            $scope.strand_mutation=item.strand_mutation;
-            $scope.start_mutation=item.start_mutation;
-            $scope.end_mutation=item.end_mutation;
-            $scope.chromosome=item.chromosome;
-            $scope.strand=item.strand;
-            $scope.start=item.start;
-            $scope.end=item.end;
-            $scope.length=item.length;
-            $scope.frame=item.frame;
-            $scope.CDS_start=item.CDS_start;
-            $scope.CDS_end=item.CDS_end;
-            $scope.CDS_length=item.CDS_length;
-            $scope.gene_name=item.gene_name;
-            $scope.gene_id=item.gene_id;
-            $scope.transcript_name=item.transcript_name;
-            $scope.transcript_id=item.transcript_id;
-            $scope.id=item.id;
-            $scope.number=item.number;
-            $scope.protein_name=item.protein_name;
-            $scope.protein_id=item.protein_id;
-            $scope.peptide=item.peptide;
-            $scope.seq=item.sequence;
-            $scope.sequence=$scope.changeColor($scope.seq,$scope.frame);
-            $scope.trustedHtml=$sce.trustAsHtml($scope.sequence);
-            $scope.list6frames=$scope.get6frameslist($scope.seq);
-            };
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*modifie la fenetre de l'arbre*/
+	/*modifie la fenetre de l'arbre*/
 	$scope.modifyTree=function(userChoice, Tree){
 		$scope.tree ='';
 		console.log(userChoice)
-
+		
 		/*envoie au serveur une annotation et le dict*/
     	$http({
     	method: 'GET',
@@ -139,9 +42,69 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
   		    console.log(response);
   		    })
     	};
-});
 
 
+
+
+	/*modifie la fenetre polymorphisme*/
+	$scope.modifyPolWin=function(index, item){
+		console.log(item.start)
+		$scope.index =index;
+		$scope.sequenceRef=item.sequence;
+		$scope.seqProtsequencePat=item.sequence.substring(0,9)+'─'+item.sequence.substring(10,22);
+		$scope.sequenceDbSNP=item.sequenceDbSNP;
+		//$scope.sequenceProtein=item.peptide;
+		$scope.rangeSeqPol= item.start-9+'-'+(9+item.start); // verifier infos
+		$scope.chromosome = item.chromosome;
+		$scope.annotation = item.annotation;
+		$scope.strand=item.strand;
+	};
+
+	$scope.open = function () {
+    	var modalUpload = $modal.open(
+    		{
+    		templateUrl: '/front/modules/main/html/upload.html',
+    		controller:'uploadController',
+    		}
+    	);
+  	};
+
+	$scope.changeColor=function(id, readingFrame){
+    	var output=function(str,readingFrame){
+			var codons = [];
+			for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
+    			codons.push(str.substring(i+readingFrame, i + 3 +readingFrame));
+			};
+
+    	    outputStr='';
+
+    	    for (var element=0, listeLength=codons.length; element<listeLength; element++){
+
+    	        if (element%2==0){
+    	    	outputStr+='<font style="background-color:red;">';
+    	    	outputStr+= (codons[element]);
+    	        outputStr+= '</font>';
+    	        }
+
+    	    else{
+    	        outputStr+='<font style="background-color:yellow;">';
+    	    	outputStr+= (codons[element]);
+    	        outputStr+= '</font>' ;
+    	    	}
+    		};
+
+    		return(outputStr);
+    		};
+	document.getElementById(id).innerHTML= (output(document.getElementById(id).innerHTML,readingFrame));
+	}
+
+
+};
+
+
+
+
+app.controller('mainCtrl', mainCtrl);
 
 
 app.factory('Tree', function(){

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/front/modules/main/css/tab.css" />
 <link rel="stylesheet" href="/front/modules/main/css/font-awesome-4.4.0/css/font-awesome.css" />
 <link rel="stylesheet" href="/front/modules/main/css/tree.css"
-<div id="main" class="container-fluid" data-ng-init="reset(); rapido()">
+<div id="main" class="container-fluid" data-ng-init="reset()">
     <script src="http://d3js.org/d3.v3.min.js"></script>
 
     <!-- top page-->
@@ -60,6 +60,7 @@
                             <th ng-click = "modifyTree('frame')">Frame</th>
                             <th ng-click = "modifyTree('CDS_start')">CDS start position</th>
                             <th ng-click = "modifyTree('CDS_end')">CDS end position</th>
+                            <th ng-click = "modifyTree('CDS_length')">CDS length</th>
                             <th ng-click = "modifyTree('gene_name')">Gene Name</th>
                             <th ng-click = "modifyTree('gene_id')">Gene Id</th>
                             <th ng-click = "modifyTree('transcript_name')">Transcript Name</th>
@@ -69,6 +70,7 @@
                             <th ng-click = "modifyTree('protein_name')">Protein Name</th>
                             <th ng-click = "modifyTree('protein_id')">Protein Id</th>
                             <th ng-click = "modifyTree('peptide')">Peptide</th>
+                            <th ng-click = "modifyTree('sequence')">Sequence</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -86,6 +88,7 @@
                             <td>{{item.frame}}</td>
                             <td>{{item.CDS_start}}</td>
                             <td>{{item.CDS_end}}</td>
+                            <td>{{item.CDS_length}}</td>
                             <td>{{item.gene_name}}</td>
                             <td>{{item.gene_id}}</td>
                             <td>{{item.transcript_name}}</td>
@@ -95,6 +98,7 @@
                             <td>{{item.protein_name}}</td>
                             <td>{{item.protein_id}}</td>
                             <td>{{item.peptide}}</td>
+                            <td>{{item.sequence}}</td>
 
 
 
@@ -150,7 +154,7 @@
 
                 <!--body-->
                 <div class="panel-body">
-                    <div class="modal-body">
+
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
 
@@ -158,20 +162,27 @@
                                     <div class="span3">
                                         <table class="table table-bordered">
                                             <thead>
-                                            <td><strong>Chromosome</strong></td>
-                                            <td><strong>Start-end</strong></td>
-                                            <td><strong>Annotation</strong></td>
-                                            <td><strong>Strand</strong></td>
+                                            <td><strong> Ref Seq</strong></td>
+                                            <td><strong>F1 Ref Seq</strong></td>
+                                            <td><strong>F2 Ref Seq</strong></td>
+                                            <td><strong>F3 Ref Seq</strong></td>
+                                            <td><strong>R1 Ref Seq</strong></td>
+                                            <td><strong>R2 Ref Seq</strong></td>
+                                            <td><strong>R3 Ref Seq</strong></td>
                                             </thead>
                                             <tbody>
-                                            <td>{{chromosome}}</td>
-                                            <td>{{rangeSeqPol}}</td>
-                                            <td>{{annotation}}</td>
-                                            <td>{{strand}}</td>
+                                            <td ng-bind-html="trustedHtml"></td>
+                                            <td>{{F1}}</td>
+                                            <td>{{F2}}</td>
+                                            <td>{{F3}}</td>
+                                            <td>{{R1}}</td>
+                                            <td>{{R2}}</td>
+                                            <td>{{R3}}</td>
+
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+
                             </div>
 
 
