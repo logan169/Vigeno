@@ -5,17 +5,17 @@
     <title></title>
 
     <style>
-    scroll{
-    font-family:Arial, sans-serif;
-    font-size:14px;
-    font-weight:normal;
-    padding:20px 20px;
-    border-style:solid;
-    border-width:1px;
-    overflow:auto;
-    max-width:50px;
-}
-</style>
+        scroll{
+        font-family:Arial, sans-serif;
+        font-size:14px;
+        font-weight:normal;
+        padding:20px 20px;
+        border-style:solid;
+        border-width:1px;
+        overflow:auto;
+        max-width:50px;
+        }
+    </style>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -30,19 +30,45 @@
     </thead>
     <tbody>
     <td>
-<p id="rawSeq">acgtagctgagctgcagctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtaagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtatagctgactgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtagatgtacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgatgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgactgatcgtactcatgctgatgcgta</p>
-</td>
-     <td><p id="rawSeqLength" ></p></td>
- <td><p id="seq" ></p></td>
- <td><p id="seqLength"></p></td>
- <td><p id="start">0</p></td>
- <td><p id="end">100</p></td>
-    </tbody>
-</div>
-<button onclick="moveSeqLeft(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor('seq',0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> </button>
-<button onclick="moveSeqRigth(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor('seq',0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-right"></span> </button>
+        <p id="rawSeq">acgtagctgagctgcagctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgctagcacgtagctgagctgcacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtaagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtatagctgactgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtagatgtacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgatgacgtagctgagctgcagctagctagctgactggatgtcgatgcgactgatcgtactcatgctgatgcgtacgactgatcgtactcatgctgatgcgta</p>
+    </td>
+    <td><p id="rawSeqLength" ></p></td>
+    <td><p id="seq" ></p></td>
+    <td><p id="seqLength"></p></td>
+    <td><p id="start">0</p></td>
+    <td><p id="end">100</p></td>
 
-<script>
+    </tbody>
+
+    <style type="text/css">
+        span {
+        display: inline-block;
+        width:30px;
+        text-align:center;
+        }
+        span1{
+        display: inline-block;
+        width:10px;
+        }
+
+    </style>
+
+
+<div>
+    <p><span><font style="background-color:yellow;">ABC</font></span><span><font style="background-color:red;">ABC</font></span><span><font style="background-color:yellow;">ABC</font></span></p>
+
+
+
+    <p><font style="background-color:red;"><span1></span1></font><font style="background-color:red;"><span>A</span></font><font style="background-color:yellow;"><span>E</span></font><font style="background-color:red;"><span>E</span></font><font style="background-color:yellow;"><span>F</span></font><font style="background-color:red;"><span>H</span></font><font style="background-color:yellow;"><span>S</span></font><font style="background-color:red;"><span>V</span></font><font style="background-color:yellow;"><span>V</span></font><font style="background-color:red;"><span>H</span></font><font style="background-color:yellow;"><span>A</span></font><font style="background-color:red;"><span>L</span></font><font style="background-color:yellow;"><span>L</span></font><font style="background-color:red;"><span>E</span></font><font style="background-color:yellow;"><span>W</span></font><font style="background-color:red;"><span>L</span></font><font style="background-color:yellow;"><span>A</span></font><font style="background-color:red;"><span>E</span></font><font style="background-color:yellow;"><span>A</span></font><font style="background-color:red;"><span>E</span></font><font style="background-color:yellow;"><span>Q</span></font><font style="background-color:red;"><span>T</span></font><font style="background-color:yellow;"><span>L</span></font><font style="background-color:red;"><span>R</span></font><font style="background-color:yellow;"><span>F</span></font><font style="background-color:red;"><span>H</span></font><font style="background-color:yellow;"><span>G</span></font><font style="background-color:red;"><span>V</span></font><font style="background-color:yellow;"><span>L</span></font><font style="background-color:red;"><span>P</span></font><font style="background-color:yellow;"><span>D</span></font><font style="background-color:red;"><span>D</span></font><font style="background-color:yellow;"><span>E</span></font><font style="background-color:red;"><span>D</span></font><font style="background-color:yellow;"><span>A</span></font><font style="background-color:red;"><span>L</span></font><font style="background-color:yellow;"><span>R</span></font><font style="background-color:red;"><span>T</span></font><font style="background-color:yellow;"><span>L</span></font><font style="background-color:red;"><span>I</span></font><font style="background-color:yellow;"><span>D</span></font><font style="background-color:red;"><span>Q</span></font><font style="background-color:yellow;"><span>H</span></font><font style="background-color:red;"><span>K</span></font></p>
+    </div>
+<p><font style="background-color:yellow;"></font><font style="background-color:red;"><span>GCA</span></font><font style="background-color:yellow;">GAG</font><font style="background-color:red;"><span>GAA</span></font><font style="background-color:yellow;">TTC</font><font style="background-color:red;"><span>CAC</span></font><font style="background-color:yellow;">TCG</font><font style="background-color:red;"><span>GTG</span></font><font style="background-color:yellow;">GTA</font><font style="background-color:red;"><span>CAT</span></font><font style="background-color:yellow;">GCC</font><font style="background-color:red;"><span>CTC</span></font><font style="background-color:yellow;">TTG</font><font style="background-color:red;"><span>GAG</span></font><font style="background-color:yellow;">TGG</font><font style="background-color:red;"><span>CTG</span></font><font style="background-color:yellow;">GCT</font><font style="background-color:red;"><span>GAG</span></font><font style="background-color:yellow;">GCG</font><font style="background-color:red;"><span>GAG</span></font><font style="background-color:yellow;">CAA</font><font style="background-color:red;"><span>ACC</span></font><font style="background-color:yellow;">CTG</font><font style="background-color:red;"><span>CGT</span></font><font style="background-color:yellow;">TTC</font><font style="background-color:red;"><span>CAT</span></font><font style="background-color:yellow;">GGT</font><font style="background-color:red;"><span>GTC</span></font><font style="background-color:yellow;">CTC</font><font style="background-color:red;"><span>CCA</span></font><font style="background-color:yellow;">GAT</font><font style="background-color:red;"><span>GAT</span></font><font style="background-color:yellow;">GAG</font><font style="background-color:red;"><span>GAT</span></font><font style="background-color:yellow;">GCT</font><font style="background-color:red;"><span>CTC</span></font><font style="background-color:yellow;">CGG</font><font style="background-color:red;"><span>ACT</span></font><font style="background-color:yellow;">CTC</font><font style="background-color:red;"><span>ATT</span></font><font style="background-color:yellow;">GAT</font><font style="background-color:red;"><span>CAG</span></font><font style="background-color:yellow;">CAT</font><font style="background-color:red;"><span>AAA</span></font></p>
+
+
+    </div>
+    <button onclick="moveSeqLeft(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor('seq',0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> </button>
+    <button onclick="moveSeqRigth(document.getElementById('rawSeq').innerHTML,document.getElementById('start').innerHTML,document.getElementById('end').innerHTML);changeColor('seq',0)" type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-right"></span> </button>
+
+    <script>
 //ON LOAD, seq is seq.substr(start,end)
 
 var startSeq= function(){
@@ -92,7 +118,7 @@ document.getElementById(id).innerHTML= (output(document.getElementById(id).inner
 
 </script>
 
-<script>
+    <script>
 /*
 Ce script permet d'afficher une nouvelle sous string d'une string mere
 
@@ -160,5 +186,48 @@ var moveSeqLeft=function(str,oldStart,oldEnd){
 
 </script>
 
+
+
+    <<form>
+      <label for="f1">F1</label>
+      <input id="f1" type="radio" name="content" ng-model="content" value="f1">
+      <br/>
+      <label for="f2">F2</label>
+      <input id="f2" type="radio" name="content" ng-model="content" value="f2">
+      <br />
+              <label for="f3">F3</label>
+      <input id="f3" type="radio" name="content" ng-model="content" value="f3">
+      <br />
+              <label for="R1">R1</label>
+      <input id="R1" type="radio" name="content" ng-model="content" value="R1">
+      <br />
+              <label for="r2">R2</label>
+      <input id="r2" type="radio" name="content" ng-model="content" value="r2">
+      <br />
+              <label for="r3">R3</label>
+      <input id="r3" type="radio" name="content" ng-model="content" value="r3">
+      <br />
+    </form>
+
+    <div class="wrapper">
+        <p ng-show="content == 'f1'">f1!</p>
+        <p ng-show="content == 'f2'">f2!</p>
+        <p ng-show="content == 'f3'">f3!</p>
+        <p ng-show="content == 'r1'">r1!</p>
+        <p ng-show="content == 'r2'">r2!</p>
+        <p ng-show="content == 'r3'">r3!</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 </body>
 </html>
+
+
+
+dictAA={'F':'lime','L':'cyan','M':'blue','*':'red','V':'yellow','I':'green','S':'coral','P':'burlywood','T':'mediumpurple','A':'lightpink','Y':'brown','H':'orange','Q':'mediumturquoise','N':'olive','K':'palegreen','D':'palegoldenrod','E':'royalblue','W':'seashell','C':'slategrey','R':'tomato','G':'salmon'}
+

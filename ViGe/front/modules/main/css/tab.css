@@ -3,8 +3,22 @@
 	overflow: auto;
 }
 
+p {
+display:flex !important;
+}
 
 .clickableTr {
     cursor:pointer;
     color:black;
 }
+
+span {
+display: inline-block;
+width:30px;
+text-align:center;
+}
+
+span1{
+    display: inline-block;
+    width:10px;
+    }

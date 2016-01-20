@@ -131,10 +131,10 @@
 
 
 
-                            <div class="svg" id="visRow">
-                                <style type="text/css">svg {display: block; width: auto; height:auto; }</style>
+                        <div class="svg" id="visRow">
+                            <style type="text/css">svg {display: block; width: auto; height:auto; }</style>
 
-                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -155,46 +155,86 @@
                 <!--body-->
                 <div class="panel-body">
 
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
 
-                                <div class="table-responsive">
-                                    <div class="span3">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <td><strong> Ref Seq</strong></td>
-                                            <td><strong>F1 Ref Seq</strong></td>
-                                            <td><strong>F2 Ref Seq</strong></td>
-                                            <td><strong>F3 Ref Seq</strong></td>
-                                            <td><strong>R1 Ref Seq</strong></td>
-                                            <td><strong>R2 Ref Seq</strong></td>
-                                            <td><strong>R3 Ref Seq</strong></td>
-                                            </thead>
-                                            <tbody>
-                                            <td ng-bind-html="trustedHtml"></td>
-                                            <td>{{F1}}</td>
-                                            <td>{{F2}}</td>
-                                            <td>{{F3}}</td>
-                                            <td>{{R1}}</td>
-                                            <td>{{R2}}</td>
-                                            <td>{{R3}}</td>
+                            <div class="table-responsive">
+                                <div class="span4">
+                                    <form>
+                                        <h6><strong>Change reading Frame:</strong></h6>
+                                        <label for="f1">F1</label>
+                                        <input id="f1" type="radio" name="content" ng-model="content" value="f1">
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <label for="f2">F2</label>
+                                        <input id="f2" type="radio" name="content" ng-model="content" value="f2">
+
+                                        <label for="f3">F3</label>
+                                        <input id="f3" type="radio" name="content" ng-model="content" value="f3">
+
+                                        <label for="r1">R1</label>
+                                        <input id="r1" type="radio" name="content" ng-model="content" value="r1">
+
+                                        <label for="r2">R2</label>
+                                        <input id="r2" type="radio" name="content" ng-model="content" value="r2">
+
+                                        <label for="r3">R3</label>
+                                        <input id="r3" type="radio" name="content" ng-model="content" value="r3">
+
+                                    </form>
+                                    <br />
+
+                                    <table class="table table-bordered">
+
+                                        <tbody>
+
+                                        <td>
+                                            <div ng-show="content == 'f1'">
+                                                <p ng-bind-html="trustedHtml00"></p>
+                                                <p ng-bind-html="trustedHtml01"></p>
+                                            </div>
+
+                                            <div ng-show="content == 'f2'">
+                                                <p ng-bind-html="trustedHtml10"></p>
+                                                <p ng-bind-html="trustedHtml11"></p>
+                                            </div>
+
+                                            <div ng-show="content == 'f3'">
+                                                <p ng-bind-html="trustedHtml20"></p>
+                                                <p ng-bind-html="trustedHtml21"></p>
+                                            </div>
+
+                                            <div ng-show="content == 'r1'">
+                                                <p ng-bind-html="trustedHtml30"></p>
+                                                <p ng-bind-html="trustedHtml31"></p>
+                                            </div>
+
+                                            <div ng-show="content == 'r2'">
+                                                <p ng-bind-html="trustedHtml40"></p>
+                                                <p ng-bind-html="trustedHtml41"></p>
+                                            </div>
+
+                                            <div ng-show="content == 'r3'">
+                                                <p ng-bind-html="trustedHtml50"></p>
+                                                <p ng-bind-html="trustedHtml51"></p>
+                                            </div>
+                                            <br>
+                                        </td>
+                                        </tbody>
+                                    </table>
+                                </div>
 
                             </div>
 
 
 
 
-                        </form>
+                    </form>
 
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 

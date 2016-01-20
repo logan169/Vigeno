@@ -38,8 +38,8 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
         $scope.sequence='';
         };
 
-  	    //colorie une sequence en fonction de ses codons
-  	    $scope.changeColor=function(str,readingFrame){
+  	    //colorie une sequence d'ADN en fonction de ses codons
+  	    $scope.changeColorADN=function(str,readingFrame){
   	        var codons = [];
     		outputStr='';
     		outputStr+='<font style="background-color:yellow;">'+str.substring(0,readingFrame)+'</font>';
@@ -50,9 +50,9 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
 
     		for (var element=0, listeLength=codons.length; element<listeLength; element++){
         	    if (element%2==0){
-        		outputStr+='<font style="background-color:red;">';
+        		outputStr+='<font style="background-color:red;"><span>';
         		outputStr+= (codons[element]);
-        	    outputStr+= '</font>';
+        	    outputStr+= '</span></font>';
         	    }
         	else{
         	    outputStr+='<font style="background-color:yellow;">';
@@ -63,6 +63,19 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
     		return(outputStr);
     	};
 
+    	//colorie une sequence d'ADN en fonction de ses codons
+  	    $scope.changeColorAA=function(str,readingFrame){
+  	    	dictAA={'F':'lime','L':'cyan','M':'cornflowerblue','*':'red','V':'yellow','I':'green','S':'coral','P':'burlywood','T':'mediumpurple','A':'lightpink','Y':'brown','H':'orange','Q':'mediumturquoise','N':'olive','K':'palegreen','D':'palegoldenrod','E':'royalblue','W':'seashell','C':'slategrey','R':'tomato','G':'salmon'};
+    		outputStr='';
+    		outputStr+='<font style="background-color:white;"><span1></span1></font>'.repeat(readingFrame)
+    		for (var element=0, listeLength=str.length; element<listeLength; element++){
+        		outputStr+='<font style="background-color:'+dictAA[str[element]]+'";><span>';
+        		outputStr+= (str[element]);
+        	    outputStr+= '</span></font>';
+        	    };
+    		return(outputStr);
+    	};
+
     	$scope.get6frameslist=function(seq){
 			 $http({
 			 	method: 'GET',
@@ -70,20 +83,41 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
 				}).then(function successCallback(response) {
 					// this callback will be called asynchronously
 					// when the response is available
-					$scope.F1=response.data.data[0]
-					$scope.F2=response.data.data[1]
-					$scope.F3=response.data.data[2]
-					$scope.R1=response.data.data[3]
-					$scope.R2=response.data.data[4]
-					$scope.R3=response.data.data[5]
-					console.log('yes');
+					$scope.seqTrad=response.data.data
+					$scope.trustedHtml00=$sce.trustAsHtml($scope.changeColorADN($scope.seqTrad[0][0],0));
+            		$scope.trustedHtml10=$sce.trustAsHtml($scope.changeColorADN($scope.seqTrad[1][0],1));
+            		$scope.trustedHtml20=$sce.trustAsHtml($scope.changeColorADN($scope.seqTrad[2][0],2));
+            		$scope.trustedHtml30=$sce.trustAsHtml($scope.changeColorADN($scope.seqTrad[3][0],0));
+            		$scope.trustedHtml40=$sce.trustAsHtml($scope.changeColorADN($scope.seqTrad[4][0],1));
+            		$scope.trustedHtml50=$sce.trustAsHtml($scope.changeColorADN($scope.seqTrad[5][0],2));
+
+            		$scope.trustedHtml01=$sce.trustAsHtml($scope.changeColorAA($scope.seqTrad[0][1],0));
+            		$scope.trustedHtml11=$sce.trustAsHtml($scope.changeColorAA($scope.seqTrad[1][1],1));
+            		$scope.trustedHtml21=$sce.trustAsHtml($scope.changeColorAA($scope.seqTrad[2][1],2));
+            		$scope.trustedHtml31=$sce.trustAsHtml($scope.changeColorAA($scope.seqTrad[3][1],0));
+            		$scope.trustedHtml41=$sce.trustAsHtml($scope.changeColorAA($scope.seqTrad[4][1],1));
+            		$scope.trustedHtml51=$sce.trustAsHtml($scope.changeColorAA($scope.seqTrad[5][1],2));
+					//console.log('yes');
 					}, function errorCallback(response) {
 					// called asynchronously if an error occurs
 					// or server returns response with an error status.
-					console.log('Noooooo!!!!');
+					//console.log('Noooooo!!!!');
 					console.log(response);
 					});
 			 };
+
+		$scope.startingStrandAndFrame=function(strand,frame){
+			outputFrame='';
+			if (strand=='+'){
+				outputFrame+='f'
+			}
+			else{
+				outputFrame+='r'
+			}
+			outputFrame+=parseInt(frame)+1
+			console.log(outputFrame)
+			document.getElementById(outputFrame).click();
+		}
 
         /*modifie la fenetre polymorphisme*/
         $scope.modifyPolWin=function(index, item){
@@ -110,9 +144,8 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
             $scope.protein_id=item.protein_id;
             $scope.peptide=item.peptide;
             $scope.seq=item.sequence;
-            $scope.sequence=$scope.changeColor($scope.seq,$scope.frame);
-            $scope.trustedHtml=$sce.trustAsHtml($scope.sequence);
             $scope.list6frames=$scope.get6frameslist($scope.seq);
+            $scope.startingStrandAndFrame($scope.strand,$scope.frame);
             };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
