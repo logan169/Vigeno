@@ -6,7 +6,7 @@ import kernel as K
 
 
 
-#startPos est une fonction prenant 3 arguments (str,str,int) en entree et donne en output
+#startPos est une fonction prenant  arguments (str,str,int) en entree et donne en output
 #un dictionnaire contenant des informations associees a la position soumise ex: geneID,sequence,annotation....
 def startPos (genomeId,chromosomeId, startPosition):
 

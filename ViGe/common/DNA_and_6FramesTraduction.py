@@ -8,21 +8,13 @@ from pyGeno.tools.UsefulFunctions import *
 
 def DNA_and_6FramesTraduction(seq):
     seq=seq.upper()
-    outputListe=[]
+    outputDict={}
 
-    seqf1=seq
-    seqf2=seq[1:]
-    seqf3=seq[2:]
-    seqr1=reverseComplement(seq)
-    seqr2=reverseComplement(seq)[1:]
-    seqr3=reverseComplement(seq)[2:]
-
+    DNAs=[seq, seq[1:], seq[2:], reverseComplement(seq), reverseComplement(seq)[1:], reverseComplement(seq)[2:]]
     translation=translateDNA_6Frames(sequence=seq)
+    frames = ["f1", "f2", "f3", "r1", "r2", "r3"]
 
-    outputListe.append([seqf1,translation[0]])
-    outputListe.append([seqf2,translation[1]])
-    outputListe.append([seqf3,translation[2]])
-    outputListe.append([seqr1,translation[3]])
-    outputListe.append([seqr2,translation[4]])
-    outputListe.append([seqr3,translation[5]])
-    return outputListe
+    for frame, DNA, AA in zip(frames, DNAs, translation ) :
+        outputDict[frame] = ( { "DNA" : DNA, "AA" : AA})
+
+    return outputDict

@@ -122,6 +122,17 @@ def getSequences(seq):
 
 
 ########################################################################################################################
+########################################################################################################################
+#produit un dict contenant les 6 frames d'ADN et leur traduction respectives
+
+@app.route('/api/v0/getDNA&AADBSNIP/<seq>/', methods=['POST','GET'])
+def gedsequencesDbSNIP(seq):
+    seq=str(seq)
+    temp= K.JSONResponse(DNA_and_6FramesTraduction(seq),False,'')
+    return flask.jsonify(**temp)
+
+
+########################################################################################################################
 
 
 @app.route('/api/v0/modifyTree/<userChoice>/', methods=['GET'])
