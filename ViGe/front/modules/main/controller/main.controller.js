@@ -28,11 +28,27 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 		return codons;
 	};
 
-
-
 	$scope.changeFrameButtonColor = function(value) {
 		$scope.currentPoly.selectedFrame=value;
     };
+
+    var getdbSnipSeq=function(chromosome,start,end){
+    	$http({
+			method: 'GET',
+			url: '/api/v0/getDNA&AADBSNIP/'+chromosome+'/'+start+'/'+end+'/'
+			}).then(function successCallback(response) {
+				// this callback will be called asynchronously
+				// when the response is available
+
+				$scope.currentPoly.allFramesDbSnps=response.data.data
+				console.log('yes');
+				}, function errorCallback(response) {
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+				console.log('Noooooo!!!!');
+				console.log(response);
+				});
+		};
 
 
 	var get6frames=function(seq){
@@ -72,18 +88,44 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 			index :index,
 			strand : item.strand,
 			start : item.start,
+			chromosome:item.chromosome,
 			end : item.end,
 			frame : item.frame,
 			peptide : item.peptide,
-			seq : item.sequence
+			seq : item.sequence,
+			gene:{
+				id:item.gene_id,
+				name:item.gene_name,
+			},
+			transcript:{
+				name:item.transcript_name,
+				id:item.transcript_id
+			},
+			exon_id:item.id,
+			protein:{
+				name:item.protein_name,
+				id:item.protein_id
+			}
 		}
 
 		get6frames($scope.currentPoly.seq);
+		getdbSnipSeq(item.chromosome,item.start,item.end);//modifier code pour obtenir dbsnp filter
 		$scope.currentPoly.selectedFrame=startingStrandAndFrame(item.strand, item.frame);
 
 	};
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
     /*modifie la fenetre de l'arbre*/
 	$scope.modifyTree=function(userChoice, Tree){

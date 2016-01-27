@@ -1,10 +1,11 @@
-.tbl {
+.span3 {
 	height: 200px;
 	overflow: auto;
 }
 .span2 {
 	width: 100%;
 	overflow: auto;
+	text-align:-webkit-center;
 }
 
 .clickableTr {
@@ -25,6 +26,15 @@ background-color:#C3E8DE;
 .codon-1{
 background-color:#99F8FF;
 }
+
+.codonSnp-0{
+background-color:#FDCDCD;
+}
+
+.codonSnp-1{
+background-color:#E88C8C;
+}
+
 
 .K{
 background-color:#ffffcc;}

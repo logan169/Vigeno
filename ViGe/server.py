@@ -4,7 +4,8 @@ import common.parser as P
 import common.addDictInDb as A
 import common.kernel as K
 import common.tree as T
-from common.DNA_and_6FramesTraduction import *
+from common.DNA_and_6FramesTraduction import DNA_and_6FramesTraduction
+from common.getDbSnipSeq import getdbSnipSeq
 import os
 
 
@@ -125,10 +126,12 @@ def getSequences(seq):
 ########################################################################################################################
 #produit un dict contenant les 6 frames d'ADN et leur traduction respectives
 
-@app.route('/api/v0/getDNA&AADBSNIP/<seq>/', methods=['POST','GET'])
-def gedsequencesDbSNIP(seq):
-    seq=str(seq)
-    temp= K.JSONResponse(DNA_and_6FramesTraduction(seq),False,'')
+@app.route('/api/v0/getDNA&AADBSNIP/<chromosome>/<int:start>/<int:end>/', methods=['POST','GET'])
+def getsequencesDbSNIP(chromosome,start,end):
+    chromosome=str(chromosome)
+    start=int(start)
+    end=int(end)
+    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end)),False,'')
     return flask.jsonify(**temp)
 
 

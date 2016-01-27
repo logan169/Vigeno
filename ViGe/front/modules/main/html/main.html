@@ -44,7 +44,7 @@
         <!--tableau body-->
         <div class="panel-body">
             <div class="table-responsive">
-                <div class="tbl">
+                <div class="span3">
                     <table class="table table-bordered">
                         <thead>
                         <tr class="clickableTr">
@@ -117,7 +117,7 @@
             <!--title-->
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    Polymorphisme : sequence {{index}}
+                    Polymorphisme : sequence {{currentPoly.index}}
 
                 </h4>
             </div>
@@ -146,17 +146,45 @@
                 <br><br>
 
                 <div class="span2">
-                    <table >
-
+                    <table class="block-center">
                         <tr>
                             <th ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
                         </tr>
                         <tr>
                             <th ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
                         </tr>
+                        <br/>
+
+                        <tr>
+                            <th ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</th>
+                        </tr>
+                        <tr>
+                            <th ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
+                        </tr>
+
+
+
+
                     </table>
                 </div>
 
+                <a href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" ng-class="{hidden:currentPoly.gene.id==null}">Gene link to Ensembl</a>
+                <br>
+
+                <a href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.transcript.id==null}">Transcript link to Ensembl</a>
+                <br>
+
+                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.exon_id==null}">Exon link to Ensembl</a>
+                <br>
+
+                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.protein_id==null}">Protein link to Ensembl</a>
+                <br>
+------------------------------
+                <!-- afficher pour comparer frame supposé etre afficher et celui vraiment affiché-->
+                {{currentPoly.allFrames}}
+                <br>
+                ------------------------------
+                {{currentPoly.allFramesDbSnps}}
 
             </div>
         </div>
