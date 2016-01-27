@@ -2,7 +2,7 @@
 
 var app = angular.module('ViGeFront.main.controllers', ['ui.bootstrap']);
 
-app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
+app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 
     /*ouvre le modal de l'upload*/
     $scope.open = function () {
@@ -14,15 +14,26 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
 
     /*set result = $rootScope.results*/
     $scope.results=$rootScope.results;
-    $scope.currentPoly = {};
+    $scope.currentPoly = {
+    	selectedFrame:null,
+    	vrai:true,
+    };
 
-	var splitDna=function(str){
+	$scope.splitDna=function(str){
 		var codons = [];
 		for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
 			codons.push(str.substring(i, i + 3 ));
 		};
+		//console.log(codons)
 		return codons;
 	};
+
+
+
+	$scope.changeFrameButtonColor = function(value) {
+		$scope.currentPoly.selectedFrame=value;
+    };
+
 
 	var get6frames=function(seq){
 		 $http({
@@ -32,7 +43,6 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
 				// this callback will be called asynchronously
 				// when the response is available
 				$scope.currentPoly.allFrames=response.data.data
-
 				console.log('yes');
 				}, function errorCallback(response) {
 				// called asynchronously if an error occurs
@@ -52,13 +62,13 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
 		outputFrame+='r';
 			outputFrame+=parseInt(frame)+1
 		}
-		console.log(outputFrame)
 		return outputFrame;
 	}
 
 	/*modifie la fenetre polymorphisme*/
 	$scope.modifyPolWin=function(index, item){
 		$scope.currentPoly = {
+			vrai:true,
 			index :index,
 			strand : item.strand,
 			start : item.start,
@@ -68,8 +78,9 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$sce){
 			seq : item.sequence
 		}
 
+		get6frames($scope.currentPoly.seq);
 		$scope.currentPoly.selectedFrame=startingStrandAndFrame(item.strand, item.frame);
-		get6frames($scope.seq);
+
 	};
 
     /////////////////////////////////////////////////////////////////////////////////////////////////

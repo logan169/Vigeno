@@ -1,6 +1,7 @@
-<link rel="stylesheet" href="/front/modules/main/css/tab.css" />
+
 <link rel="stylesheet" href="/front/modules/main/css/font-awesome-4.4.0/css/font-awesome.css" />
-<link rel="stylesheet" href="/front/modules/main/css/tree.css"
+<link rel="stylesheet" href="/front/modules/main/css/tree.css"/>
+<link rel="stylesheet" href="/front/modules/main/css/templates/main.css"/>
 <div id="main" class="container-fluid" data-ng-init="reset()">
     <script src="http://d3js.org/d3.v3.min.js"></script>
 
@@ -43,7 +44,7 @@
         <!--tableau body-->
         <div class="panel-body">
             <div class="table-responsive">
-                <div class="span3">
+                <div class="tbl">
                     <table class="table table-bordered">
                         <thead>
                         <tr class="clickableTr">
@@ -84,7 +85,7 @@
                             <td>{{item.start}}</td>
                             <td>{{item.end}}</td>
                             <td>{{item.length}}</td>
-                            <td>{{item.frame}}</td>
+                            <td>{{item.frame+1}}</td>
                             <td>{{item.CDS_start}}</td>
                             <td>{{item.CDS_end}}</td>
                             <td>{{item.CDS_length}}</td>
@@ -98,9 +99,6 @@
                             <td>{{item.protein_id}}</td>
                             <td>{{item.peptide}}</td>
                             <td>{{item.sequence}}</td>
-
-
-
                         </tr>
                         </tbody>
                     </table>
@@ -126,30 +124,38 @@
 
             <!--body-->
             <div class="panel-body text-center">
-
-
+                <!--
+                <pre>{{currentPoly.selectedFrame }}</pre>
                 <div class="btn-group">
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="0">Forward 1</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="1">Forward 2</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="2">Forward 3</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="3">Reverse 1</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="4">Reverse 2</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="5">Reverse 3</label>
+                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="f1" >Forward 1</label>
+                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="f2" >Forward 2</label>
+                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="f3" >Forward 3</label>
+                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="r1" >Reverse 1</label>
+                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="r2" >Reverse 2</label>
+                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="r3" >Reverse 3</label>
                 </div>
-                {{selectedFrame}}
 
+                -->
 
+                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f1'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f1" class="hidden">Forward 1</label>
+                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f2'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f2" class="hidden">Forward 2</label>
+                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f3'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f3" class="hidden">Forward 3</label>
+                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r1'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r1" class="hidden">Reverse 1</label>
+                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r2'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r2" class="hidden">Reverse 2</label>
+                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r3'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r3" class="hidden">Reverse 3</label>
+                <br><br>
 
-                <table>
+                <div class="span2">
+                    <table >
 
-                    <tr>
-                        <th ng-repeat="item in splitDna(dict['f1']['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
-                    </tr>
-                    <tr>
-                        <th ng-repeat="AA in dict['f1']['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
-                    </tr>
-                </table>
-
+                        <tr>
+                            <th ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
+                        </tr>
+                        <tr>
+                            <th ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
+                        </tr>
+                    </table>
+                </div>
 
 
             </div>

@@ -82,7 +82,7 @@ def upload_File():
 
 @app.route('/api/v0/processFile/<filename>/',methods=['POST'])
 def copy_File_and_his_output_in_DB_File_Content(filename):
-            print filename
+            #print filename
             #dict=parseFile("/u/schwartzl/py/projetIric/20160114/ViGe/uploads/",'pep_pep_pep.csv','log')
 
             dictTab=P.parseFile(os.path.join(app.config['UPLOAD_FOLDER']),filename,authentification())
@@ -101,7 +101,7 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
                 return outputDict ######################################message d'erreur
             else:
                 print 'copy_File_and_his_output_in_DB_File_Content'+' passed!'
-                print outputDict['data']
+                #print outputDict['data']
                 return flask.jsonify(**K.JSONResponse(outputDict['data'],False,'file in db!'))
 
 ########################################################################################################################
