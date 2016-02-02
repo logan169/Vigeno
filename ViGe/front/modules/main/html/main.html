@@ -147,6 +147,18 @@
 
                 <div class="span2">
                     <table class="block-center">
+
+                        <a href="" id="top" ng-click="tabScroll()">position_mutation-50</a>
+
+
+                        <tr>
+                            <th ng-repeat="item in Array(currentPoly.start,currentPoly.end) track by $index" ng-attr-id="{{ 'position_mutation-' + item }}" ng-class="{'text-center':currentPoly.vrai, I:range(item,currentPoly.mutated.normalized.start,currentPoly.mutated.normalized.end)}">{{item}}</th>
+                        </tr>
+
+                        <tr>
+                            <th ng-repeat="item in currentPoly.Array track by $index" class="text-center">|</th>
+                        </tr>
+
                         <tr>
                             <th ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
                         </tr>
@@ -154,37 +166,32 @@
                             <th ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
                         </tr>
                         <br/>
-
                         <tr>
                             <th ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</th>
                         </tr>
                         <tr>
                             <th ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
                         </tr>
-
-
-
-
                     </table>
                 </div>
 
-                <a href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" ng-class="{hidden:currentPoly.gene.id==null}">Gene link to Ensembl</a>
+
+
+                <a href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" ng-class="{hidden:currentPoly.gene.id==null}" target="_blank">Gene link to Ensembl</a>
+                <br>
+                <a href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.transcript.id==null}" target="_blank">Transcript link to Ensembl</a>
+                <br>
+                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.exon_id==null}" target="_blank">Exon link to Ensembl</a>
+                <br>
+                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.protein_id==null}" target="_blank">Protein link to Ensembl</a>
                 <br>
 
-                <a href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.transcript.id==null}">Transcript link to Ensembl</a>
-                <br>
-
-                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.exon_id==null}">Exon link to Ensembl</a>
-                <br>
-
-                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.protein_id==null}">Protein link to Ensembl</a>
-                <br>
-------------------------------
+          ------------------------------
                 <!-- afficher pour comparer frame supposé etre afficher et celui vraiment affiché-->
                 {{currentPoly.allFrames}}
                 <br>
                 ------------------------------
-                {{currentPoly.allFramesDbSnps}}
+               {{currentPoly.allFramesDbSnps}}
 
             </div>
         </div>

@@ -2,7 +2,17 @@
 
 var app = angular.module('ViGeFront.main.controllers', ['ui.bootstrap']);
 
-app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
+app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location, $anchorScroll){
+
+
+	/*autoScroll jusqu'a la position de la sequence mutée*/
+	$scope.tabScroll = function() {
+      $location.hash('position_mutation-'+Math.round(parseInt($scope.currentPoly.mutated.length/2+$scope.currentPoly.mutated.normalized.start)));
+      $anchorScroll();
+      console.log($scope.currentPoly.mutated.start,$scope.currentPoly.mutated.end,$scope.currentPoly.mutated.length)
+      console.log(Math.round($scope.currentPoly.mutated.length/2+$scope.currentPoly.mutated.normalized.start));
+    };
+
 
     /*ouvre le modal de l'upload*/
     $scope.open = function () {
@@ -21,6 +31,7 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 
 	$scope.splitDna=function(str){
 		var codons = [];
+		if (str==undefined){return}
 		for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
 			codons.push(str.substring(i, i + 3 ));
 		};
@@ -59,11 +70,11 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 				// this callback will be called asynchronously
 				// when the response is available
 				$scope.currentPoly.allFrames=response.data.data
-				console.log('yes');
+				//console.log('yes');
 				}, function errorCallback(response) {
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.
-				console.log('Noooooo!!!!');
+				//console.log('Noooooo!!!!');
 				console.log(response);
 				});
 		 };
@@ -81,6 +92,28 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 		return outputFrame;
 	}
 
+	$scope.Array=function(start,stop){
+    	var output=Array(0);
+    	for (var i=2;i<(stop+1-start);i+=3){
+    	        output.push(i);
+    	};
+    	$scope.currentPoly.Array= output;
+    	return output;
+	};
+
+	$scope.range=function(item,start,end){
+		if (item>=start) {
+			if (item>=end){
+			//console.log(item,start,end,true)
+			return false}
+			return true;
+			}
+		else{
+			//console.log(item,start,end,false)
+			return false;
+		}
+	};
+
 	/*modifie la fenetre polymorphisme*/
 	$scope.modifyPolWin=function(index, item){
 		$scope.currentPoly = {
@@ -93,6 +126,7 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 			frame : item.frame,
 			peptide : item.peptide,
 			seq : item.sequence,
+			length:item.length,
 			gene:{
 				id:item.gene_id,
 				name:item.gene_name,
@@ -105,13 +139,23 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope){
 			protein:{
 				name:item.protein_name,
 				id:item.protein_id
+			},
+			mutated:{
+				start:item.start_mutation,
+				end:item.end_mutation,
+				length:item.end_mutation-item.start_mutation,
+				normalized:{
+					start:item.start_mutation-item.start,
+					end:item.end-item.end_mutation,
+
+				}
 			}
 		}
 
+		console.log($scope.currentPoly.mutated.start,$scope.currentPoly.mutated.end,$scope.currentPoly.mutated.length)
 		get6frames($scope.currentPoly.seq);
 		getdbSnipSeq(item.chromosome,item.start,item.end);//modifier code pour obtenir dbsnp filter
 		$scope.currentPoly.selectedFrame=startingStrandAndFrame(item.strand, item.frame);
-
 	};
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,3 +337,5 @@ update(root);
 
 
 });
+
+

@@ -3,6 +3,7 @@ from pyGeno.Genome import Chromosome
 
 
 
+
 def getdbSnipSeq(chromosome,start,end):
 
     #modifier le code pour incorporer le snp
