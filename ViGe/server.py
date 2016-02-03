@@ -30,7 +30,7 @@ def authentification(username=None):
     return user
 
 dictFile={}
-dictTab={}
+dictT={}
 ###########################################################################################################
 
 #premier call envoie vers index.html
@@ -76,7 +76,7 @@ def upload_File():
 
             # enregistre le fichier dans le fichier 'Upload'
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print 'upload_File'+' passed!'
+            print 'upload_File passed!'
             return flask.jsonify(**K.JSONResponse(None,False,'file uploaded'))
 
 ########################################################################################################################
@@ -88,9 +88,12 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
 
             dictTab=P.parseFile(os.path.join(app.config['UPLOAD_FOLDER']),filename,authentification())
 
+
             if dictTab['error']==True:
                 return dictTab ######################################message d'erreur
             else:
+
+
                 print 'DictTab done!'
                 try:
                     outputDict=A.addDictInDb(**dictTab['data'])
@@ -101,8 +104,12 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
             if outputDict['error'] ==True:
                 return outputDict ######################################message d'erreur
             else:
-                print 'copy_File_and_his_output_in_DB_File_Content'+' passed!'
+                print 'copy_File_and_his_output_in_DB_File_Content passed!'
                 #print outputDict['data']
+
+                #dictTab=outputDict['data']
+                global dictT
+                dictT=outputDict['data']
                 return flask.jsonify(**K.JSONResponse(outputDict['data'],False,'file in db!'))
 
 ########################################################################################################################
@@ -142,21 +149,15 @@ def getsequencesDbSNIP(chromosome,start,end,ref_strand):
 
 @app.route('/api/v0/modifyTree/<userChoice>/', methods=['GET'])
 def modifyTree(userChoice):
-    #print 'userChoice : '+userChoice
-
-    global dictTab  #j'improte mon nouveau dict du tableau a partir de  ma variable global dictTab
-
-    temp= K.JSONResponse(T.TreeJsInput(userChoice,dictTab),False,'')
-    #print temp
+    global dictT  #variable global dictTab correspondant au resultat affiche dans le tableau du client
+    print dictT
+    temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT),False,'')
+    print temp
     return flask.jsonify(**temp)
-
-
-
-
 
 
 if __name__ == '__main__':
     app.debug=True
-    app.run(host='0.0.0.0',port=8091)
+    app.run(host='0.0.0.0',port=8092)
 
 

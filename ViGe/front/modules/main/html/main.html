@@ -50,6 +50,7 @@
                             <thead>
                             <tr class="clickableTr">
                                 <th>index #</th>
+                                <!--{u'CDS_start': 20022968, 'peptide': 'AEAEAVREVY', u'protein_name': None, u'sequence': u'GCGAATCCACACAATTATGATGCATGGTTTGATTACTTGCGCTTGGTAGAAAGTGACGCAGAAGCTGAAGCCGTGAGAGAAGTCTATGAAAGGGCCATTGCCAATGTCCCACCCATTCAGGAGAAGAGGCACTGGAAGCGCTACATTTATCTTTGGATCAACTATGCACTCTATGAAGAATTGGAGGCAAAG', 'strand_mutation': '-', u'_rev': u'6648786362161', u'number': 7, u'gene_id': u'ENSG00000101343', u'CDS_length': 192, u'transcript_id': u'ENST00000536226', u'CDS_end': 20023160, 'strand': u'-', 'end_mutation': '20023103', 'enst': 'ENST00000536226', u'_id': u'Exon/6648783019825', 'end': 20023160, u'_key': u'6648783019825', u'protein_id': None, u'id': u'ENSE00003521184', 'start': 20022968, u'length': 192, 'ensg': 'ENSG00000101343', 'chromosome': u'20', u'transcript_name': u'CRNKL1-007', 'start_mutation': '20023073', u'frame': 0, u'gene_name': u'CRNKL1'},-->
                                 <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
                                 <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
                                 <th ng-click = "modifyTree('end_mutation')">Mutation end</th>
@@ -178,7 +179,22 @@
 
 
         <!-- panel contenant polymorphisme box-->
+        <div ng-class="{panel:currentPoly.vrai, 'panel-info':currentPoly.vrai}">
+            <!--deuxieme panel contenant l'upload data box-->
+            <div class="panel panel-info">
 
+                <!--title-->
+                <div class="panel-heading">
+                    <h4 class="panel-title">Tree</h4>
+                </div>
+
+                <!--body-->
+                <div class="panel-body" id="visRow">
+
+
+                </div>
+            </div>
+        </div>
         
 
 
