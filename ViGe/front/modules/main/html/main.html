@@ -31,168 +31,151 @@
     <br><br>
     <br><br>
 
-    <!--panneau du tableau -->
-    <div class="panel panel-info">
-
-        <!--tableau titre-->
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                Tableau
-            </h4>
-        </div>
-
-        <!--tableau body-->
-        <div class="panel-body">
-            <div class="table-responsive">
-                <div class="span3">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="clickableTr">
-                            <th>index #</th>
-                            <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
-                            <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
-                            <th ng-click = "modifyTree('end_mutation')">Mutation end</th>
-                            <th ng-click = "modifyTree('chromosome')">Chromosome</th>
-                            <th ng-click = "modifyTree('strand')">Strand</th>
-                            <th ng-click = "modifyTree('start')">Start position</th>
-                            <th ng-click = "modifyTree('end')">End position</th>
-                            <th ng-click = "modifyTree('length')">Length</th>
-                            <th ng-click = "modifyTree('frame')">Frame</th>
-                            <th ng-click = "modifyTree('CDS_start')">CDS start position</th>
-                            <th ng-click = "modifyTree('CDS_end')">CDS end position</th>
-                            <th ng-click = "modifyTree('CDS_length')">CDS length</th>
-                            <th ng-click = "modifyTree('gene_name')">Gene Name</th>
-                            <th ng-click = "modifyTree('gene_id')">Gene Id</th>
-                            <th ng-click = "modifyTree('transcript_name')">Transcript Name</th>
-                            <th ng-click = "modifyTree('transcript_id')">Transcript Id</th>
-                            <th ng-click = "modifyTree('id')">Exon Id</th>
-                            <th ng-click = "modifyTree('number')">Position in Transcript</th>
-                            <th ng-click = "modifyTree('protein_name')">Protein Name</th>
-                            <th ng-click = "modifyTree('protein_id')">Protein Id</th>
-                            <th ng-click = "modifyTree('peptide')">Peptide</th>
-                            <th ng-click = "modifyTree('sequence')">Sequence</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--acceder au contenu de la liste data-->
-                        <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item)">
-                            <td> {{$index+1}} </td>
-                            <td>{{item.strand_mutation}}</td>
-                            <td>{{item.start_mutation}}</td>
-                            <td>{{item.end_mutation}}</td>
-                            <td>{{item.chromosome}}</td>
-                            <td>{{item.strand}}</td>
-                            <td>{{item.start}}</td>
-                            <td>{{item.end}}</td>
-                            <td>{{item.length}}</td>
-                            <td>{{item.frame+1}}</td>
-                            <td>{{item.CDS_start}}</td>
-                            <td>{{item.CDS_end}}</td>
-                            <td>{{item.CDS_length}}</td>
-                            <td>{{item.gene_name}}</td>
-                            <td>{{item.gene_id}}</td>
-                            <td>{{item.transcript_name}}</td>
-                            <td>{{item.transcript_id}}</td>
-                            <td>{{item.id}}</td>
-                            <td>{{item.number}}</td>
-                            <td>{{item.protein_name}}</td>
-                            <td>{{item.protein_id}}</td>
-                            <td>{{item.peptide}}</td>
-                            <td>{{item.sequence}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="row">
-
-        <!--troisieme panel contenant polymorphisme box-->
+    <div>
+        <!--panneau du tableau -->
         <div class="panel panel-info">
 
-            <!--title-->
+            <!--tableau titre-->
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    Polymorphisme : sequence {{currentPoly.index}}
-
+                    Fichier:#
                 </h4>
             </div>
 
-            <!--body-->
-            <div class="panel-body text-center">
-                <!--
-                <pre>{{currentPoly.selectedFrame }}</pre>
-                <div class="btn-group">
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="f1" >Forward 1</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="f2" >Forward 2</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="f3" >Forward 3</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="r1" >Reverse 1</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="r2" >Reverse 2</label>
-                    <label class="btn btn-info" ng-model="selectedFrame" uib-btn-radio="r3" >Reverse 3</label>
+            <!--tableau body-->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div class="span3">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="clickableTr">
+                                <th>index #</th>
+                                <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
+                                <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
+                                <th ng-click = "modifyTree('end_mutation')">Mutation end</th>
+                                <th ng-click = "modifyTree('chromosome')">Chromosome</th>
+                                <th ng-click = "modifyTree('strand')">Strand</th>
+                                <th ng-click = "modifyTree('start')">Start position</th>
+                                <th ng-click = "modifyTree('end')">End position</th>
+                                <th ng-click = "modifyTree('length')">Length</th>
+                                <th ng-click = "modifyTree('frame')">Frame</th>
+                                <th ng-click = "modifyTree('CDS_start')">CDS start position</th>
+                                <th ng-click = "modifyTree('CDS_end')">CDS end position</th>
+                                <th ng-click = "modifyTree('CDS_length')">CDS length</th>
+                                <th ng-click = "modifyTree('gene_name')">Gene Name</th>
+                                <th ng-click = "modifyTree('gene_id')">Gene Id</th>
+                                <th ng-click = "modifyTree('transcript_name')">Transcript Name</th>
+                                <th ng-click = "modifyTree('transcript_id')">Transcript Id</th>
+                                <th ng-click = "modifyTree('id')">Exon Id</th>
+                                <th ng-click = "modifyTree('number')">Position in Transcript</th>
+                                <th ng-click = "modifyTree('protein_name')">Protein Name</th>
+                                <th ng-click = "modifyTree('protein_id')">Protein Id</th>
+                                <th ng-click = "modifyTree('peptide')">Peptide</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--acceder au contenu de la liste data-->
+                            <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item)">
+                                <td> {{$index+1}} </td>
+                                <td>{{item.strand_mutation}}</td>
+                                <td>{{item.start_mutation}}</td>
+                                <td>{{item.end_mutation}}</td>
+                                <td>{{item.chromosome}}</td>
+                                <td>{{item.strand}}</td>
+                                <td>{{item.start}}</td>
+                                <td>{{item.end}}</td>
+                                <td>{{item.length}}</td>
+                                <td>{{item.frame+1}}</td>
+                                <td>{{item.CDS_start}}</td>
+                                <td>{{item.CDS_end}}</td>
+                                <td>{{item.CDS_length}}</td>
+                                <td>{{item.gene_name}}</td>
+                                <td>{{item.gene_id}}</td>
+                                <td>{{item.transcript_name}}</td>
+                                <td>{{item.transcript_id}}</td>
+                                <td>{{item.id}}</td>
+                                <td>{{item.number}}</td>
+                                <td>{{item.protein_name}}</td>
+                                <td>{{item.protein_id}}</td>
+                                <td>{{item.peptide}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-                -->
-
-                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f1'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f1" class="hidden">Forward 1</label>
-                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f2'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f2" class="hidden">Forward 2</label>
-                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f3'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f3" class="hidden">Forward 3</label>
-                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r1'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r1" class="hidden">Reverse 1</label>
-                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r2'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r2" class="hidden">Reverse 2</label>
-                <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r3'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r3" class="hidden">Reverse 3</label>
-                <br><br>
-
-                <div class="span2">
-                    <table class="block-center">
-
-                        <a href="" id="top" ng-click="tabScroll()">position_mutation-50</a>
+            </div>
+        </div>
 
 
-                        <tr>
-                            <th ng-repeat="item in Array(currentPoly.start,currentPoly.end) track by $index" ng-attr-id="{{ 'position_mutation-' + item }}" ng-class="{'text-center':currentPoly.vrai, I:range(item,currentPoly.mutated.normalized.start,currentPoly.mutated.normalized.end)}">{{item}}</th>
-                        </tr>
 
-                        <tr>
-                            <th ng-repeat="item in currentPoly.Array track by $index" class="text-center">|</th>
-                        </tr>
+        <div class="row">
+            <!--troisieme panel contenant polymorphisme box-->
+            <div ng-class="{hidden:currentPoly.gene.id==null}">
+                <div ng-class="{panel:currentPoly.vrai, 'panel-info':currentPoly.vrai}">
 
-                        <tr>
-                            <th ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
-                        </tr>
-                        <tr>
-                            <th ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
-                        </tr>
-                        <br/>
-                        <tr>
-                            <th ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</th>
-                        </tr>
-                        <tr>
-                            <th ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
-                        </tr>
-                    </table>
+                    <!--title-->
+
+                    <div class="panel-heading">
+
+                        <div class="form-group">
+
+                            <h4 class="pull-left"><strong>Sequence {{currentPoly.index}}</strong></h4>
+
+                            <div class=" btn-sm">
+                                <div class="pull-right">
+                                    <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.gene.id==null}" href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Gene</a>
+                                    <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.transcript.id==null}" href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Transcript</a>
+                                    <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.exon_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Exon</a>
+                                    <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.protein_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Protein</a>
+                                </div>
+
+                                <div class="text-center">
+                                    <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f1'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f1" class="hidden">Forward 1</label>
+                                    <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f2'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f2" class="hidden">Forward 2</label>
+                                    <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='f3'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="f3" class="hidden">Forward 3</label>
+                                    <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r1'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r1" class="hidden">Reverse 1</label>
+                                    <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r2'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r2" class="hidden">Reverse 2</label>
+                                    <label ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,'btn-warning':currentPoly.selectedFrame=='r3'}"> <input type="radio" ng-model="currentPoly.selectedFrame" value="r3" class="hidden">Reverse 3</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--body-->
+                    <div class="panel-body text-center">
+
+
+                        <div class="span2">
+                            <table class="block-center">
+
+                                <tr>
+                                    <th ng-repeat="item in Array(currentPoly.start,currentPoly.end) track by $index" ng-attr-id="{{ 'position_mutation-' + item }}" ng-class="{'text-center':currentPoly.vrai, I:range(item,currentPoly.mutated.normalized.start,currentPoly.mutated.normalized.end)}">{{item}}</th>
+                                </tr>
+
+                                <tr>
+                                    <th ng-repeat="item in currentPoly.Array track by $index" class="text-center">|</th>
+                                </tr>
+
+                                <tr>
+                                    <th ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
+                                </tr>
+                                <tr>
+                                    <th ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
+                                </tr>
+                                <br/>
+                                <tr>
+                                    <th ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</th>
+                                </tr>
+                                <tr>
+                                    <th ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </div>
                 </div>
-
-
-
-                <a href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" ng-class="{hidden:currentPoly.gene.id==null}" target="_blank">Gene link to Ensembl</a>
-                <br>
-                <a href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.transcript.id==null}" target="_blank">Transcript link to Ensembl</a>
-                <br>
-                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.exon_id==null}" target="_blank">Exon link to Ensembl</a>
-                <br>
-                <a href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" ng-class="{hidden:currentPoly.protein_id==null}" target="_blank">Protein link to Ensembl</a>
-                <br>
-
-          ------------------------------
-                <!-- afficher pour comparer frame supposé etre afficher et celui vraiment affiché-->
-                {{currentPoly.allFrames}}
-                <br>
-                ------------------------------
-               {{currentPoly.allFramesDbSnps}}
-
             </div>
         </div>
     </div>

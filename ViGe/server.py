@@ -126,12 +126,14 @@ def getSequences(seq):
 ########################################################################################################################
 #produit un dict contenant les 6 frames d'ADN et leur traduction respectives
 
-@app.route('/api/v0/getDNA&AADBSNIP/<chromosome>/<int:start>/<int:end>/', methods=['POST','GET'])
-def getsequencesDbSNIP(chromosome,start,end):
+@app.route('/api/v0/getDNA&AADBSNIP/<chromosome>/<int:start>/<int:end>/<ref_strand>/', methods=['POST','GET'])
+def getsequencesDbSNIP(chromosome,start,end,ref_strand):
     chromosome=str(chromosome)
     start=int(start)
     end=int(end)
-    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end)),False,'')
+    ref_strand=str(ref_strand)
+
+    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end,ref_strand)),False,'')
     return flask.jsonify(**temp)
 
 

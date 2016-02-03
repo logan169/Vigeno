@@ -5,12 +5,54 @@ var app = angular.module('ViGeFront.main.controllers', ['ui.bootstrap']);
 app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location, $anchorScroll){
 
 
-	/*autoScroll jusqu'a la position de la sequence mutée*/
-	$scope.tabScroll = function() {
-      $location.hash('position_mutation-'+Math.round(parseInt($scope.currentPoly.mutated.length/2+$scope.currentPoly.mutated.normalized.start)));
-      $anchorScroll();
-      console.log($scope.currentPoly.mutated.start,$scope.currentPoly.mutated.end,$scope.currentPoly.mutated.length)
-      console.log(Math.round($scope.currentPoly.mutated.length/2+$scope.currentPoly.mutated.normalized.start));
+	/*function that get the width size of the screen to adjust the offset of the id to look for in the function tabscroll in order to center on the position specified*/
+	var viewport=function (){
+		console.log('viewport');
+    	var e = window, a = 'inner';
+    	if ( !( 'innerWidth' in window ) ){
+    	    a = 'client';
+    	    e = document.documentElement || document.body;
+    	    }
+    	var dict= { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+    	//console.log('width :'+dict.width);
+    	//console.log('height :'+dict.heigth);
+    	return dict.width
+    	};
+
+    var getIdToScrollTo=function(){
+    	console.log('getIdToScrollTo');
+		// mutation length/2 + start
+		var demiLength=Math.round($scope.currentPoly.mutated.normalized.demilength);
+
+		//offset based on screen width
+		var offset=Math.round(viewport()/11); // need to measure the right up offset
+		console.log('offset :'+offset)
+
+
+		//output Position is the closest position who %3==0 from (defPos+offset)-2 (starting position)
+		var output=demiLength+offset;
+		while ((output-2)%3!=0){
+		    output+=1;
+		    console.log(output);
+		}
+		if (output>$scope.currentPoly.mutated.normalized.end){return $scope.currentPoly.mutated.normalized.end;}
+
+		return ('position_mutation-'+(output));
+    }
+
+	/*autoScroll jusqu'a la position == 1/2 de la sequence mutée*/
+	var tabScroll = function() {
+		console.log('getIdToScrollTo');
+		var id=getIdToScrollTo()
+		console.log('IdToScrollTo :'+id);
+
+
+	  		if (document.getElementById(id).scrollIntoView() != null){
+	  			document.getElementById(id).scrollIntoView()
+	  			}
+	  		else{console.log(null)}
+
+
     };
 
 
@@ -43,15 +85,16 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location, $an
 		$scope.currentPoly.selectedFrame=value;
     };
 
-    var getdbSnipSeq=function(chromosome,start,end){
+    var getdbSnipSeq=function(chromosome,start,end,ref_strand){
     	$http({
 			method: 'GET',
-			url: '/api/v0/getDNA&AADBSNIP/'+chromosome+'/'+start+'/'+end+'/'
+			url: '/api/v0/getDNA&AADBSNIP/'+chromosome+'/'+start+'/'+end+'/'+ref_strand+'/'
 			}).then(function successCallback(response) {
 				// this callback will be called asynchronously
 				// when the response is available
 
 				$scope.currentPoly.allFramesDbSnps=response.data.data
+				tabScroll();
 				console.log('yes');
 				}, function errorCallback(response) {
 				// called asynchronously if an error occurs
@@ -147,14 +190,14 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location, $an
 				normalized:{
 					start:item.start_mutation-item.start,
 					end:item.end-item.end_mutation,
-
+					demilength:(item.end_mutation-item.start_mutation)/2+(item.start_mutation-item.start),
 				}
 			}
 		}
 
-		console.log($scope.currentPoly.mutated.start,$scope.currentPoly.mutated.end,$scope.currentPoly.mutated.length)
+		console.log($scope.currentPoly.mutated.start,$scope.currentPoly.mutated.end,$scope.currentPoly.mutated.length,$scope.currentPoly.mutated.normalized.demilength)
 		get6frames($scope.currentPoly.seq);
-		getdbSnipSeq(item.chromosome,item.start,item.end);//modifier code pour obtenir dbsnp filter
+		getdbSnipSeq(item.chromosome,item.start,item.end,item.strand);//modifier code pour obtenir dbsnp filter
 		$scope.currentPoly.selectedFrame=startingStrandAndFrame(item.strand, item.frame);
 	};
 

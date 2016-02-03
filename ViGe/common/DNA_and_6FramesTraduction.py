@@ -7,7 +7,12 @@ from pyGeno.tools.UsefulFunctions import *
 
 
 def DNA_and_6FramesTraduction(seq):
-    seq=seq.upper()
+    print seq
+    try:
+        seq=seq.upper()
+    except:
+        pass
+
     outputDict={}
     DNAs=[seq, seq[1:], seq[2:], reverseComplement(seq), reverseComplement(seq)[1:], reverseComplement(seq)[2:]]
 
