@@ -23,3 +23,12 @@ def DNA_and_6FramesTraduction(seq):
         outputDict[frame] = ({ "DNA" : DNA, "AA" : AA})
 
     return outputDict
+
+
+'''
+l=DNA_and_6FramesTraduction(complement('CGATTCGGAGGATATAGTTTT'),'+')
+m=DNA_and_6FramesTraduction(complement('CGATTCGGAGGATATAGTTTT'),'-')
+
+for element in l:
+    print element,l[element],m[element]
+'''

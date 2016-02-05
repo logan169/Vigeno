@@ -47,10 +47,8 @@
                 <div class="table-responsive">
                     <div class="span3">
                         <table class="table table-bordered">
-                            <thead>
-                            <tr class="clickableTr">
+                            <tr class="clickableTr  strong">
                                 <th>index #</th>
-                                <!--{u'CDS_start': 20022968, 'peptide': 'AEAEAVREVY', u'protein_name': None, u'sequence': u'GCGAATCCACACAATTATGATGCATGGTTTGATTACTTGCGCTTGGTAGAAAGTGACGCAGAAGCTGAAGCCGTGAGAGAAGTCTATGAAAGGGCCATTGCCAATGTCCCACCCATTCAGGAGAAGAGGCACTGGAAGCGCTACATTTATCTTTGGATCAACTATGCACTCTATGAAGAATTGGAGGCAAAG', 'strand_mutation': '-', u'_rev': u'6648786362161', u'number': 7, u'gene_id': u'ENSG00000101343', u'CDS_length': 192, u'transcript_id': u'ENST00000536226', u'CDS_end': 20023160, 'strand': u'-', 'end_mutation': '20023103', 'enst': 'ENST00000536226', u'_id': u'Exon/6648783019825', 'end': 20023160, u'_key': u'6648783019825', u'protein_id': None, u'id': u'ENSE00003521184', 'start': 20022968, u'length': 192, 'ensg': 'ENSG00000101343', 'chromosome': u'20', u'transcript_name': u'CRNKL1-007', 'start_mutation': '20023073', u'frame': 0, u'gene_name': u'CRNKL1'},-->
                                 <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
                                 <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
                                 <th ng-click = "modifyTree('end_mutation')">Mutation end</th>
@@ -72,12 +70,11 @@
                                 <th ng-click = "modifyTree('protein_name')">Protein Name</th>
                                 <th ng-click = "modifyTree('protein_id')">Protein Id</th>
                                 <th ng-click = "modifyTree('peptide')">Peptide</th>
-
                             </tr>
-                            </thead>
+
                             <tbody>
                             <!--acceder au contenu de la liste data-->
-                            <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item)">
+                            <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item); changeSelectedRow(1+ $index)" ng-attr-id="{{  1+ $index+ '-table-row'}}" ng-class="{warning:currentPoly.selectedRow==1+ $index+'-table-row' }">
                                 <td> {{$index+1}} </td>
                                 <td>{{item.strand_mutation}}</td>
                                 <td>{{item.start_mutation}}</td>
@@ -151,25 +148,25 @@
                         <table class="block-center">
 
                             <tr>
-                                <th ng-repeat="item in Array(currentPoly.start,currentPoly.end) track by $index" ng-attr-id="{{ 'position_mutation-' + item }}" ng-class="{'text-center':currentPoly.vrai, I:range(item,currentPoly.mutated.normalized.start,currentPoly.mutated.normalized.end)}">{{item}}</th>
+                                <td ng-repeat="item in Array(currentPoly.start,currentPoly.end) track by $index" ng-attr-id="{{ 'position_mutation-' + item }}" ng-class="{'text-center':currentPoly.vrai, I:range(item,currentPoly.mutated.normalized.start,currentPoly.mutated.normalized.end)}">{{item}}</td>
                             </tr>
 
                             <tr>
-                                <th ng-repeat="item in currentPoly.Array track by $index" class="text-center">|</th>
+                                <td ng-repeat="item in currentPoly.Array track by $index" class="text-center">|</td>
                             </tr>
 
                             <tr>
-                                <th ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</th>
+                                <td ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</td>
                             </tr>
                             <tr>
-                                <th ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
+                                <td ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</td>
                             </tr>
                             <br/>
                             <tr>
-                                <th ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</th>
+                                <td ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</td>
                             </tr>
                             <tr>
-                                <th ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</th>
+                                <td ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</td>
                             </tr>
                         </table>
                     </div>
@@ -190,8 +187,6 @@
 
                 <!--body-->
                 <div class="panel-body" id="visRow">
-
-
                 </div>
             </div>
         </div>

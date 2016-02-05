@@ -139,7 +139,6 @@ def getsequencesDbSNIP(chromosome,start,end,ref_strand):
     start=int(start)
     end=int(end)
     ref_strand=str(ref_strand)
-
     temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end,ref_strand)),False,'')
     return flask.jsonify(**temp)
 

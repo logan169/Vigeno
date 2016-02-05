@@ -30,7 +30,8 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 
 
 		//output Position is the closest position who %3==0 from (defPos+offset)-2 (starting position)
-		var output=demiLength+offset;
+		//var output=demiLength+offset;
+		var output=demiLength;
 		while ((output-2)%3!=0){
 		    output+=1;
 		    console.log(output);
@@ -69,7 +70,17 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
     $scope.currentPoly = {
     	selectedFrame:null,
     	vrai:true,
+    	selectedRow:null,
     };
+
+    $scope.changeSelectedRow=function(idNumber){
+    	console.log($scope.currentPoly.selectedRow);
+    	$scope.currentPoly.selectedRow =  idNumber+'-table-row';
+    	console.log(idNumber);
+    	console.log($scope.currentPoly.selectedRow);
+
+    }
+
 
 	$scope.splitDna=function(str){
 		var codons = [];
@@ -160,6 +171,7 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 	/*modifie la fenetre polymorphisme*/
 	$scope.modifyPolWin=function(index, item){
 		$scope.currentPoly = {
+
 			vrai:true,
 			index :index,
 			strand : item.strand,
@@ -189,15 +201,15 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 				length:item.end_mutation-item.start_mutation,
 				normalized:{
 					start:item.start_mutation-item.start,
-					end:item.end-item.end_mutation,
+					end:(item.start_mutation-item.start)+(item.end_mutation-item.start_mutation),
 					demilength:(item.end_mutation-item.start_mutation)/2+(item.start_mutation-item.start),
 				}
 			}
 		}
 
-		console.log($scope.currentPoly.mutated.start,$scope.currentPoly.mutated.end,$scope.currentPoly.mutated.length,$scope.currentPoly.mutated.normalized.demilength)
-		get6frames($scope.currentPoly.seq);
-		getdbSnipSeq(item.chromosome,item.start,item.end,item.strand);//modifier code pour obtenir dbsnp filter
+		console.log($scope.currentPoly.mutated.normalized.start,$scope.currentPoly.mutated.normalized.end,$scope.currentPoly.mutated.length,$scope.currentPoly.mutated.normalized.demilength)
+		get6frames($scope.currentPoly.seq,$scope.currentPoly.strand);
+		getdbSnipSeq(item.chromosome,item.start,item.end,$scope.currentPoly.strand);//modifier code pour obtenir dbsnp filter
 		$scope.currentPoly.selectedFrame=startingStrandAndFrame(item.strand, item.frame);
 	};
 
@@ -212,7 +224,10 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	/*reset table*/
+	var rstTab=function(){
+		document.getElementById('visRow').innerHTML='';
+		}
 
     /*modifie la fenetre de l'arbre*/
 	$scope.modifyTree=function(userChoice){
@@ -228,6 +243,7 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 		    // when the response is available
 		    console.log(response.data.data);
 		    $scope.tree=response.data.data;
+		    rstTab();
 		    Tree.makeNewTree(response.data.data);
 
 
@@ -349,12 +365,10 @@ this.makeNewTree=function(input){
 	}
 
 
-
 	// ************** Generate the tree diagram	 *****************
 	var margin = {top: 20, right: 120, bottom: 20, left: 120},
 		width = window.innerWidth - margin.right - margin.left,
 		height = window.innerHeight - margin.top - margin.bottom
-
 
 	var i = 0,
 		duration = 750,
@@ -366,22 +380,25 @@ this.makeNewTree=function(input){
 	var diagonal = d3.svg.diagonal()
 		.projection(function(d) { return [d.y, d.x]; });
 
-	
-	var svg = d3.select("#visRow").append("svg")
-		.attr("width", width + margin.right + margin.left)
-		.attr("height", height + margin.top + margin.bottom)
-	    .append("g")
-	    .attr("viewBox", "0 0 " + width + " " + height )
-	    .attr("preserveAspectRatio", "xMidYMid meet")
-	    .attr("pointer-events", "all")
-	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	d3.selectAll("#amazingViz").remove();
+	var svg = d3.selection("#visRow").insert("svg")
+			  .attr("id", "amazingViz")
+			  .attr("width", width + margin.right + margin.left)
+			  .attr("height", height + margin.top + margin.bottom)
+			  .insert("g")
+			  .attr("viewBox", "0 0 " + width + " " + height )
+			  .attr("preserveAspectRatio", "xMidYMid meet")
+			  .attr("pointer-events", "all")
+			  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
 
 	root = input[0];
+
 	console.log(root)
 	root.x0 = height / 2;
 	root.y0 = 0;
-
 	update(root);
 
 	}
