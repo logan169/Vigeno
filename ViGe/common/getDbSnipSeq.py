@@ -18,6 +18,6 @@ def getdbSnipSeq(chromosome,start,end,ref_strand):
         return chro.sequence[start:end]
 
     elif ref_strand == '-':
-        return reverseComplement(chro.sequence[start:end])
+        return chro.sequence[::-1]
 
 

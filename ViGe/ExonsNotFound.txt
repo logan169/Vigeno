@@ -21697,3 +21697,17 @@
 {'enst': 'ENST00000261366', 'peptide': 'AEHDQLLLNY', 'start': '126113533', 'ensg': 'ENSG00000113368', 'strand': '+', 'end': '126140471', 'chromosome': '5'}
 {'enst': 'ENST00000275072', 'peptide': 'AEHDVTVKY', 'start': '89859121', 'ensg': 'ENSG00000146281', 'strand': '+', 'end': '89862777', 'chromosome': '6'}
 {'enst': 'ENST00000333082', 'peptide': 'AEHLGDFHRTY', 'start': '1108125', 'ensg': 'ENSG00000125818', 'strand': '+', 'end': '1115770', 'chromosome': '20'}
+{'enst': 'ENST00000368328', 'peptide': 'AAAKVILKK', 'start': '126667452', 'ensg': 'ENSG00000203760', 'strand': '+', 'end': '126669626', 'chromosome': '6'}
+{'enst': 'ENST00000381571', 'peptide': 'AANKVVLQLK', 'start': '47453664', 'ensg': 'ENSG00000169019', 'strand': '-', 'end': '47455087', 'chromosome': '4'}
+{'enst': 'ENST00000376389', 'peptide': 'AEAEAASVRM', 'start': '30698339', 'ensg': 'ENSG00000137312', 'strand': '-', 'end': '30698485', 'chromosome': '6'}
+{'enst': 'ENST00000372172', 'peptide': 'AEAVQRLLY', 'start': '45475789', 'ensg': 'ENSG00000126107', 'strand': '-', 'end': '45475895', 'chromosome': '1'}
+{'enst': 'ENST00000324460', 'peptide': 'AEAYLGKKV', 'start': '128001809', 'ensg': 'ENSG00000044574', 'strand': '-', 'end': '128002474', 'chromosome': '9'}
+{'enst': 'ENST00000539906', 'peptide': 'AEDELFNRY', 'start': '69113425', 'ensg': 'ENSG00000111581', 'strand': '+', 'end': '69114915', 'chromosome': '12'}
+{'enst': 'ENST00000447062', 'peptide': 'AEDGLIRQY', 'start': '27614332', 'ensg': 'ENSG00000142784', 'strand': '+', 'end': '27618712', 'chromosome': '1'}
+{'enst': 'ENST00000296484', 'peptide': 'AEDPSLERHF', 'start': '52185089', 'ensg': 'ENSG00000164087', 'strand': '-', 'end': '52188373', 'chromosome': '3'}
+{'enst': 'ENST00000391976', 'peptide': 'AEEKQTKSF', 'start': '242179522', 'ensg': 'ENSG00000115677', 'strand': '-', 'end': '242181886', 'chromosome': '2'}
+{'enst': 'ENST00000354947', 'peptide': 'AEGAPQKEVY', 'start': '57994854', 'ensg': 'ENSG00000166908', 'strand': '+', 'end': '57995050', 'chromosome': '12'}
+{'enst': 'ENST00000223428', 'peptide': 'AEGGYPLRF', 'start': '99537111', 'ensg': 'ENSG00000081386', 'strand': '-', 'end': '99538291', 'chromosome': '9'}
+{'enst': 'ENST00000261366', 'peptide': 'AEHDQLLLNY', 'start': '126113533', 'ensg': 'ENSG00000113368', 'strand': '+', 'end': '126140471', 'chromosome': '5'}
+{'enst': 'ENST00000275072', 'peptide': 'AEHDVTVKY', 'start': '89859121', 'ensg': 'ENSG00000146281', 'strand': '+', 'end': '89862777', 'chromosome': '6'}
+{'enst': 'ENST00000333082', 'peptide': 'AEHLGDFHRTY', 'start': '1108125', 'ensg': 'ENSG00000125818', 'strand': '+', 'end': '1115770', 'chromosome': '20'}
