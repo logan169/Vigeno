@@ -12,7 +12,7 @@ def parseFile(path,filename,username):
     #ici on verifie le type de chaque colonne pour chaque ligne et on accumule l'info dans un \
     # dict , si le test passe le dict est copie dans la bd file_content
     typs={'chromosome':'string'}
-    docLignes={}
+    docLignes=[]
 
     numeroLigne=1
     for ligne in csv[1:len(csv)]:
@@ -42,10 +42,11 @@ def parseFile(path,filename,username):
             docLigne[colonne]=ligne[colonne]
 
         #ajoute le dict docligne a liste doclignes
-        docLignes[numeroLigne]=docLigne
+        docLignes.append(docLigne)
         numeroLigne+=1
 
     outputDoc={'docLignes':docLignes,'filename':filename,'username':username,'typs':typs}
+    print outputDoc
     return K.JSONResponse(outputDoc,False,'file uploaded')
 
 #######################################################################################################################

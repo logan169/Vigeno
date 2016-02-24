@@ -6,18 +6,31 @@ from pyGeno.tools.UsefulFunctions import *
 #Il retourne un dictionnaire composee
 
 
-def DNA_and_6FramesTraduction(seq):
-    print seq
+def DNA_and_6FramesTraduction(seq,ref_strand):
+
     try:
         seq=seq.upper()
     except:
         pass
 
+
+    print seq
+
+    if ref_strand == '+':
+        frames = ["f1", "f2", "f3", "r1", "r2", "r3"]
+        pass
+
+    elif ref_strand == '-':
+
+        frames = ["r1", "r2", "r3","f1", "f2", "f3"]
+        pass
+
+    print seq
+
     outputDict={}
     DNAs=[seq, seq[1:], seq[2:], reverseComplement(seq), reverseComplement(seq)[1:], reverseComplement(seq)[2:]]
 
     translation=translateDNA_6Frames(sequence=seq)
-    frames = ["f1", "f2", "f3", "r1", "r2", "r3"]
 
     for frame, DNA, AA in zip(frames, DNAs, translation ) :
         outputDict[frame] = ({ "DNA" : DNA, "AA" : AA})
@@ -26,9 +39,6 @@ def DNA_and_6FramesTraduction(seq):
 
 
 '''
-l=DNA_and_6FramesTraduction(complement('CGATTCGGAGGATATAGTTTT'),'+')
-m=DNA_and_6FramesTraduction(complement('CGATTCGGAGGATATAGTTTT'),'-')
-
-for element in l:
-    print element,l[element],m[element]
+DNA_and_6FramesTraduction("TACTGCCCTATCGGTTGAAAAGACAAG",'+')
+DNA_and_6FramesTraduction("TACTGCCCTATCGGTTGAAAAGACAAG",'-')
 '''

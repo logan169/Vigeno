@@ -2,15 +2,15 @@
 <link rel="stylesheet" href="/front/modules/main/css/font-awesome-4.4.0/css/font-awesome.css" />
 <link rel="stylesheet" href="/front/modules/main/css/tree.css"/>
 <link rel="stylesheet" href="/front/modules/main/css/templates/main.css"/>
+
 <div id="main" class="container-fluid" data-ng-init="reset()">
-    <script src="http://d3js.org/d3.v3.min.js"></script>
 
     <!-- top page-->
     <div class="row">
         <!--logo iric-->
         <div class="col-md-3">
             <div id="logo" class="" style="height: 100px">
-                <a href="http://www.iric.ca/"><img class="logotext" src="http://www.iric.ca/wordpress/wp-content/themes/iric/resources/images/logo_IRIC_full_fr.png" height="120"></a>
+                <a href="http://www.iric.ca/"><img class="logotext" src="https://www.caissedebienfaisancecn.com/medias/photos/logo_iric.jpg" height="120"></a>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
                     <div class="span3">
                         <table class="table table-bordered">
                             <tr class="clickableTr  strong">
-                                <th>index #</th>
+                                <th>Input Line</th>
                                 <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
                                 <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
                                 <th ng-click = "modifyTree('end_mutation')">Mutation end</th>
@@ -74,7 +74,7 @@
 
                             <tbody>
                             <!--acceder au contenu de la liste data-->
-                            <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin($index+1, item); changeSelectedRow(1+ $index)" ng-attr-id="{{  1+ $index+ '-table-row'}}" ng-class="{warning:currentPoly.selectedRow==1+ $index+'-table-row' }">
+                            <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin(1+$index, item); changeSelectedRow( 1+$index)" ng-attr-id="{{ 1+  $index+ '-table-row'}}" ng-class="{warning:currentPoly.selectedRow== 1+$index+'-table-row' }">
                                 <td> {{$index+1}} </td>
                                 <td>{{item.strand_mutation}}</td>
                                 <td>{{item.start_mutation}}</td>
@@ -122,10 +122,10 @@
 
                         <div class=" btn-sm">
                             <div class="pull-right">
-                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.gene.id==null}" href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Gene</a>
-                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.transcript.id==null}" href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Transcript</a>
-                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.exon_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Exon</a>
-                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,hidden:currentPoly.protein_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Protein</a>
+                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.gene.id==null}" href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Gene</a>
+                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.transcript.id==null}" href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Transcript</a>
+                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.exon_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Exon</a>
+                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.protein_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Protein</a>
                             </div>
 
                             <div class="text-center">
@@ -142,8 +142,6 @@
 
                 <!--body-->
                 <div class="panel-body text-center">
-
-
                     <div class="span2">
                         <table class="block-center">
 
@@ -158,40 +156,28 @@
                             <tr>
                                 <td ng-repeat="item in splitDna(currentPoly.allFrames[currentPoly.selectedFrame]['DNA']) track by $index" class="codon-{{$index%2}} text-center">{{item}}</td>
                             </tr>
+
                             <tr>
                                 <td ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</td>
                             </tr>
-                            <br/>
+
                             <tr>
                                 <td ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</td>
                             </tr>
+
                             <tr>
                                 <td ng-repeat="AA in currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</td>
                             </tr>
+
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div id="visRow">
 
-        <!-- panel contenant polymorphisme box-->
-        <div ng-class="{panel:currentPoly.vrai, 'panel-info':currentPoly.vrai}">
-            <!--deuxieme panel contenant l'upload data box-->
-            <div class="panel panel-info">
-
-                <!--title-->
-                <div class="panel-heading">
-                    <h4 class="panel-title">Tree</h4>
-                </div>
-
-                <!--body-->
-                <div class="panel-body" id="visRow">
-                </div>
-            </div>
         </div>
-        
 
 
     </div>
-</div>

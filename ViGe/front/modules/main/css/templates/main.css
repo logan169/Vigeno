@@ -1,6 +1,7 @@
 .span3 {
 	height: 200px;
 	overflow: auto;
+
 }
 .span2 {
 	width: 100%;
@@ -25,6 +26,11 @@
 
 td{
 	width:35px;
+	text-align: -webkit-center;
+}
+
+th{
+text-align: -webkit-center;
 }
 
 

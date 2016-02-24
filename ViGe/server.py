@@ -88,11 +88,9 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
 
             dictTab=P.parseFile(os.path.join(app.config['UPLOAD_FOLDER']),filename,authentification())
 
-
             if dictTab['error']==True:
                 return dictTab ######################################message d'erreur
             else:
-
 
                 print 'DictTab done!'
                 try:
@@ -122,12 +120,12 @@ def load_File_in_DB_File_Content_to_client(filename):
 ########################################################################################################################
 #produit un dict contenant les 6 frames d'ADN et leur traduction respectives
 
-@app.route('/api/v0/getDNA&AA/<seq>/', methods=['POST','GET'])
-def getSequences(seq):
+@app.route('/api/v0/getDNA&AA/<seq>/<ref_strand>/', methods=['POST','GET'])
+def getSequences(seq,ref_strand):
     seq=str(seq)
-    temp= K.JSONResponse(DNA_and_6FramesTraduction(seq),False,'')
+    ref_strand=str(ref_strand)
+    temp= K.JSONResponse(DNA_and_6FramesTraduction(seq,ref_strand),False,'')
     return flask.jsonify(**temp)
-
 
 ########################################################################################################################
 ########################################################################################################################
@@ -139,24 +137,24 @@ def getsequencesDbSNIP(chromosome,start,end,ref_strand):
     start=int(start)
     end=int(end)
     ref_strand=str(ref_strand)
-    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end,ref_strand)),False,'')
+    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end),ref_strand),False,'')
     return flask.jsonify(**temp)
 
-
 ########################################################################################################################
-
 
 @app.route('/api/v0/modifyTree/<userChoice>/', methods=['GET'])
 def modifyTree(userChoice):
     global dictT  #variable global dictTab correspondant au resultat affiche dans le tableau du client
-    print dictT
-    temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT),False,'')
+    try:
+        temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT,'chromosome'),False,'')
+    except:
+        pass
     print temp
     return flask.jsonify(**temp)
 
-
 if __name__ == '__main__':
     app.debug=True
-    app.run(host='0.0.0.0',port=8092)
+    app.run(host='0.0.0.0',port=8687)
+
 
 

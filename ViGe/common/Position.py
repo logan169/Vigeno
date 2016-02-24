@@ -2,7 +2,7 @@ __author__ = 'schwartzl'
 
 import format as F
 import kernel as K
-
+'''
 
 
 
@@ -146,13 +146,13 @@ def startPos (genomeId,chromosomeId, startPosition):
         #on ajoute la sequence de DBSNP au dict
         resp['data']['sequenceDbSNP']=chro.sequence[start:end]
 
-        '''
+
         #print frame
         try:
             print resp['data']['frame']
         except:
             print('no frame?')
-        '''
+
         
         try:
             proteinReferent = genomeReferent.get(Protein,{'name like':resp['data']['transcript']})[0]
@@ -170,8 +170,26 @@ def startPos (genomeId,chromosomeId, startPosition):
     return resp
 
 
+'''
 
+child=['a','b','c','d','e','f']
 
+l={'children':child}
 
+print l
+
+def splitChildren(child):
+    print len(child)
+    if len(child)>5:
+        l['children']={
+            str(child[0]+'-'+child[len(child)/2]):child[0:len(child)/2],
+            str(child[len(child)/2]+'-'+child[len(child)]):child[len(child)/2:]
+            }
+        for item in l['children']:
+            splitChildren(item)
+    return l['children']
+
+print l
+print splitChildren(l['children'])
 
 
