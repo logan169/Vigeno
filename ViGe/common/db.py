@@ -19,13 +19,14 @@ def mdp_hash(mdp,salt):
 ###############################################################"
 ##db
 ###############################################################
-conn = Connection(arangoURL='http://132.204.81.223:1375')
+#conn = Connection(arangoURL='http://132.204.81.223:1375')
+conn = Connection(arangoURL='http://127.0.0.1:8529')
 
 #Creation/initialisation des collections
 try :
-    l
+    db = conn.createDatabase(name = 'ViGeno')
 except:
-    db=conn["ViGe"]
+    db=conn["ViGeno"]
 
 try:
     usersCollection= db.createCollection(name = "Users")
@@ -57,7 +58,7 @@ except:
 #######################################################################################################################
 
 #print querie results:
-
+#requete pour brin forward
 def getExons(startPosition,endPosition,transcript_id):
 
     bindVars={
@@ -69,6 +70,27 @@ def getExons(startPosition,endPosition,transcript_id):
     aql = """
     FOR c IN Exon
         FILTER  c.start <= @startPosition && c.end >= @endPosition && c.transcript_id==@transcript_id
+        RETURN c
+    """
+
+    # by setting rawResults to True you'll get dictionaries instead of Document objects, useful if you want to result to set of fields for example
+    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
+
+    return queryResult
+
+
+#requete pour brin reverse
+def getExonsReverse(startPosition,endPosition,transcript_id):
+
+    bindVars={
+        'startPosition':startPosition,
+        'endPosition':endPosition,
+        'transcript_id':transcript_id,
+        }
+
+    aql = """
+    FOR c IN Exon
+        FILTER  c.start <= @endPosition  && c.end >= @startPosition && c.transcript_id==@transcript_id
         RETURN c
     """
 

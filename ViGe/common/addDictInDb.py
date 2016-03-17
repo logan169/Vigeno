@@ -6,11 +6,8 @@
 ######################################################################################################################
 
 
-from db import getExons,addFileOverview,modifyPermissionDoc,addFileContent
+from db import getExons,getExonsReverse,addFileOverview,modifyPermissionDoc,addFileContent
 import kernel as K
-
-
-
 
 def addDictInDb(docLignes,filename,username,typs):
 
@@ -21,20 +18,22 @@ def addDictInDb(docLignes,filename,username,typs):
     for x in range (1,len(docLignes)):
 
         augmentedContent=getExons(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
-        if len(augmentedContent)>0:
-            if len(augmentedContent)==1:
+        if len(augmentedContent) == 0:
+            augmentedContent=getExonsReverse(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
+            if len(augmentedContent) != 0:
+                print 'Exon reversed found!'
+        try:
                 docLignes[x]['start_mutation']=docLignes[x]['start']
                 docLignes[x]['end_mutation']=docLignes[x]['end']
                 docLignes[x]['strand_mutation']=docLignes[x]['strand']
                 docLignes[x].update(augmentedContent[0])
-
 
                 try:
                     addFileContent(filename=filename,line=x,username=username,content=docLignes[x])
                 except:
                     message= 'You already own a file with this name, please change the name of the file you are uploading'
                     return K.JSONResponse(None,True,message)
-        else:
+        except:
             ExonsNotFound.write(str(docLignes[x])+'\n')
 
     ExonsNotFound.close()

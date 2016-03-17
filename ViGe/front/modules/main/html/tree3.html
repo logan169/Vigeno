@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Tree Example</title>
+
+	<style>
+
+		.node {
+		cursor: pointer;
+		}
+
+		.node circle {
+		fill: #fff;
+		stroke: steelblue;
+		stroke-width: 3px;
+		}
+
+		.node text {
+		font: 12px sans-serif;
+		}
+
+		.link {
+		fill: none;
+		stroke: #ccc;
+		stroke-width: 2px;
+		}
+
+		.tooltip {
+  		position: absolute;
+  		text-align: center;
+  		width: auto;
+  		height: 15px;
+  		padding: 1px;
+  		font: 12px sans-serif;
+  		background: lightsteelblue;
+  		border: 0px;
+  		border-radius: 8px;
+  		pointer-events: none;
+		}
+
+	</style>
+
+
+</head>
+
+<body>
+
+
+<!-- load the d3.js library -->
+<div class ="row-responsive" id="visRow">
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<!--<script src="/home/master/Documents/vige/ViGe/front/lib/c3-0.4.10/c3.min.js"></script>
+	<link rel="stylesheet" href="/home/master/Documents/vige/ViGe/front/lib/c3-0.4.10/c3.min.css">
+
+	<script src="/home/master/Documents/vige/ViGe/front/lib/d3plus.min.js"></script>-->
+
+
+
+
+	<script src="/20160209/ViGe/front/modules/main/script/tree3.js"></script>
+
+<!--
+
+
+<!--<script type="text/javascript">
+var chart = c3.generate({
+
+	bindto: '#visRow',
+    data: {
+        // iris data from R
+        columns: [
+            ['data1', 30],
+            ['data2', 120],
+        ],
+        type : 'pie',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    tooltip: {
+        format: {
+            title: function (d) { return 'Data ' + d; },
+            value: function (value, ratio, id) {
+                var format = id === 'data1' ? d3.format(',') : d3.format('$');
+                return format(value);
+            }
+        }
+    }
+})
+<>
+chart = chart.resize({height:100, width:300});
+
+<script type="text/javascript">
+
+var w = 20;
+var h = 20;
+var r = h/2;
+var color = d3.scale.category20c();
+
+var data = [{"label":"Category A", "value":20}, 
+		          {"label":"Category B", "value":50}, 
+		          {"label":"Category C", "value":30}];
+
+
+var vis = d3.select('#visRow')
+	.append("svg:svg")
+	.data([data])
+	.attr("width", w)
+	.attr("height", h)
+	.append("svg:g")
+	.attr("transform", "translate(" + r + "," + r + ")");
+
+var pie = d3.layout.pie().value(function(d){return d.value;});
+
+// declare an arc generator function
+var arc = d3.svg.arc().outerRadius(r);
+
+// select paths, use arc generator to draw
+var arcs = vis.selectAll("g.slice")
+	.data(pie)
+	.enter().append("svg:g")
+	.attr("class", "slice");
+
+
+arcs.append("svg:path")
+    .attr("fill", function(d, i){
+        return color(i);
+    })
+    .attr("d", function (d) {
+        // log the result of the arc generator to show how cool it is :)
+        console.log(arc(d));
+        return arc(d);
+    });
+
+
+
+</script>
+
+
+<script>
+
+
+
+  var container = "#visRow"
+  name = 'chromosome'
+  var data = [
+    {"occurence": 100, "name": "alpha", parent:'chromosome 11'},
+    {"occurence": 70, "name": "beta", parent:'chromosome 11'},
+    {"occurence": 40, "name": "gamma", parent:'chromosome 11'},
+    {"occurence": 15, "name": "delta", parent:'chromosome 11'},
+    {"occurence": 5, "name": "epsilon", parent:'chromosome 11'},
+    {"occurence": 1, "name": "zeta", parent:'chromosome 11'},
+  ]
+
+
+  var pieChart = function (c, d){
+  	d3plus.viz()
+  	  .container(c)
+  	  .data(d)
+  	  .type("pie")
+  	  .id('name')
+  	  .size('occurence')
+  	  .tooltip(false)
+  	  .width(45)
+  	  .height(45)
+  	  .mouse(false)
+  	  .draw()
+};
+
+pieChart(container ,data)
+
+</script>
+-->
+
+</div>
+</body>
+</html>

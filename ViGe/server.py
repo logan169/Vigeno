@@ -145,16 +145,33 @@ def getsequencesDbSNIP(chromosome,start,end,ref_strand):
 @app.route('/api/v0/modifyTree/<userChoice>/', methods=['GET'])
 def modifyTree(userChoice):
     global dictT  #variable global dictTab correspondant au resultat affiche dans le tableau du client
+
+    print 'userchoice',userChoice
+
     try:
-        temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT,'chromosome'),False,'')
+        temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT),False,'')
+    except:
+        temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT),False,'')
+
+    return flask.jsonify(**temp)
+
+########################################################################################################################
+
+@app.route('/api/v0/addTreeLayer/<userChoice>/<parameter>/', methods=['GET'])
+def addLayer(userChoice,parameter):
+    global dictT  #variable global dictTab correspondant au resultat affiche dans le tableau du client
+    try:
+        temp= K.JSONResponse(T.TreeJsInput(userChoice,dictT,str(parameter)),False,'')
     except:
         pass
-    print temp
+
     return flask.jsonify(**temp)
+
+########################################################################################################################
 
 if __name__ == '__main__':
     app.debug=True
-    app.run(host='0.0.0.0',port=8687)
+    app.run(host='0.0.0.0',port=8081)
 
 
 

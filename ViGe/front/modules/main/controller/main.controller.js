@@ -66,10 +66,17 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 
     /*set result = $rootScope.results*/
     $scope.results=$rootScope.results;
+
     $scope.currentPoly = {
     	selectedFrame:null,
     	vrai:true,
     	selectedRow:null,
+    	layerValue : false,
+    	TreeValue : null,
+    };
+
+    $scope.changeLayerValue = function(){
+    	$scope.currentPoly.layerValue = !$scope.currentPoly.layerValue
     };
 
     $scope.changeSelectedRow=function(idNumber){
@@ -77,9 +84,7 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
     	$scope.currentPoly.selectedRow =  idNumber+'-table-row';
     	console.log(idNumber);
     	console.log($scope.currentPoly.selectedRow);
-
-    }
-
+    };
 
 	$scope.splitDna=function(str){
 		var codons = [];
@@ -233,28 +238,61 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 	$scope.modifyTree=function(userChoice){
 		$scope.tree ='';
 		console.log(userChoice)
+		console.log(!$scope.currentPoly.layer,$scope.currentPoly.TreeValue)
 
-		/*envoie au serveur une annotation et le dict*/
-    	$http({
-    	method: 'GET',
-    	url: '/api/v0/modifyTree/'+userChoice+'/'
-    	}).then(function successCallback(response) {
-		    // this callback will be called asynchronously
-		    // when the response is available
-		    console.log(response.data.data);
-		    $scope.tree=response.data.data;
-		    rstTab();
-		    Tree.makeNewTree(response.data.data);
+		if (!$scope.currentPoly.layerValue || !$scope.currentPoly.TreeValue){
+			console.log('yeayea')
+			/*envoie au serveur une annotation et le dict*/
+    		$http({
+    		method: 'GET',
+    		url: '/api/v0/modifyTree/'+userChoice+'/'
+    		}).then(function successCallback(response) {
+			    // this callback will be called asynchronously
+			    // when the response is available
+			    console.log(response.data.data);
+			    $scope.tree=response.data.data;
+			    $scope.currentPoly.TreeValue = userChoice
+			    rstTab();
+			    Tree.makeNewTree(response.data.data);
+  				},
 
+    		function errorCallback(response) {
+   			    // called asynchronously if an error occurs
+   			    // or server returns response with an error status.
+  			    //console.log("Erreur lors de la tentative de mise à jour de l'arbre");
+  			    console.log(response);
+  			    })
+    		}
 
-  		},
-    	function errorCallback(response) {
-   		    // called asynchronously if an error occurs
-   		    // or server returns response with an error status.
-  		    //console.log("Erreur lors de la tentative de mise à jour de l'arbre");
-  		    console.log(response);
-  		    })
-    	};
+    	else if($scope.currentPoly.layerValue){
+    		/*Ajoute un calque à l'arbre*/
+
+			console.log('yoyoya')
+			$scope.tree ='';
+			console.log(userChoice, $scope.currentPoly.TreeValue)
+
+			/*envoie au serveur une annotation et le dict*/
+    		$http({
+    		method: 'GET',
+    		url: '/api/v0/addTreeLayer/'+$scope.currentPoly.TreeValue+'/'+userChoice+'/'
+    		}).then(function successCallback(response) {
+			    // this callback will be called asynchronously
+			    // when the response is available
+			    console.log(response.data.data);
+			    $scope.tree = response.data.data;
+			    rstTab();
+			    Tree.makeNewTree(response.data.data);
+  			},
+
+    		function errorCallback(response) {
+   			    // called asynchronously if an error occurs
+   			    // or server returns response with an error status.
+  			    //console.log("Erreur lors de la tentative de mise à jour de l'arbre");
+  			    console.log(response);
+  			    })
+    		}
+    	else{}
+    	}
 });
 
 
@@ -303,7 +341,8 @@ function update(source) {
 	  .attr("x", 0)
 	  .attr("text-anchor", 'middle')
 	  .text(function(d) {if (d.children_length ){return d.children_length}})
-	  .style("fill", 'orange')
+	  .style("font-weight", 'bold')
+	  .style("fill", 'black')
 	  .style("fill-opacity", 1);
 
 

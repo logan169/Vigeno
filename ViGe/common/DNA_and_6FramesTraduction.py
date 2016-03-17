@@ -28,7 +28,11 @@ def DNA_and_6FramesTraduction(seq,ref_strand):
     print seq
 
     outputDict={}
+
     DNAs=[seq, seq[1:], seq[2:], reverseComplement(seq), reverseComplement(seq)[1:], reverseComplement(seq)[2:]]
+    if ref_strand == '-':
+        DNAs=[seq[::-1], seq[1:][::-1], seq[2:][::-1], reverseComplement(seq)[::-1], reverseComplement(seq)[1:][::-1], reverseComplement(seq)[2:]][::-1]
+
 
     translation=translateDNA_6Frames(sequence=seq)
 
@@ -38,7 +42,3 @@ def DNA_and_6FramesTraduction(seq,ref_strand):
     return outputDict
 
 
-'''
-DNA_and_6FramesTraduction("TACTGCCCTATCGGTTGAAAAGACAAG",'+')
-DNA_and_6FramesTraduction("TACTGCCCTATCGGTTGAAAAGACAAG",'-')
-'''

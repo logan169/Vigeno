@@ -10,7 +10,7 @@
         <!--logo iric-->
         <div class="col-md-3">
             <div id="logo" class="" style="height: 100px">
-                <a href="http://www.iric.ca/"><img class="logotext" src="https://www.caissedebienfaisancecn.com/medias/photos/logo_iric.jpg" height="120"></a>
+                <a href="http://www.iric.ca/"><img class="logotext" src="http://www.iric.ca/wordpress/wp-content/themes/iric/resources/images/logo_IRIC_full_fr.png" height="120"></a>
             </div>
         </div>
 
@@ -18,7 +18,7 @@
         <div class="col-md-9">
             <blockquote class="pull-right">
                 <ul class="nav nav-tabs">
-                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home </a></li>
                     <li><a href ng-click="open()"><span class="glyphicon glyphicon-paperclip"></span> Upload a list</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
@@ -39,7 +39,12 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     Fichier:#
+                    <div class="pull-right">
+                    <div ng-class="{'btn':currentPoly.vrai, 'btn-info':!currentPoly.layerValue, 'btn-sm':currentPoly.vrai, 'btn-warning':currentPoly.layerValue, 'layerbtn':currentPoly.vrai}" ng-click="changeLayerValue()"><span class="glyphicon glyphicon-tree-deciduous"></span> Add Layer</div>
+
+                    </div>
                 </h4>
+
             </div>
 
             <!--tableau body-->
@@ -67,8 +72,8 @@
                                 <th ng-click = "modifyTree('transcript_id')">Transcript Id</th>
                                 <th ng-click = "modifyTree('id')">Exon Id</th>
                                 <th ng-click = "modifyTree('number')">Position in Transcript</th>
-                                <th ng-click = "modifyTree('protein_name')">Protein Name</th>
-                                <th ng-click = "modifyTree('protein_id')">Protein Id</th>
+                                <!--<th ng-click = "modifyTree('protein_name')">Protein Name</th>
+                                <th ng-click = "modifyTree('protein_id')">Protein Id</th>-->
                                 <th ng-click = "modifyTree('peptide')">Peptide</th>
                             </tr>
 
@@ -94,8 +99,8 @@
                                 <td>{{item.transcript_id}}</td>
                                 <td>{{item.id}}</td>
                                 <td>{{item.number}}</td>
-                                <td>{{item.protein_name}}</td>
-                                <td>{{item.protein_id}}</td>
+                                <!--<td>{{item.protein_name}}</td>
+                                <td>{{item.protein_id}}</td>-->
                                 <td>{{item.peptide}}</td>
                             </tr>
                             </tbody>

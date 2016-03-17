@@ -171,7 +171,7 @@ def startPos (genomeId,chromosomeId, startPosition):
 
 
 '''
-
+'''
 child=['a','b','c','d','e','f']
 
 l={'children':child}
@@ -191,5 +191,44 @@ def splitChildren(child):
 
 print l
 print splitChildren(l['children'])
+'''
 
 
+
+###################################
+
+
+from pyGeno.Genome import *
+#on initialise nos variables de pyGeno en les associant au genome et chromosome de l'input
+
+
+genomeId='GRCh37.75'
+chromosomeId = 6
+genomeReferent = Genome (name = str(genomeId))
+chro = genomeReferent.get(Chromosome, number = str(chromosomeId))[0]
+
+#sinon 3eme verification:verifie si la position soumise est dans l'index des Genes de ce chromosome => intron
+
+startPosition = 30698339
+chromosomeId = 6
+
+
+
+#geneReferent = genomeReferent.get(Gene, {'start >=': startPosition, 'end <': startPosition, "chromosome.number" : str(chromosomeId)})
+#if len(geneReferent) == 0:
+#    print 'b'
+#    geneReferent = genomeReferent.get(Gene, {'start <': startPosition, 'end >=': startPosition, "chromosome.number" : str(chromosomeId)})
+#
+#print geneReferent[0]
+
+
+exRef = genomeReferent.get(Exon, {'start >=': startPosition, 'end <': startPosition, "chromosome.number" : str(chromosomeId)})
+
+if len(exRef) == 0:
+    print 'b'
+    exRef = genomeReferent.get(Exon, {'start <': startPosition, 'end >=': startPosition, "chromosome.number" : str(chromosomeId)})
+
+print exRef[0]
+
+for item in exRef:
+    print item

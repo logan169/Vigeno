@@ -34,6 +34,10 @@ text-align: -webkit-center;
 }
 
 
+.layerbtn{
+	margin-top: -5px;
+}
+
 h4{
 font-weight:bold;
 }
