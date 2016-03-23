@@ -20,7 +20,13 @@ def mdp_hash(mdp,salt):
 ##db
 ###############################################################
 #conn = Connection(arangoURL='http://132.204.81.223:1375')
-conn = Connection(arangoURL='http://127.0.0.1:8529')
+
+#conn = Connection(arangoURL='http://132.204.81.150:8082')
+
+conn = Connection(arangoURL = 'http://132.204.81.150:8082')
+#conn = Connection(arangoURL='http://127.0.0.1:8529')
+
+
 
 #Creation/initialisation des collections
 try :
@@ -223,4 +229,5 @@ def findfiles(collection, filename):
     """
     queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
     return queryResult
+
 

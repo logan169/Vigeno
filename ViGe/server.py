@@ -91,13 +91,15 @@ def copy_File_and_his_output_in_DB_File_Content(filename):
             if dictTab['error']==True:
                 return dictTab ######################################message d'erreur
             else:
-
                 print 'DictTab done!'
+                print dictTab
+
                 try:
                     outputDict=A.addDictInDb(**dictTab['data'])
                 except:
-                    outputDict=O()
-                    return flask.jsonify(**K.JSONResponse(outputDict,False,'file in db!'))
+                    pass
+                    #outputDict= O()
+                    #return flask.jsonify(**K.JSONResponse(outputDict,False,'file in db!'))
 
             if outputDict['error'] ==True:
                 return outputDict ######################################message d'erreur
@@ -171,7 +173,7 @@ def addLayer(userChoice,parameter):
 
 if __name__ == '__main__':
     app.debug=True
-    app.run(host='0.0.0.0',port=8081)
+    app.run(host='0.0.0.0',port=8083)
 
 
 

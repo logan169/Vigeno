@@ -11,6 +11,8 @@ import kernel as K
 
 def addDictInDb(docLignes,filename,username,typs):
 
+    print docLignes,filename,username,typs
+
     #cree un fichier pour noter tout les exons n'ayant pas ete trouves dans la bd
     ExonsNotFound=open('ExonsNotFound.txt','a')
 
@@ -41,7 +43,9 @@ def addDictInDb(docLignes,filename,username,typs):
     #l'overview dans file_Overview
     addFileOverview(filename=filename,username=username,colonnes=typs)
     #la permission de lire,ecrire,'overview et le file owned dans file_Overview
-    modifyPermissionDoc(username=username,fileReadPermission=filename,fileWritePermission=filename,fileOwned=filename)
+
+    #a decommenter au moment de l'implementation des compte
+    #modifyPermissionDoc(username=username,fileReadPermission=filename,fileWritePermission=filename,fileOwned=filename)
 
 
 
