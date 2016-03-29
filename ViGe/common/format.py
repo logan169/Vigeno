@@ -57,3 +57,5 @@ def formatProtein(protein) :
         'transcript': protein.transcript.name,
     }
 
+
+

@@ -17,7 +17,7 @@ def addDictInDb(docLignes,filename,username,typs):
     ExonsNotFound=open('ExonsNotFound.txt','a')
 
     # on process chaque lignes et on ajoute le dict de resultat dans File_Content
-    for x in range (1,len(docLignes)):
+    for x in range (0,len(docLignes)):
 
         augmentedContent=getExons(startPosition=int(docLignes[x]['start']),endPosition=int(docLignes[x]['end']),transcript_id=docLignes[x]['enst'])
         if len(augmentedContent) == 0:

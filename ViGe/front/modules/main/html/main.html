@@ -38,7 +38,7 @@
             <!--tableau titre-->
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    Fichier:#
+                    <div> File#
                     <div class="pull-right">
                     <div ng-class="{'btn':currentPoly.vrai, 'btn-info':!currentPoly.layerValue, 'btn-sm':currentPoly.vrai, 'btn-warning':currentPoly.layerValue, 'layerbtn':currentPoly.vrai}" ng-click="changeLayerValue()"><span class="glyphicon glyphicon-tree-deciduous"></span> Add Layer</div>
 
@@ -51,8 +51,8 @@
             <div class="panel-body">
                 <div class="table-responsive">
                     <div class="span3">
-                        <table class="table table-bordered">
-                            <tr class="clickableTr  strong">
+                        <table class="table table-bordered text-center">
+                            <tr class="clickableTr strong">
                                 <th>Input Line</th>
                                 <th ng-click = "modifyTree('strand_mutation')">Mutation strand</th>
                                 <th ng-click = "modifyTree('start_mutation')">Mutation start</th>
@@ -72,14 +72,15 @@
                                 <th ng-click = "modifyTree('transcript_id')">Transcript Id</th>
                                 <th ng-click = "modifyTree('id')">Exon Id</th>
                                 <th ng-click = "modifyTree('number')">Position in Transcript</th>
-                                <!--<th ng-click = "modifyTree('protein_name')">Protein Name</th>
-                                <th ng-click = "modifyTree('protein_id')">Protein Id</th>-->
+                                <th ng-click = "modifyTree('protein_name')">Protein Name</th>
+                                <th ng-click = "modifyTree('protein_id')">Protein Id</th>
                                 <th ng-click = "modifyTree('peptide')">Peptide</th>
                             </tr>
 
                             <tbody>
                             <!--acceder au contenu de la liste data-->
                             <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin(1+$index, item); changeSelectedRow( 1+$index)" ng-attr-id="{{ 1+  $index+ '-table-row'}}" ng-class="{warning:currentPoly.selectedRow== 1+$index+'-table-row' }">
+
                                 <td> {{$index+1}} </td>
                                 <td>{{item.strand_mutation}}</td>
                                 <td>{{item.start_mutation}}</td>
@@ -99,8 +100,8 @@
                                 <td>{{item.transcript_id}}</td>
                                 <td>{{item.id}}</td>
                                 <td>{{item.number}}</td>
-                                <!--<td>{{item.protein_name}}</td>
-                                <td>{{item.protein_id}}</td>-->
+                                <td>{{item.protein_name}}</td>
+                                <td>{{item.protein_id}}</td>
                                 <td>{{item.peptide}}</td>
                             </tr>
                             </tbody>
@@ -130,7 +131,7 @@
                                 <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.gene.id==null}" href="http://www.ensembl.org/id/{{currentPoly.gene.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Gene</a>
                                 <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.transcript.id==null}" href="http://useast.ensembl.org/Homo_sapiens/Gene/Splice?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Transcript</a>
                                 <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.exon_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Exon</a>
-                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.protein_id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?db=core;g={{currentPoly.gene.id}};t={{currentPoly.transcript}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Protein</a>
+                                <a ng-class="{btn:currentPoly.vrai,'btn-info':currentPoly.vrai,disabled:currentPoly.protein.id==null}" href="http://useast.ensembl.org/Homo_sapiens/Transcript/Sequence_Protein?g={{currentPoly.gene.id}};t={{currentPoly.transcript.id}}" target="_blank"><input type="image" src="/front/modules/main/image/ensemble.png" />&nbsp;Protein</a>
                             </div>
 
                             <div class="text-center">

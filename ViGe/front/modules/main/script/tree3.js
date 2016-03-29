@@ -167,13 +167,27 @@ var div = d3.select("body").append("div")
 
   nodeEnter
      .each(drawPie)
+     .on("mouseover", function(d) {
+
+             div.transition()
+                 .duration(200)
+                 .style("opacity", 1);
+             div.html(d.name)
+                 .style("left", (d3.event.pageX) + "px")
+                 .style("top", (d3.event.pageY - 28) + "px");
+             })
+     .on("mouseout", function(d) {
+             div.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+                 })
      .append('circle')
      .attr('r',function(d){return d.children_length==0? 0:11})
      .style('fill',function(d){return d.pie.length==0 ? '#3182bd':'none'})
      .style('stroke',function(d){return d.children_length==0? 'none':'black'})
      .style('stroke-width',0.9) // la width du cercle peut etre modifiee au besoin pour refleter
      .on("mouseover", function(d) {
-     //console.log(d)
+
              div.transition()
                  .duration(200)
                  .style("opacity", 1);
@@ -194,7 +208,21 @@ var div = d3.select("body").append("div")
      .attr("width", 20)
      .attr("height", 20)
      .style('fill', function(d){if (root.layer == 'null'){return d.children_length==0 ? '#fee0d2':'none'}else{return d.children_length==0 ? d.color:'none'}})
-     .style('stroke',function(d){return d.children_length==0 ? 'black':'none'});
+     .style('stroke',function(d){return d.children_length==0 ? 'black':'none'})
+     .on("mouseover", function(d) {
+
+             div.transition()
+                 .duration(200)
+                 .style("opacity", 1);
+             div.html(d.name)
+                 .style("left", (d3.event.pageX) + "px")
+                 .style("top", (d3.event.pageY - 28) + "px");
+             })
+     .on("mouseout", function(d) {
+             div.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+                 });
 
 
 
@@ -285,8 +313,8 @@ var div = d3.select("body").append("div")
   box.append('rect')
      .attr("x", 50)
      .attr('y',-25)
-     .attr("width", function(){return root.layer == 'null'? 175:400})
-     .attr("height", 50)
+     .attr("width", 300)
+     .attr("height", 75)
      .style('fill', '#fee0d2')
      .style('stroke','black')
 
@@ -298,8 +326,8 @@ var div = d3.select("body").append("div")
 	 .style("fill-opacity", 1);
 
   box.append("text")
-     .attr("x", 225)
-     .attr('y',5)
+     .attr("x", 75)
+     .attr('y',30)
 	 .text(function (){ if (root.layer != 'null'){return 'Layer : '+root.layer.toUpperCase();}})
 	 .style("font-weight", 'bold')
 	 .style("fill-opacity", 1);
@@ -336,8 +364,10 @@ var diagonal = d3.svg.diagonal()
  .projection(function(d) { return [d.x, d.y]; });
 
 var svg = d3.select("#visRow").append("svg")
-	.attr("width", width + margin.right + margin.left)
-	.attr("height", height + margin.top + margin.bottom)
+    .attr("width", '100%')
+    .attr("height", '100%')
+    .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
+    .attr('preserveAspectRatio','xMinYMin')
     .append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 

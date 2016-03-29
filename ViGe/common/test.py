@@ -53,11 +53,19 @@ print dictColor
 
 #print l
 
-def tree(t):
-    #print t
-    while t['_children'] is not None:
-        print t
-        print '\n'
-        return tree(t._children)
 
-tree(l[0])
+w=0
+wo=[]
+lists = [1115763, 1242454, 6857935, 6990415, 12595223, 16465149]
+
+for list in lists:
+    i=[]
+    for item in list:
+        print list
+        print '#'*200
+        print item
+        i.append(f(item,nameList(list),listLeaf[str(item)], layer = parameter))
+    wo.append(f(nameList(list),root,i))
+    out[0]['_children'][w]['children_length']+=1
+    out[0]['_children']=wo
+    w+=1

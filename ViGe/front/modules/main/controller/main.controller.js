@@ -303,10 +303,66 @@ app.service('Tree', function(){
 this.makeNewTree=function(input){
 
 
+//*********************************************************************************************************************
+//pie
+
+function drawPie(d) {
+  d3.select(this)
+    .selectAll('path')
+    .data(pie(d.pie))
+    .enter()
+    .append('path')
+    .attr('d', arc)
+    .attr('fill', function(d){return d.data.color;})
+    .attr('stroke','black')
+    .attr('stroke-width', function(d) { return d.data.value == 0 ? 0: 0.5;})
+    }
+
+    var w = 100;
+    var h = 60;
+    var i = 0;
+
+
+    var tree = d3.layout.tree()
+      .nodeSize([w + 10, h + 20])
+      .separation(function(a, b) {
+        return (a.parent == b.parent ? 1 : 1.5);
+      });
+
+    var diagonal = d3.svg.diagonal()
+      .projection(function(d) {
+        return [d.x, d.y];
+      });
+
+    var vis = d3.select("body").append("svg:svg")
+      .attr("width", 500)
+      .attr("height", 500)
+      .append("svg:g")
+      .attr("transform", "translate(" + 250 + "," + 30 + ")");
+
+    function toggleAll(d) {
+      if (d.children) {
+        d.children.forEach(toggleAll);
+        toggle(d);
+      }
+    }
+
+    var arc = d3.svg.arc()
+      .outerRadius(10)
+      .innerRadius(0);
+
+    var pie = d3.layout.pie()
+      .value(function(d) {
+        return d.value;
+      })
+      .sort(null);
+
+
 //************************************************************functions************************************************
 function update(source) {
 
-  // Compute the new tree layout.
+
+ // Compute the new tree layout.
   var nodes = tree.nodes(root).reverse(),
 	  links = tree.links(nodes);
 
@@ -323,17 +379,78 @@ function update(source) {
 	  .attr("transform", function(d) { return "translate(" + source.x + "," + source.y + ")"; })
 	  .on("click", click);
 
-  nodeEnter.append("circle")
-	  .attr("r", 1e-6)
-	  .style("fill", function(d) {return d._children ? "lightsteelblue" : "#fff"; });
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  nodeEnter
+     .each(drawPie)
+     .on("mouseover", function(d) {
+
+             div.transition()
+                 .duration(200)
+                 .style("opacity", 1);
+             div.html(d.name)
+                 .style("left", (d3.event.pageX) + "px")
+                 .style("top", (d3.event.pageY - 28) + "px");
+             })
+     .on("mouseout", function(d) {
+             div.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+                 })
+     .append('circle')
+     .attr('r',function(d){return d.children_length==0? 0:11})
+     .style('fill',function(d){return d.pie.length==0 ? '#3182bd':'none'})
+     .style('stroke',function(d){return d.children_length==0? 'none':'black'})
+     .style('stroke-width',0.9) // la width du cercle peut etre modifiee au besoin pour refleter
+     .on("mouseover", function(d) {
+
+             div.transition()
+                 .duration(200)
+                 .style("opacity", 1);
+             div.html(d.name)
+                 .style("left", (d3.event.pageX) + "px")
+                 .style("top", (d3.event.pageY - 28) + "px");
+             })
+     .on("mouseout", function(d) {
+             div.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+                 })
+
+  nodeEnter
+     .append('rect')
+     .attr("x", -10)
+     .attr("y", -10)
+     .attr("width", 20)
+     .attr("height", 20)
+     .style('fill', function(d){if (root.layer == 'null'){return d.children_length==0 ? '#fee0d2':'none'}else{return d.children_length==0 ? d.color:'none'}})
+     .style('stroke',function(d){return d.children_length==0 ? 'black':'none'})
+     .on("mouseover", function(d) {
+
+             div.transition()
+                 .duration(200)
+                 .style("opacity", 1);
+             div.html(d.name)
+                 .style("left", (d3.event.pageX) + "px")
+                 .style("top", (d3.event.pageY - 28) + "px");
+             })
+     .on("mouseout", function(d) {
+             div.transition()
+                 .duration(500)
+                 .style("opacity", 0);
+                 });
+
 
   nodeEnter.append("text")
 	  .attr("y",  function(d) {return d.children || d._children ?  -15: 25;})
-	  .attr("x", function(d) { return d.children || d._children ? 10 : 0;})
+	  .attr("x", function(d) { return d.children || d._children ? 2 : 0;})
 	  .attr("text-anchor", 'middle')
 	  .style("font-size",15)
-	  .text(function(d) {if (d.parent == 'null'){return 'Tree : '+d.name+' / '+'Layer : '+d.layer; } else{return d.name;}})
-	  .style("fill", function(d) {return d._children ? "black":"blue"; })
+	  .text(function(d) {if (d.parent == 'null'){return d.name.charAt(0).toUpperCase() + d.name.slice(1) } else{if (String(d.name).length<7 && String(d.name).length !=6 ){return d.name;}}})
+	  .style('font-weight','bold')
 	  .style("fill-opacity", 1);
 
   nodeEnter.append("text")
@@ -348,18 +465,10 @@ function update(source) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
 	  .duration(duration)
 	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-
-  nodeUpdate.select("circle")
-	  .attr("r" , 10)                   // modifie le rayon des noeuds lorsque les noeud ss jacents sont absorbés
-	  .style("fill" , function(d) { return d.color} )           // change la couleur des noeuds
-
 
   nodeUpdate.select("text")
 	  .style("fill-opacity", 1);
@@ -374,9 +483,6 @@ function update(source) {
 	  .duration(duration)
 	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 	  .remove();
-
-  nodeExit.select("circle")
-	  .attr("r", 1e-6);
 
   nodeExit.select("text")
       .style("fill-opacity", 1e-6);
@@ -419,6 +525,31 @@ function update(source) {
 	d.y0 = d.y;
   });
 
+
+  //add title box
+
+  box.append('rect')
+     .attr("x", 50)
+     .attr('y',-25)
+     .attr("width", 300)
+     .attr("height", function(d){return root.layer == 'null'? 40:65})
+     .style('fill', '#fee0d2')
+     .style('stroke','black')
+
+  box.append("text")
+     .attr("x", 75)
+     .attr('y',0)
+	 .text(function (){ return 'Tree : '+root.name.toUpperCase();})
+	 .style("font-weight", 'bold')
+	 .style("fill-opacity", 1);
+
+  box.append("text")
+     .attr("x", 75)
+     .attr('y',25)
+	 .text(function (){ if (root.layer != 'null'){return 'Layer : '+root.layer.toUpperCase();}})
+	 .style("font-weight", 'bold')
+	 .style("fill-opacity", 1);
+
 }
 
 // Toggle children on click.
@@ -432,6 +563,8 @@ function click(d) {
   }
   update(d);
 }
+
+
 
 // ************** Generate the tree diagram	 *****************
 var margin = {top: 30, right: 10, bottom: 30, left: 10},
@@ -449,10 +582,14 @@ var diagonal = d3.svg.diagonal()
  .projection(function(d) { return [d.x, d.y]; });
 
 var svg = d3.select("#visRow").append("svg")
-	.attr("width", width + margin.right + margin.left)
-	.attr("height", height + margin.top + margin.bottom)
+    .attr("width", '100%')
+    .attr("height", '100%')
+    .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
+    .attr('preserveAspectRatio','xMinYMin')
     .append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var box = svg.append("g")
 
 root = input[0];
 root.x0 = height / 2;
