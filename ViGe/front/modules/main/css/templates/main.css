@@ -1,0 +1,119 @@
+.modal {
+display: block;
+}
+
+.span3 {
+	height: 200px;
+	overflow: auto;
+
+}
+.span2 {
+	width: 100%;
+	overflow: auto;
+	text-align:-webkit-center;
+}
+
+.clickableTr {
+    cursor:pointer;
+    color:black;
+}
+
+
+.fixed{
+	position:fixed;
+	float:none;
+}
+
+.strong{
+	font-weight: bold;
+}
+
+td{
+	width:35px;
+	text-align: -webkit-center;
+}
+
+th{
+text-align: -webkit-center;
+}
+
+
+.layerbtn{
+	margin-top: -5px;
+}
+
+h4{
+font-weight:bold;
+}
+
+/*couleur boite sequence adn et aa */
+
+.codon-0{
+background-color:#C3E8DE;
+}
+.codon-1{
+background-color:#99F8FF;
+}
+
+.codonSnp-0{
+background-color:#FDCDCD;
+}
+
+.codonSnp-1{
+background-color:#E88C8C;
+}
+
+
+.K{
+background-color:#ffffcc;}
+.N{
+background-color:#0074D9;}
+.Q{
+background-color:#7FDBFF;}
+.H{
+background-color:#39CCCC;}
+.Y{
+background-color:#3D9970;}
+.A{
+background-color:#2ECC40;}
+.T{
+background-color:#01FF70;}
+.P{
+background-color:#FFDC00;}
+.S{
+background-color:#FF851B;}
+.*{
+background-color: red;}
+.I{
+background-color:#9966ff;}
+.V{
+background-color:#F012BE;}
+.M{
+background-color:#B10DC9;}
+.L{
+background-color:#AAAAAA;}
+.F{
+background-color:#DDDDDD;}
+.D{
+background-color:palegoldenrod;
+}
+.W{
+background-color:royalblue;
+}
+.E{
+background-color:#c7996b;
+}
+.C{
+background-color:SILVER;
+}
+.R{
+background-color:#ffcce6;
+}
+.G{
+background-color:salmon;
+}
+
+
+
+
+

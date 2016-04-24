@@ -1,0 +1,57 @@
+<div modal="showModal" close="cancel()">
+    <div class="modal-content">
+        <div class="modal-header" >
+            <h3>Table Columns</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="panel panel-info">
+                <!--title-->
+                <div class="panel-heading">
+                    <p>Update shown columns</p>
+                </div>
+                <!--body-->
+                <div class="panel-body">
+                    <!--
+                    <div class="pull-left">
+                    <button class="btn btn-info btn pull-left" ng-click="checkAll">Check all</button>
+                    </div>
+                        <div class="pull-right">
+                        <button class="btn btn-info btn" ng-click="uncheckAll">Uncheck all</button>
+                    </div>
+                    -->
+                            <br>
+
+
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.strand_mutation" ng-checked="column.strand_mutation">strand_mutation</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.start_mutation" ng-checked="column.start_mutation">start_mutation</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.end_mutation" ng-checked="column.end_mutation">end_mutation</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.chromosome" ng-checked="column.chromosome">chromosome</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.strand" ng-checked="column.strand">strand</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.start" ng-checked="column.start">start</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.end" ng-checked="column.end">end</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.length" ng-checked="column.length">length</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.frame" ng-checked="column.frame">frame</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.CDS_start" ng-checked="column.CDS_start">CDS_start</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.CDS_end" ng-checked="column.CDS_end">CDS_end</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.CDS_length" ng-checked="column.CDS_length">CDS_length</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.gene_name" ng-checked="column.gene_name">gene_name</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.gene_id" ng-checked="column.gene_id">gene_id</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.transcript_name" ng-checked="column.transcript_name">transcript_name</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.transcript_id" ng-checked="column.transcript_id">transcript_id</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.id" ng-checked="column.id">id</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.number" ng-checked="column.number">number</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.protein_name" ng-checked="column.protein_name">protein_name</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.protein_id" ng-checked="column.protein_id">protein_id</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.peptide" ng-checked="column.peptide">peptide</label><br>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="column.group" ng-checked="column.group">group</label><br>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="cancel()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

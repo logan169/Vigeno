@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>GVV-index</title>
+    <!--On load, launch modules-->
+    <!-- Jquery (bootstrap ) besoin de ça)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!--angular js , angular-route-->
+    <script src="/front/lib/angular.js"></script>
+    <script src="/front/lib/angular-route.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!--modal-->
+
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
+
+    <link rel="stylesheet" href="/front/modules/main/css/font-awesome-4.4.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="/front/modules/main/css/templates/tree.css"/>
+    <link rel="stylesheet" href="/front/modules/main/css/templates/main.css"/>
+
+
+    <!--d3 pour l'arbre-->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    <!-- lien vers l'application qui va gerer l'affichage des pages html -->
+    <script src="/front/VigeFront.js"></script>
+    <script src="/front/modules/main/controller/main.controller.js"></script>
+    <script src="/front/modules/main/controller/upload.controller.js"></script>
+    <script src="/front/modules/main/controller/table.controller.js"></script>
+
+</head>
+
+<body ng-app="VigeFront" ng-controller="mainCtrl">
+    <!--va chercher les modules necessaires à l.txt'affichage de la nouvelle vue-->
+
+            <div id="view" ng-view></div>
+
+
+</body>
+</html>
+
+

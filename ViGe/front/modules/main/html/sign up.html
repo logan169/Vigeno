@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>GVV-index</title>
+    <!--On load, launch modules-->
+    <!-- Jquery (bootstrap ) besoin de ça)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!--angular js , angular-route-->
+    <script src="/front/lib/angular.js"></script>
+    <script src="/front/lib/angular-route.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!--modal-->
+
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
+
+    <!--css-->
+
+
+
+
+    <!--d3-->
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!-- lien vers l'application qui va gerer l'affichage des pages html -->
+    <script src="/front/VigeFront.js"></script>
+    <script src="/front/modules/main/controller/main.controller.js"></script>
+    <script src="/front/modules/main/controller/upload.controller.js"></script>
+
+</head>
+<body>
+
+<!-- top page-->
+<div class="row">
+    <!--navigation bar-->
+
+    <blockquote>
+        <ul class="nav nav-tabs">
+
+            <li class="pull-left"><a href="http://www.iric.ca/"><img class="logotext" src="http://www.iric.ca/wordpress/wp-content/themes/iric/resources/images/logo_IRIC_full_fr.png" height="120"></a></li>
+
+            <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="pull-right"><a href ng-click="open()"><span class="glyphicon glyphicon-paperclip"></span> Upload a list</a></li>
+            <li class="pull-right"><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
+            <li class="pull-right"><a href ng-click="openModalLog()"><span class="glyphicon glyphicon-user"></span>Log in</a></li>
+
+        </ul>
+    </blockquote>
+</div>
+
+</div>
+
+
+<div class="form-group col-sm-1"></div>
+<div class="panel panel-info form-group col-sm-4">
+    <br>
+    <form role="form" method="POST">
+
+
+        <div class="row">
+            <div class="form-group col-sm-1"></div>
+            <h1 class="col-sm-3">Sign Up <hr></h1>
+            <div class="form-group col-sm-4"></div>
+            <div class="form-group col-sm-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-1"></div>
+            <div class="form-group col-sm-5">
+                <label>Name</label>
+                <input name='name' type="text" class="form-control">
+            </div>
+            <div class="form-group col-sm-5">
+                <label>Last name</label>
+                <input name='last_name' type="text" class="form-control">
+            </div>
+            <div class="form-group col-sm-1"></div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-1"></div>
+            <div class="form-group col-sm-10">
+                <label>Mail</label>
+                <input name= 'mail-1' type="email" class="form-control">
+            </div>
+            <div class="form-group col-sm-1"></div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-1"></div>
+            <div class="form-group col-sm-10">
+                <label>Re-enter your mail</label>
+                <input name= 'mail-2' type="email" class="form-control">
+            </div>
+            <div class="form-group col-sm-1"></div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-1"></div>
+            <div class="form-group col-sm-5">
+                <label>Username</label>
+                <input name= 'user_name' type="text" class="form-control">
+            </div>
+            <div class="form-group col-sm-5">
+                <label>Password</label>
+                <input name= 'password' type="text" class="form-control">
+            </div>
+            <div class="form-group col-sm-1"></div>
+        </div>
+
+        <br>
+        <br>
+        <div class="row">
+            <div class="form-group pull-right col-sm-3 ">
+                <input type="hidden" name="save" value="contact">
+                <button type="submit" name='submit' class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="form-group col-sm-1"></div>
+<div class="panel panel-info form-group col-sm-4">
+    <div class="panel">
+    <br>
+    <h1>Welcome in ViGe!</h1>
+    <br>
+    <p>
+        ViGe is a visual app rest on pyGeno feature that analyze your SNP data for you and let you
+        share results with colleagues.
+    </p>
+    </div>
+</div>
+
+
+</body>
+</html>
