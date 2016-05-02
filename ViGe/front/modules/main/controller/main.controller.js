@@ -100,10 +100,10 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 		$scope.currentPoly.selectedFrame=value;
     };
 
-    var getdbSnipSeq=function(chromosome,start,end,ref_strand){
+    var getdbSnipSeq=function(chromosome,start,end,ref_strand,frame){
     	$http({
 			method: 'GET',
-			url: '/api/v0/getDNA&AADBSNIP/'+chromosome+'/'+start+'/'+end+'/'+ref_strand+'/'
+			url: '/api/v0/getDNA&AADBSNIP/'+chromosome+'/'+start+'/'+end+'/'+ref_strand+'/'+frame+'/'
 			}).then(function successCallback(response) {
 				// this callback will be called asynchronously
 				// when the response is available
@@ -195,7 +195,8 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 		protein_name : true,
 		protein_id : false,
 		peptide : true,
-		group : false
+		group : false,
+                sex : true
 	}
 
 	/*modifie les colonnes du tableau*/
@@ -247,7 +248,7 @@ app.controller('mainCtrl',function($scope,$http,$modal,$rootScope,$location,Tree
 
 		console.log($scope.currentPoly.mutated.normalized.start,$scope.currentPoly.mutated.normalized.end,$scope.currentPoly.mutated.length,$scope.currentPoly.mutated.normalized.demilength)
 		get6frames($scope.currentPoly.seq,$scope.currentPoly.strand,$scope.currentPoly.frame);
-		getdbSnipSeq(item.chromosome,item.start,item.end,$scope.currentPoly.strand);//modifier code pour obtenir dbsnp filter
+		getdbSnipSeq(item.chromosome,item.start,item.end,$scope.currentPoly.strand,$scope.currentPoly.frame);//modifier code pour obtenir dbsnp filter
 		$scope.currentPoly.selectedFrame=startingStrandAndFrame(item.strand, item.frame);
 	};
 

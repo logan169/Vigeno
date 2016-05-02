@@ -23,7 +23,9 @@ app.controller('tableController', function( $modal, $modalInstance, $scope,$root
   $scope.protein_name = $rootScope.column.protein_name;
   $scope.protein_id = $rootScope.column.protein_id;
   $scope.peptide = $rootScope.column.peptide;
-  $scope.group = $rootScope.column.group;
+  $scope.group = $rootScope.column.group; 
+$scope.sex = $rootScope.column.sex;
+
 
   $scope.checkall_checkbox = false;
   $scope.uncheckall_checkbox = false;

@@ -79,7 +79,8 @@
                                 <th ng-show="column.protein_id" ng-click = "modifyTree('protein_id')">Protein Id</th>
                                 <th ng-show="column.peptide" ng-click = "modifyTree('peptide')">Peptide</th>
                                 <th ng-show="column.group" ng-click = "modifyTree('group')">Group</th>
-                            </tr>
+                                <th ng-show="column.sex" ng-click = "modifyTree('sex')">Sex</th>
+</tr>
 
                             <tbody>
                             <!--acceder au contenu de la liste data-->
@@ -171,18 +172,13 @@
                                 </tr>
 
                                 <tr>
-                                    <td ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center">{{AA}}</td>
+                                    <td ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center" text-center">{{AA}}</td>
                                 </tr>
-                            </div>
-                        </table>
-                        <br>
-
-                        <table>
-
-                            <div class="block-center">
-
+                            
+<tr> 
+                                    <td ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" text-center">&nbsp;</td>
+                                </tr>
                                 <tr>
-                                    <h4>db SNPs</h4>
                                     <td ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" class="codonSnp-{{$index%2}} text-center">{{item}}</td>
                                 </tr>
 

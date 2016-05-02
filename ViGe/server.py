@@ -77,6 +77,8 @@ def upload_File():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             print 'upload_File passed!'
             return flask.jsonify(**K.JSONResponse(None,False,'file uploaded'))
+	else:
+	    return flask.jsonify(**K.JSONResponse(None,True,'Wrong file extension, file must be a csv!'))
 
 ########################################################################################################################
 
@@ -132,13 +134,14 @@ def getSequences(seq,ref_strand,frame):
 ########################################################################################################################
 #produit un dict contenant les 6 frames d'ADN et leur traduction respectives
 
-@app.route('/api/v0/getDNA&AADBSNIP/<chromosome>/<int:start>/<int:end>/<ref_strand>/', methods=['POST','GET'])
-def getsequencesDbSNIP(chromosome,start,end,ref_strand):
+@app.route('/api/v0/getDNA&AADBSNIP/<chromosome>/<int:start>/<int:end>/<ref_strand>/<frame>/', methods=['POST','GET'])
+def getsequencesDbSNIP(chromosome,start,end,ref_strand,frame):
     chromosome=str(chromosome)
     start=int(start)
     end=int(end)
+    frame =str(frame)
     ref_strand=str(ref_strand)
-    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end),ref_strand),False,'')
+    temp= K.JSONResponse(DNA_and_6FramesTraduction(getdbSnipSeq(chromosome,start,end,ref_strand),ref_strand,frame),False,'')
     return flask.jsonify(**temp)
 
 ########################################################################################################################
