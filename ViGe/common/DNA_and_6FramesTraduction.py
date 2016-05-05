@@ -20,7 +20,7 @@ def DNA_and_6FramesTraduction(seq,ref_strand,frame):
         frames = ["f1", "f2", "f3", "r1", "r2", "r3"]
 
     elif ref_strand == '-':
-	frames = ["f1", "f2", "f3", "r1", "r2", "r3"]
+        frames = ["f1", "f2", "f3", "r1", "r2", "r3"]
         #frames = [ "r1", "r2", "r3","f1", "f2", "f3"]
 
 

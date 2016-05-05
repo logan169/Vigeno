@@ -111,7 +111,6 @@ def getExonsReverse(startPosition,endPosition,transcript_id):
 # pour bd User
 #########################################################################
 
-
 #validate if an username exist and return doc for an user in collection user
 def FindUsername(username,mail):
     bindVars={
@@ -176,9 +175,6 @@ def modifyPermissionDoc(username,fileReadPermission=None,fileWritePermission=Non
 
 #########################################################################
 #########################################################################
-def getUserPermission(username):
-    doc = permissionCollection[str(username)]
-    return doc
 
 #########################################################################
 # pour bd Annotation
@@ -198,35 +194,11 @@ def addExon(dict):
 def addFileOverview(filename,username,colonnes):
     docFileOverview = fileOverviewCollection.createDocument()
     docFileOverview._key=str(username)+','+str(filename)
-    docFileOverview['filename']= filename
+    docFileOverview['fileName']= filename
     docFileOverview['uploadDate']= time.time()
     docFileOverview['originalOwner']=username
     docFileOverview['column']=colonnes
     docFileOverview.save()
-
-#retourne la liste contenant les fichier appartenant à username
-def FindUserFiles(username):
-
-    #Filelist = []
-    #for doc in fileOverviewCollection.fetchAll():
-    #    #on regarde si l'index 0 de _key est l'username si on la split avec les ,
-    #    if doc['originalOwner'] == username:
-    #        if doc['fileName'] not in Filelist: # fileName à changer pour filename pour concorder avec la collection file content
-    #            Filelist.append(doc['fileName']) # fileName à changer pour filename pour concorder avec la collection file content
-    #return Filelist
-
-
-    bindVars={
-        'username':username,
-        }
-    aql = """
-    For c IN File_Overview
-    FILTER  c.originalOwner==@username
-    SORT c.uploadDate
-    RETURN c
-    """
-    queryResult = db.AQLQuery(aql, rawResults = True, batchSize = 100, bindVars = bindVars)
-    return queryResult
 
 
 #########################################################################
@@ -245,7 +217,7 @@ def addFileContent(filename,line, username, content=None):
 #########################################################################
 
 #collection possible : File_Content, File_Overview
-def getFile(collection, filename):
+def findfiles(collection, filename):
     bindVars={
         'filename':filename,
         }
@@ -259,26 +231,3 @@ def getFile(collection, filename):
     return queryResult
 
 
-'''
-Plan decrivant qu'elles fonctions appeller à partir de qu'elle page
-
-Acceuil
-    => loggin
-            -FindUsername(username,mail)
-        =>sign in
-            -addUser(username,mdp,mail)
-            -createPermissionDoc(username)
-UserPage
-    -getUserPermission(username)
-    -FindUserFiles(username)
-    =>Upload a File
-        -addFileOverview(filename,username,colonnes)
-        -addFileContent(filename,line, username, content=None)
-        -modifyPermissionDoc(username,fileReadPermission=None,fileWritePermission=None,fileOwned=None)
-    =>Share a File
-        -modifyPermissionDoc(username,fileReadPermission=None,fileWritePermission=None,fileOwned=None)
-
-    => see analysis results
-        -getFile(collection, filename) pour avoir le contenu du fichier
-
-'''
