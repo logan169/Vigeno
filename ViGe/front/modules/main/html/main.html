@@ -80,12 +80,11 @@
                                 <th ng-show="column.peptide" ng-click = "modifyTree('peptide')">Peptide</th>
                                 <th ng-show="column.group" ng-click = "modifyTree('group')">Group</th>
                                 <th ng-show="column.sex" ng-click = "modifyTree('sex')">Sex</th>
-</tr>
+                            </tr>
 
                             <tbody>
                             <!--acceder au contenu de la liste data-->
                             <tr class="clickableTr" ng-repeat="item in $root.results.data" ng-click= "modifyPolWin(1+$index, item); changeSelectedRow( 1+$index)" ng-attr-id="{{ 1+  $index+ '-table-row'}}" ng-class="{warning:currentPoly.selectedRow== 1+$index+'-table-row' }">
-
                                 <td> {{$index+1}} </td>
                                 <td ng-show="column.strand_mutation">{{item.strand_mutation}}</td>
                                 <td ng-show="column.start_mutation">{{item.start_mutation}}</td>
@@ -109,7 +108,7 @@
                                 <td ng-show="column.protein_id">{{item.protein_id}}</td>
                                 <td ng-show="column.peptide">{{item.peptide}}</td>
                                 <td ng-show="column.group">{{item.group}}</td>
-				<td ng-show="column.group">{{item.sex}}</td>
+                                <td ng-show="column.sex">{{item.sex}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -175,8 +174,8 @@
                                 <tr>
                                     <td ng-repeat="AA in currentPoly.allFrames[currentPoly.selectedFrame]['AA'] track by $index" class="{{AA}} text-center" text-center">{{AA}}</td>
                                 </tr>
-                            
-<tr> 
+
+                                <tr>
                                     <td ng-repeat="item in splitDna(currentPoly.allFramesDbSnps[currentPoly.selectedFrame]['DNA']) track by $index" text-center">&nbsp;</td>
                                 </tr>
                                 <tr>
